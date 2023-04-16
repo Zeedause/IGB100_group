@@ -77,17 +77,24 @@ public class Player : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, maxDistance))
         {
-            //Debug.Log("Hit");
             if (hitInfo.collider.GameObject().CompareTag("Plant"))
-            {
-                //Debug.Log("Hit Plant");
                 hitInfo.collider.GameObject().GetComponent<Plant>().Interact();
-            }
+
             else if (hitInfo.collider.GameObject().CompareTag("PlantPlacement"))
-            {
-                //Debug.Log("Hit Plant");
                 hitInfo.collider.GameObject().GetComponent<PlantPlacement>().Interact();
-            }
+
+            else if (hitInfo.collider.GameObject().CompareTag("WaterPlacement"))
+                hitInfo.collider.GameObject().GetComponent<WaterPlacement>().Interact();
+
+            else if (hitInfo.collider.GameObject().CompareTag("LightPlacement"))
+                hitInfo.collider.GameObject().GetComponent<LightPlacement>().Interact();
+
+            else if (hitInfo.collider.GameObject().CompareTag("PlantFinish"))
+                hitInfo.collider.GameObject().GetComponent<PlantFinish>().Interact();
+
+            else if (hitInfo.collider.GameObject().CompareTag("PlantDelete"))
+                hitInfo.collider.GameObject().GetComponent<PlantDelete>().Interact();
+
         }
     }
 
