@@ -13,6 +13,10 @@ public class MoveCamera : MonoBehaviour
     
     void Update()
     {
+        //Don't process unless gameState == GameState.InProgress
+        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+            return;
+
         transform.position = cameraPosition.position;
     }
 }

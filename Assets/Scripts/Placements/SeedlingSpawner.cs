@@ -14,6 +14,10 @@ public class SeedlingSpawner : MonoBehaviour
 
     private void Update()
     {
+        //Don't process unless gameState == GameState.InProgress
+        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+            return;
+
         if (!placement.placedObject)
         {
             SpawnPlant();

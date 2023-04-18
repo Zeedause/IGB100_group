@@ -24,6 +24,10 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
+        //Don't process unless gameState == GameState.InProgress
+        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+            return;
+
         //Get mouse input
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;

@@ -31,6 +31,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //Don't process unless gameState == GameState.InProgress
+        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+        {
+            StopPlayer();
+            return;
+        }
+
         Movement();
 
         //Debug.DrawRay(cam.transform.position, cam.transform.forward * maxDistance, Color.green);
@@ -43,9 +50,10 @@ public class Player : MonoBehaviour
             MoveHeldObject();
     }
 
-    void FixedUpdate()
+    //Stops player movement
+    private void StopPlayer()
     {
-        
+        rb.velocity = Vector3.zero;
     }
 
     //Player input controls

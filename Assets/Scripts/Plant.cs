@@ -8,8 +8,7 @@ public class Plant : MonoBehaviour
     public GameObject placement;
     private PlantHUD plantHUD;
 
-    public Material[] materials;
-    private MeshRenderer meshRenderer;
+    public int sellValue = 20;
 
     public enum GrowthState
     {
@@ -39,7 +38,6 @@ public class Plant : MonoBehaviour
     {
         //Get components
         plantHUD = transform.Find("PlantHUD").gameObject.GetComponent<PlantHUD>();
-        meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
 
         //Set the initial growth state
         SetGrowthState(GrowthState.Seedling);
@@ -47,6 +45,10 @@ public class Plant : MonoBehaviour
 
     private void Update()
     {
+        //Don't process unless gameState == GameState.InProgress
+        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+            return;
+
         if (growthState == GrowthState.Growing)
         {
             if (growth >= fullGrowth) //Fully grown
@@ -114,25 +116,21 @@ public class Plant : MonoBehaviour
             case GrowthState.Seedling:
                 plantHUD.SetGrowthState("Seedling");
                 plantHUD.SetGrowthStatsVisibility(false);
-                meshRenderer.material = materials[0];
                 break;
 
             case GrowthState.Growing:
                 plantHUD.SetGrowthState("Growing");
                 plantHUD.SetGrowthStatsVisibility(true);
-                meshRenderer.material = materials[1];
                 break;
 
             case GrowthState.Grown:
                 plantHUD.SetGrowthState("Grown");
                 plantHUD.SetGrowthStatsVisibility(false);
-                meshRenderer.material = materials[2];
                 break;
 
             case GrowthState.Dead:
                 plantHUD.SetGrowthState("Dead");
                 plantHUD.SetGrowthStatsVisibility(false);
-                meshRenderer.material = materials[3];
                 break;
         }
 

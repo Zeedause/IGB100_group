@@ -18,6 +18,10 @@ public class WaterPlacement : MonoBehaviour
 
     private void Update()
     {
+        //Don't process unless gameState == GameState.InProgress
+        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+            return;
+
         if (!active && IsValidPlacement())
             SetActive(true);
         else if (active && !IsValidPlacement())
