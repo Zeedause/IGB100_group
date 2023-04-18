@@ -18,14 +18,22 @@ public class Plant : MonoBehaviour
         Grown,
         Dead
     }
+    [Header("Growth/Water/Light")]
     public GrowthState growthState;
     private float growth = 0f;
     public float growthRate = 1f;
     public float fullGrowth = 10f;
     private float light;
     public float lightRate = -1f;
-    public float water;
+    private float water;
     public float waterRate = -1f;
+
+    [Header("Animation")]
+    public GameObject plantModel;
+    public Vector3 growthScaleMin = new Vector3(0.05f, 0.05f, 0.05f);
+    public Vector3 growthScaleMax = new Vector3(0.2f, 0.2f, 0.2f);
+
+
 
     private void Start()
     {
@@ -74,6 +82,16 @@ public class Plant : MonoBehaviour
             plantHUD.UpdateWater(water, Color.red);
         else
             plantHUD.UpdateWater(water, Color.white);
+
+        //Apply growth changes to model
+        UpdateModel();
+    }
+
+    //Updates the plant's model based on current growth stats
+    private void UpdateModel()
+    {
+        float growthPerc = growth / fullGrowth;
+        plantModel.transform.localScale = Vector3.Lerp(growthScaleMin, growthScaleMax, growthPerc);
     }
 
     //Adds to the current light rate
