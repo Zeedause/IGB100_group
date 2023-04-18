@@ -23,8 +23,10 @@ public class Plant : MonoBehaviour
     public float growthRate = 1f;
     public float fullGrowth = 10f;
     private float light;
+    public float maxLight = 100f;
     public float lightRate = -1f;
     private float water;
+    public float maxWater = 100f;
     public float waterRate = -1f;
 
     [Header("Animation")]
@@ -69,17 +71,15 @@ public class Plant : MonoBehaviour
 
         //Light
         light += lightRate * Time.deltaTime;
-        if (light > 100f)
-            light = 100f;
+        if (light > maxLight)
+            light = maxLight;
         if (light <= 15.0f)
             plantHUD.UpdateLight(light, Color.red);
         else
             plantHUD.UpdateLight(light, Color.white);
 
         //Water
-        water += waterRate * Time.deltaTime;
-        if (water > 100f)
-            water = 100f;
+        AddWater(waterRate * Time.deltaTime);
         if (water <= 15.0f)
             plantHUD.UpdateWater(water, Color.red);
         else
@@ -87,6 +87,14 @@ public class Plant : MonoBehaviour
 
         //Apply growth changes to model
         UpdateModel();
+    }
+
+    //Add the specified amount of water to this object, negative to subtract
+    public void AddWater(float amount)
+    {
+        water += amount;
+        if (water > maxWater)
+            water = maxWater;
     }
 
     //Updates the plant's model based on current growth stats

@@ -10,15 +10,14 @@ public class Player : MonoBehaviour
      */
 
     [Header("Movement")]
-    //public Transform orientation;
-    private Rigidbody rb;
-
     public float moveSpeed;
     private Vector3 moveDirection;
+    private Rigidbody rb;
 
     [Header("Interaction")]
     public Camera cam;
     public float maxDistance;
+    public bool interactingCooldown = false;
 
     public Transform holdDisplacement;
     public GameObject heldObject;
@@ -41,10 +40,10 @@ public class Player : MonoBehaviour
         Movement();
 
         //Debug.DrawRay(cam.transform.position, cam.transform.forward * maxDistance, Color.green);
-        if (Input.GetMouseButtonDown(0))
-        {
+        if (Input.GetMouseButton(0) && !interactingCooldown)
             Interact();
-        }
+        else if (!Input.GetMouseButton(0) && interactingCooldown)
+            interactingCooldown = false;
 
         if (heldObject)
             MoveHeldObject();
@@ -85,24 +84,47 @@ public class Player : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, maxDistance))
         {
-            if (hitInfo.collider.GameObject().CompareTag("Plant"))
-                hitInfo.collider.GameObject().GetComponent<Plant>().Interact();
+            GameObject hitObject = hitInfo.collider.GameObject();
+            if (!heldObject)
+            {
+                interactingCooldown = true;
 
-            else if (hitInfo.collider.GameObject().CompareTag("PlantPlacement"))
-                hitInfo.collider.GameObject().GetComponent<PlantPlacement>().Interact();
+                if (hitObject.CompareTag("Plant"))
+                    hitObject.GetComponent<Plant>().Interact();
 
-            else if (hitInfo.collider.GameObject().CompareTag("WaterPlacement"))
-                hitInfo.collider.GameObject().GetComponent<WaterPlacement>().Interact();
+                else if (hitObject.CompareTag("WateringCan"))
+                    hitObject.GetComponent<WateringCan>().Interact();
+            }
+            else
+            {
+                if (heldObject.CompareTag("Plant"))
+                {
+                    interactingCooldown = true;
 
-            else if (hitInfo.collider.GameObject().CompareTag("LightPlacement"))
-                hitInfo.collider.GameObject().GetComponent<LightPlacement>().Interact();
+                    if (hitObject.CompareTag("PlantPlacement"))
+                        hitObject.GetComponent<PlantPlacement>().Interact();
 
-            else if (hitInfo.collider.GameObject().CompareTag("PlantFinish"))
-                hitInfo.collider.GameObject().GetComponent<PlantFinish>().Interact();
+                    else if (hitObject.CompareTag("LightPlacement"))
+                        hitObject.GetComponent<LightPlacement>().Interact();
 
-            else if (hitInfo.collider.GameObject().CompareTag("PlantDelete"))
-                hitInfo.collider.GameObject().GetComponent<PlantDelete>().Interact();
+                    else if (hitObject.CompareTag("PlantFinish"))
+                        hitObject.GetComponent<PlantFinish>().Interact();
 
+                    else if (hitObject.CompareTag("PlantDelete"))
+                        hitObject.GetComponent<PlantDelete>().Interact();
+                }
+                else if (heldObject.CompareTag("WateringCan"))
+                {
+                    if (hitObject.CompareTag("Plant"))
+                        heldObject.GetComponent<WateringCan>().WaterPlant(hitObject);
+
+                    else if (hitObject.CompareTag("WaterPlacement"))
+                    {
+                        interactingCooldown = true;
+                        hitObject.GetComponent<WaterPlacement>().Interact();
+                    }
+                }   
+            }
         }
     }
 

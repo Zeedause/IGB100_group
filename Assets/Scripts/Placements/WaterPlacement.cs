@@ -26,31 +26,38 @@ public class WaterPlacement : MonoBehaviour
             SetActive(true);
         else if (active && !IsValidPlacement())
             SetActive(false);
+
+        if (placement.placedObject)
+            WaterPlacedObject();
+    }
+
+    //Adds water to the placed object's water value
+    private void WaterPlacedObject()
+    {
+        placement.placedObject.GetComponent<WateringCan>().AddWater(waterRate * Time.deltaTime);
     }
 
     //Check if this object is valid to be placed on
     private bool IsValidPlacement()
     {
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
-        return !placement.placedObject && heldObject && heldObject.CompareTag("Plant");
+        return !placement.placedObject && heldObject && heldObject.CompareTag("WateringCan");
     }
 
     //If the player successfully interacts with this object
     public void Interact()
     {
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
-        if (heldObject && heldObject.CompareTag("Plant"))
+        if (heldObject && heldObject.CompareTag("WateringCan"))
         {
             GameManager.instance.player.GetComponent<Player>().heldObject = null;
             placement.placedObject = heldObject;
-            heldObject.GetComponent<Plant>().placement = this.gameObject;
-            heldObject.GetComponent<Plant>().waterRate += waterRate;
+            heldObject.GetComponent<WateringCan>().placement = this.gameObject;
 
             heldObject.transform.position = transform.position;
             heldObject.transform.rotation = transform.rotation;
 
             heldObject.GetComponent<BoxCollider>().enabled = true;
-
         }
     }
 

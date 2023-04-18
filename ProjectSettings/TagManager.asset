@@ -9,6 +9,8 @@ TagManager:
   - PlantDelete
   - WaterPlacement
   - LightPlacement
+  - PlantFinish
+  - WateringCan
   layers:
   - Default
   - TransparentFX
