@@ -13,7 +13,10 @@ public class WaterPlacement : MonoBehaviour
     {
         placement = this.gameObject.GetComponent<Placement>();
 
-        SetActive(false);
+        //
+        // Always visible for playtesting
+        //
+        SetActive(true);
     }
 
     private void Update()
@@ -22,10 +25,14 @@ public class WaterPlacement : MonoBehaviour
         if (GameManager.instance.gameState != GameManager.GameState.InProgress)
             return;
 
+        /*
+         * irrelevant for playtesting
+         * 
         if (!active && IsValidPlacement())
             SetActive(true);
         else if (active && !IsValidPlacement())
             SetActive(false);
+        */
 
         if (placement.placedObject)
             WaterPlacedObject();
@@ -56,6 +63,12 @@ public class WaterPlacement : MonoBehaviour
 
             heldObject.transform.position = transform.position;
             heldObject.transform.rotation = transform.rotation;
+
+            // CHANGED FOR PLAYTESTING
+            //
+            // move the watering can up while in the water for visilibity
+            heldObject.transform.position += new Vector3(0, 0.15f, 0);
+
 
             heldObject.GetComponent<BoxCollider>().enabled = true;
         }

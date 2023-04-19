@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
     public GameObject player;
+    public int lossMultiplier = 2;
 
     public enum GameState
     {
@@ -127,6 +128,11 @@ public class GameManager : MonoBehaviour {
     public void AddMoney(int value)
     {
         money += value;
+    }
+
+    public void LoseMoney(int value)
+    {
+        money -= value / lossMultiplier;
     }
 
     //Updates HUD values

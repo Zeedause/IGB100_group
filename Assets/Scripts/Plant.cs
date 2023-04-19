@@ -7,6 +7,7 @@ public class Plant : MonoBehaviour
 {
     public GameObject placement;
     private PlantHUD plantHUD;
+    private GameManager gameManager;
 
     public int sellValue = 20;
 
@@ -38,6 +39,8 @@ public class Plant : MonoBehaviour
 
     private void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         //Get components
         plantHUD = transform.Find("PlantHUD").gameObject.GetComponent<PlantHUD>();
 
@@ -55,8 +58,12 @@ public class Plant : MonoBehaviour
         {
             if (growth >= fullGrowth) //Fully grown
                 SetGrowthState(GrowthState.Grown);
-            else if (light <= 0f || water <= 0f) //Dead
+            else if (light <= 0f || water <= 0f)
+            {
+                //Dead
                 SetGrowthState(GrowthState.Dead);
+                gameManager.LoseMoney(sellValue);
+            } 
             else
                 Grow(); //Continue to grow
         }

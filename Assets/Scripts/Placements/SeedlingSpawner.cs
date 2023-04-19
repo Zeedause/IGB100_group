@@ -5,7 +5,8 @@ using UnityEngine;
 public class SeedlingSpawner : MonoBehaviour
 {
     private Placement placement;
-    public GameObject spawnPlant;
+    public GameObject spawnRose;
+    public GameObject spawnCactus;
 
     private void Start()
     {
@@ -27,7 +28,16 @@ public class SeedlingSpawner : MonoBehaviour
     //Creates a new plant at the spawner's position & rotation
     private void SpawnPlant()
     {
-        placement.placedObject = Instantiate(spawnPlant, transform.position, transform.rotation);
-        placement.placedObject.GetComponent<Plant>().placement = this.gameObject;
+        // select which plant to spawn, 33% chance to spawn cactus (int overload for Random.Range has exclusive maxValue)
+        int spawnID = UnityEngine.Random.Range(1, 4);
+        if(spawnID < 3)
+        {
+            placement.placedObject = Instantiate(spawnRose, transform.position, transform.rotation);
+            placement.placedObject.GetComponent<Plant>().placement = this.gameObject;
+        }
+        else {
+            placement.placedObject = Instantiate(spawnCactus, transform.position, transform.rotation);
+            placement.placedObject.GetComponent<Plant>().placement = this.gameObject;
+        }
     }
 }
