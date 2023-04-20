@@ -1238,7 +1238,7 @@ MonoBehaviour:
   growthRate: 3
   fullGrowth: 100
   maxLight: 100
-  lightRate: -3
+  lightRate: -2.2
   maxWater: 100
   waterRate: -0.7
   plantModel: {fileID: 1152975111706427174}
