@@ -181,6 +181,12 @@ public class Plant : MonoBehaviour
                 else if (placement.gameObject.CompareTag("LightPlacement"))
                 {
                     lightRate -= placement.gameObject.GetComponent<LightPlacement>().lightRate;
+
+                    if (this.gameObject.name == "Lily(Clone)")
+                    {
+                        Debug.Log("Healed");
+                        waterRate -= dryRate;
+                    }
                 }
                 placement.GetComponent<Placement>().placedObject = null;
                 placement = null;

@@ -46,6 +46,12 @@ public class LightPlacement : MonoBehaviour
             heldObject.GetComponent<Plant>().placement = this.gameObject;
             heldObject.GetComponent<Plant>().lightRate += lightRate;
 
+            if (heldObject.name == "Lily(Clone)")
+            {
+                Debug.Log("Dry");
+                heldObject.GetComponent<Plant>().waterRate += heldObject.GetComponent<Plant>().dryRate;
+            }
+
             heldObject.transform.position = transform.position;
             heldObject.transform.rotation = transform.rotation;
 

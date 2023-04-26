@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
     public GameObject inProgressHUD;
     public GameObject finishedWinHUD;
     public GameObject finishedFailHUD;
+    public GameObject PlantBook;
 
     // Awake Checks - Singleton setup
     void Awake() {
@@ -141,6 +142,15 @@ public class GameManager : MonoBehaviour {
     //Updates HUD values
     private void UpdateHUD()
     {
+        if (Input.GetMouseButton(1))
+        {
+            PlantBook.SetActive(true);
+            Debug.Log("Yes");
+
+        }
+        else 
+            PlantBook.SetActive(false);
+
         inProgressHUD.transform.Find("MoneyCounter").GameObject().GetComponent<TextMeshProUGUI>().text = "$" + money + " / $" + moneyGoal;
         timerImage.fillAmount = timer / timeLimit;
         // inProgressHUD.transform.Find("Timer").GameObject().GetComponent<TextMeshProUGUI>().text = "Time Left:\n\r" + MathF.Ceiling(timer);
