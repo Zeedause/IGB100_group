@@ -5,6 +5,7 @@ using System;
 using TMPro;
 using UnityEditor;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour {
 
     public GameObject player;
     public int lossMultiplier = 2;
+
+    public Image timerImage;
 
     public enum GameState
     {
@@ -138,7 +141,8 @@ public class GameManager : MonoBehaviour {
     //Updates HUD values
     private void UpdateHUD()
     {
-        inProgressHUD.transform.Find("MoneyCounter").GameObject().GetComponent<TextMeshProUGUI>().text = "Money: $" + money + "/$" + moneyGoal;
-        inProgressHUD.transform.Find("Timer").GameObject().GetComponent<TextMeshProUGUI>().text = "Time Left:\n\r" + MathF.Ceiling(timer);
+        inProgressHUD.transform.Find("MoneyCounter").GameObject().GetComponent<TextMeshProUGUI>().text = "$" + money + " / $" + moneyGoal;
+        timerImage.fillAmount = timer / timeLimit;
+        // inProgressHUD.transform.Find("Timer").GameObject().GetComponent<TextMeshProUGUI>().text = "Time Left:\n\r" + MathF.Ceiling(timer);
     }
 }

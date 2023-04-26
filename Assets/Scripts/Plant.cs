@@ -22,13 +22,14 @@ public class Plant : MonoBehaviour
     public GrowthState growthState;
     private float growth = 0f;
     public float growthRate = 1f;
-    public float fullGrowth = 10f;
+    public float fullGrowth = 100f;
     private float light;
     public float maxLight = 100f;
     public float lightRate = -1f;
     private float water;
     public float maxWater = 100f;
     public float waterRate = -1f;
+    public float dryRate = -1f;
 
     [Header("Animation")]
     public GameObject plantModel;
@@ -43,6 +44,7 @@ public class Plant : MonoBehaviour
 
         //Get components
         plantHUD = transform.Find("PlantHUD").gameObject.GetComponent<PlantHUD>();
+        plantHUD.SetUI(fullGrowth, maxLight, maxWater);
 
         //Set the initial growth state
         SetGrowthState(GrowthState.Seedling);
@@ -177,7 +179,9 @@ public class Plant : MonoBehaviour
                 if (placement.gameObject.CompareTag("WaterPlacement"))
                     waterRate -= placement.gameObject.GetComponent<WaterPlacement>().waterRate;
                 else if (placement.gameObject.CompareTag("LightPlacement"))
+                {
                     lightRate -= placement.gameObject.GetComponent<LightPlacement>().lightRate;
+                }
                 placement.GetComponent<Placement>().placedObject = null;
                 placement = null;
             }
