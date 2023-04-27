@@ -1240,14 +1240,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placement: {fileID: 0}
-  sellValue: 35
+  sellValue: 30
   growthState: 0
-  growthRate: 3
+  growthRate: 2.2
   fullGrowth: 100
   maxLight: 100
   lightRate: -2.2
   maxWater: 100
   waterRate: -0.7
+  dryRate: -1
   plantModel: {fileID: 1152975111706427174}
   growthScaleMin: {x: 0.0018, y: 0.0018, z: 0.0018}
   growthScaleMax: {x: 0.011, y: 0.011, z: 0.011}
