@@ -59,7 +59,11 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        //Check gamweState
+        //Exit the game
+        if (Input.GetKey("escape"))
+            Application.Quit();
+
+        //Check gameState
         if (gameState == GameState.Starting)
         {
             if (Input.GetKey("space"))

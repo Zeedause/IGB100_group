@@ -176,9 +176,10 @@ public class Plant : MonoBehaviour
             //If picked up from placement, remove this object from it
             if (placement)
             {
-                if (placement.gameObject.CompareTag("WaterPlacement"))
-                    waterRate -= placement.gameObject.GetComponent<WaterPlacement>().waterRate;
-                else if (placement.gameObject.CompareTag("LightPlacement"))
+                //Plants no longer placable in WaterPlacements
+                //if (placement.gameObject.CompareTag("WaterPlacement"))
+                //    waterRate -= placement.gameObject.GetComponent<WaterPlacement>().waterRate;
+                if (placement.gameObject.CompareTag("LightPlacement"))
                 {
                     lightRate -= placement.gameObject.GetComponent<LightPlacement>().lightRate;
 
