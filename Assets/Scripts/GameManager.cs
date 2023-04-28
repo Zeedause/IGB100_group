@@ -149,8 +149,6 @@ public class GameManager : MonoBehaviour {
         if (Input.GetMouseButton(1))
         {
             PlantBook.SetActive(true);
-            Debug.Log("Yes");
-
         }
         else 
             PlantBook.SetActive(false);
