@@ -132,21 +132,25 @@ public class Plant : MonoBehaviour
         {
             case GrowthState.Seedling:
                 plantHUD.SetGrowthState("Seedling");
+                plantHUD.SetGrowthStateVisibility(false);
                 plantHUD.SetGrowthStatsVisibility(false);
                 break;
 
             case GrowthState.Growing:
                 plantHUD.SetGrowthState("Growing");
+                plantHUD.SetGrowthStateVisibility(true);
                 plantHUD.SetGrowthStatsVisibility(true);
                 break;
 
             case GrowthState.Grown:
                 plantHUD.SetGrowthState("Grown");
+                plantHUD.SetGrowthStateVisibility(true);
                 plantHUD.SetGrowthStatsVisibility(false);
                 break;
 
             case GrowthState.Dead:
                 plantHUD.SetGrowthState("Dead");
+                plantHUD.SetGrowthStateVisibility(true);
                 plantHUD.SetGrowthStatsVisibility(false);
                 break;
         }

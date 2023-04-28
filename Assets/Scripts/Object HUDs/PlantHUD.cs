@@ -22,6 +22,11 @@ public class PlantHUD : MonoBehaviour
         this.gameObject.transform.Find("GrowthStateLabel").gameObject.GetComponent<TextMeshProUGUI>().text = text;
     }
 
+    public void SetGrowthStateVisibility(bool visible)
+    {
+        this.gameObject.transform.Find("GrowthStateLabel").gameObject.SetActive(visible);
+    }
+
     public void SetGrowthStatsVisibility(bool visible)
     {
         // this.gameObject.transform.Find("GrowthLabel").gameObject.SetActive(visible);
