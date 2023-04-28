@@ -48,7 +48,6 @@ public class LightPlacement : MonoBehaviour
 
             if (heldObject.name == "Lily(Clone)")
             {
-                Debug.Log("Dry");
                 heldObject.GetComponent<Plant>().waterRate += heldObject.GetComponent<Plant>().dryRate;
             }
 

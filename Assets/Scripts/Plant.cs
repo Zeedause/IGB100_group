@@ -185,7 +185,6 @@ public class Plant : MonoBehaviour
 
                     if (this.gameObject.name == "Lily(Clone)")
                     {
-                        Debug.Log("Healed");
                         waterRate -= dryRate;
                     }
                 }
