@@ -8,7 +8,7 @@ public class WateringCan : MonoBehaviour
     public GameObject placement;
     private WateringCanHUD wateringCanHUD;
 
-    private float water;
+    public float water;
     public float waterCapacity = 500f;
     public float wateringRate = 15f;
 
