@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
 
     public GameObject player;
-    public int lossMultiplier = 2;
+    public int lossDivisor = 2;
 
     public Image timerImage;
 
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour {
 
     public void LoseMoney(int value)
     {
-        money -= value / lossMultiplier;
+        money -= value / lossDivisor;
     }
 
     //Updates HUD values
