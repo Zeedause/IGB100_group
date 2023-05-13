@@ -25,7 +25,7 @@ public class PlayerCamera : MonoBehaviour
     private void Update()
     {
         //Don't process unless gameState == GameState.InProgress
-        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+        if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
             return;
 
         //Get mouse input

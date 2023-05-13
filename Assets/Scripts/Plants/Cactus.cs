@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class Placement : Interactable
+public class Cactus : Plant
 {
-    public GameObject placedObject;
+    
 }

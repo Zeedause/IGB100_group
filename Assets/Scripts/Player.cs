@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
      * https://www.youtube.com/watch?v=f473C43s8nE
      */
 
+    public GameObject spawner;
+
     [Header("Movement")]
     public float moveSpeed;
     private Vector3 moveDirection;
@@ -16,8 +18,7 @@ public class Player : MonoBehaviour
 
     [Header("Interaction")]
     public Camera cam;
-    public float maxDistance;
-    public bool interactingCooldown = false;
+    public float interactionDistance;
 
     public Transform holdDisplacement;
     public GameObject heldObject;
@@ -31,22 +32,33 @@ public class Player : MonoBehaviour
     void Update()
     {
         //Don't process unless gameState == GameState.InProgress
-        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+        if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
         {
             StopPlayer();
             return;
         }
 
+        //Process player movement
         Movement();
 
-        //Debug.DrawRay(cam.transform.position, cam.transform.forward * maxDistance, Color.green);
-        if (Input.GetMouseButton(0) && !interactingCooldown)
+        //Check for player interaction
+        if (Input.GetMouseButtonDown(0))
             Interact();
-        else if (!Input.GetMouseButton(0) && interactingCooldown)
-            interactingCooldown = false;
 
+        //Move held object with player
         if (heldObject)
             MoveHeldObject();
+    }
+
+    //Reset the object to it's initial state
+    public void Respawn()
+    {
+        //Reset position & rotation
+        transform.position = spawner.transform.position;
+        transform.rotation = spawner.transform.rotation;
+
+        //Held object & interaction
+        heldObject = null;
     }
 
     //Stops player movement
@@ -81,50 +93,15 @@ public class Player : MonoBehaviour
     //Attempt to interact with an object
     private void Interact()
     {
+        //Raycast a limited distance to find an object in the direction the player is looking
         RaycastHit hitInfo;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, maxDistance))
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, interactionDistance))
         {
             GameObject hitObject = hitInfo.collider.GameObject();
-            if (!heldObject)
-            {
-                interactingCooldown = true;
 
-                if (hitObject.CompareTag("Plant"))
-                    hitObject.GetComponent<Plant>().Interact();
-
-                else if (hitObject.CompareTag("WateringCan"))
-                    hitObject.GetComponent<WateringCan>().Interact();
-            }
-            else
-            {
-                if (heldObject.CompareTag("Plant"))
-                {
-                    interactingCooldown = true;
-
-                    if (hitObject.CompareTag("PlantPlacement"))
-                        hitObject.GetComponent<PlantPlacement>().Interact();
-
-                    else if (hitObject.CompareTag("LightPlacement"))
-                        hitObject.GetComponent<LightPlacement>().Interact();
-
-                    else if (hitObject.CompareTag("PlantFinish"))
-                        hitObject.GetComponent<PlantFinish>().Interact();
-
-                    else if (hitObject.CompareTag("PlantDelete"))
-                        hitObject.GetComponent<PlantDelete>().Interact();
-                }
-                else if (heldObject.CompareTag("WateringCan"))
-                {
-                    if (hitObject.CompareTag("Plant"))
-                        heldObject.GetComponent<WateringCan>().WaterPlant(hitObject);
-
-                    else if (hitObject.CompareTag("WaterPlacement"))
-                    {
-                        interactingCooldown = true;
-                        hitObject.GetComponent<WaterPlacement>().Interact();
-                    }
-                }   
-            }
+            //If the object is interactable, interact with it
+            if (hitObject.GetComponent<Interactable>())
+                hitObject.GetComponent<Interactable>().Interact();
         }
     }
 

@@ -90,10 +90,9 @@ GameObject:
   - component: {fileID: 6475003057215144525}
   - component: {fileID: 6475003057215144524}
   - component: {fileID: 6475003057215144523}
-  - component: {fileID: 1476435550}
   m_Layer: 0
   m_Name: PlantPlacement
-  m_TagString: PlantPlacement
+  m_TagString: Placement
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -189,20 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d078472a53bec2545a6bcfffbf57b677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
---- !u!114 &1476435550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6475003057215144526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b439cb0f40db924bb2b1f6c9a5b89d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   placedObject: {fileID: 0}
+  active: 0
 --- !u!1 &6690552496781736292
 GameObject:
   m_ObjectHideFlags: 0

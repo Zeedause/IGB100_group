@@ -2,22 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlantPlacement : MonoBehaviour
+public class PlantPlacement : Placement
 {
     public bool active;
-    private Placement placement;
 
     private void Start()
     {
-        placement = this.gameObject.GetComponent<Placement>();
-
         SetActive(false);
     }
 
     private void Update()
     {
         //Don't process unless gameState == GameState.InProgress
-        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+        if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
             return;
 
         if (!active && IsValidPlacement())
@@ -30,22 +27,27 @@ public class PlantPlacement : MonoBehaviour
     private bool IsValidPlacement()
     {
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
-        return !placement.placedObject && heldObject && heldObject.CompareTag("Plant");
+        return !placedObject && heldObject && heldObject.GetComponent<Plant>();
     }
 
     //If the player successfully interacts with this object
-    public void Interact()
+    public override void Interact()
     {
+        //If the object held by the player is a plant
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
-        if (heldObject && heldObject.CompareTag("Plant"))
+        if (heldObject && heldObject.GetComponent<Plant>())
         {
-            GameManager.instance.player.GetComponent<Player>().heldObject = null;
-            placement.placedObject = heldObject;
+            //Add the object to this placement
+            placedObject = heldObject;
+
+            //Add this placement to the object
             heldObject.GetComponent<Plant>().placement = this.gameObject;
 
+            //Move and rotate the object to this placement
             heldObject.transform.position = transform.position;
             heldObject.transform.rotation = transform.rotation;
 
+            //Enable the collider of the object
             heldObject.GetComponent<BoxCollider>().enabled = true;
         }
     }

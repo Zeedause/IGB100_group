@@ -2,74 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterPlacement : MonoBehaviour
+public class WaterPlacement : Placement
 {
-    public bool active;
-    private Placement placement;
-
     public float waterRate = 15f;
-
-    private void Start()
-    {
-        placement = this.gameObject.GetComponent<Placement>();
-
-        //
-        // Always visible for playtesting
-        //
-        SetActive(true);
-    }
 
     private void Update()
     {
         //Don't process unless gameState == GameState.InProgress
-        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+        if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
             return;
 
-        /*
-         * irrelevant for playtesting
-         * 
-        if (!active && IsValidPlacement())
-            SetActive(true);
-        else if (active && !IsValidPlacement())
-            SetActive(false);
-        */
-
-        if (placement.placedObject)
+        if (placedObject)
             WaterPlacedObject();
     }
 
     //Adds water to the placed object's water value
     private void WaterPlacedObject()
     {
-        placement.placedObject.GetComponent<WateringCan>().AddWater(waterRate * Time.deltaTime);
-    }
-
-    //Check if this object is valid to be placed on
-    private bool IsValidPlacement()
-    {
-        GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
-        return !placement.placedObject && heldObject && heldObject.CompareTag("WateringCan");
+        placedObject.GetComponent<WateringCan>().AddWater(waterRate * Time.deltaTime);
     }
 
     //If the player successfully interacts with this object
-    public void Interact()
+    public override void Interact()
     {
+        //If the object held by the player is a plant
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
-        if (heldObject && heldObject.CompareTag("WateringCan"))
+        if (heldObject && heldObject.GetComponent<WateringCan>())
         {
+            //Remove the held object from the player
             GameManager.instance.player.GetComponent<Player>().heldObject = null;
-            placement.placedObject = heldObject;
+
+            //Add the object to this placement
+            placedObject = heldObject;
+
+            //Add this placement to the object
             heldObject.GetComponent<WateringCan>().placement = this.gameObject;
 
+            //Move and rotate the object to this placement
             heldObject.transform.position = transform.position;
             heldObject.transform.rotation = transform.rotation;
-
-            // CHANGED FOR PLAYTESTING
-            //
-            // move the watering can up while in the water for visilibity
+            //Move the watering can up while in the water for visilibity
             heldObject.transform.position += new Vector3(0, 0.15f, 0);
 
-
+            //Enable the collider of the object
             heldObject.GetComponent<BoxCollider>().enabled = true;
         }
     }
@@ -80,6 +55,5 @@ public class WaterPlacement : MonoBehaviour
         this.gameObject.GetComponent<MeshRenderer>().enabled = b;
         this.gameObject.GetComponent<BoxCollider>().enabled = b;
         this.transform.Find("HUD").gameObject.SetActive(b);
-        active = b;
     }
 }

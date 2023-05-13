@@ -5,12 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Plant
-  - PlantPlacement
-  - PlantDelete
-  - WaterPlacement
-  - LightPlacement
-  - PlantFinish
   - WateringCan
+  - Placement
   layers:
   - Default
   - TransparentFX

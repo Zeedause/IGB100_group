@@ -922,9 +922,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6009209942586564674}
   - component: {fileID: 6009209942586564679}
-  - component: {fileID: 6009209942586564675}
+  - component: {fileID: 3011446930852666821}
   m_Layer: 0
-  m_Name: Plant
+  m_Name: Rose
   m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -960,7 +960,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6009209942586564675
+--- !u!114 &3011446930852666821
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -969,7 +969,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6009209942586564678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c37f86de55175c4790a89cc6b20efd1, type: 3}
+  m_Script: {fileID: 11500000, guid: 861b78742e139e241b8b144233caa95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   placement: {fileID: 0}
@@ -981,7 +981,6 @@ MonoBehaviour:
   lightRate: -1
   maxWater: 100
   waterRate: -1
-  dryRate: -1
   plantModel: {fileID: 5911429887318459093}
   growthScaleMin: {x: 0.05, y: 0.05, z: 0.05}
   growthScaleMax: {x: 0.2, y: 0.2, z: 0.2}

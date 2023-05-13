@@ -1,41 +1,51 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections;
-using System;
+﻿using System.Linq;
 using TMPro;
-using UnityEditor;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
     //Singleton Setup
     public static GameManager instance = null;
-
-    public GameObject player;
-    public int lossDivisor = 2;
-
-    public Image timerImage;
-
+    
+    //Game State Variables
     public enum GameState
     {
-        Starting,
-        InProgress,
-        FinishedWin,
-        FinishedFail
+        MainMenu,
+        Gameplay,
+        Paused,
+        UpgradeMenu,
+        LevelWon,
+        LevelLost
     }
     public GameState gameState;
+    public int levelNumber = 0;
+
+    //Gameplay Variables
+    private float timeLimit;
     private float timer;
-    public float timeLimit = 120; //Seconds
-    public int money = 0;
-    public int moneyGoal = 1000;
+    private int money;
+    private int moneyGoal;
+
+    //Level Settings
+    public bool spawnRose = false;
+    public bool spawnCactus = false;
+    public bool spawnLily = false;
+
+    [Header("References")]
+    public GameObject player;
+    public GameObject wateringCan;
 
     [Header("HUD")]
-    public GameObject startingHUD;
-    public GameObject inProgressHUD;
-    public GameObject finishedWinHUD;
-    public GameObject finishedFailHUD;
+    public GameObject mainMenuHUD;
+    public GameObject gameplayHUD;
+    public GameObject PauseHUD;
+    public GameObject levelWonHUD;
+    public GameObject levelLostHUD;
     public GameObject PlantBook;
+    public Image timerImage;
 
     // Awake Checks - Singleton setup
     void Awake() {
@@ -59,71 +69,190 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
-        //Exit the game
-        if (Input.GetKey("escape"))
-            Application.Quit();
+        //Game State switch block
+        switch (gameState)
+        {
+            case GameState.MainMenu:
+                MainMenu();
+                break;
 
-        //Check gameState
-        if (gameState == GameState.Starting)
-        {
-            if (Input.GetKey("space"))
-                StartGame();
-        }
-        else if (gameState == GameState.FinishedWin || gameState == GameState.FinishedFail)
-        {
-            if (Input.GetKey("space"))
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        else //gameState == GameState.InProgress
-        {
-            UpdateTimer();
+            case GameState.Gameplay:
+                Gameplay();
+                break;
 
-            UpdateHUD();
-            
-            if (timer <= 0)
-            {
-                if (money >= moneyGoal)
-                    FinishGameWin();
-                else
-                    FinishGameFail();
-            }
+            case GameState.Paused:
+                Paused();
+                break;
+
+            //case GameState.UpgradeMenu:
+            //    UpgradeMenu();
+            //    break;
+
+            case GameState.LevelWon:
+                LevelWon();
+                break;
+
+            case GameState.LevelLost:
+                LevelLost();
+                break;
         }
     }
 
     //Initialise the game
     private void InitialiseGame()
     {
-        gameState = GameState.Starting;
-        timer = timeLimit;
-        money = 0;
-        startingHUD.SetActive(true);
+        //Inialise Varaibles
+        levelNumber = 1;
+
+        //Initial Game State
+        gameState = GameState.MainMenu;
     }
 
-    //Start the game
-    private void StartGame()
+    //Game State - Main Menu
+    private void MainMenu()
     {
-        gameState = GameState.InProgress;
+        //Show the Main Menu HUD
+        if (mainMenuHUD.activeSelf == false)
+            mainMenuHUD.SetActive(true);
 
-        startingHUD.SetActive(false);
-        inProgressHUD.SetActive(true);
+        //If 'Escape' key is pressed, exit the application
+        if (Input.GetKey("escape"))
+            Application.Quit();
+
+        //Wait for player to start the game
+        if (Input.GetKey("space"))
+        {
+            LevelSetup(levelNumber);
+
+            mainMenuHUD.SetActive(false);
+
+            gameState = GameState.Gameplay;
+        }
     }
 
-    //End game with win
-    private void FinishGameWin()
+    //Game State - Gameplay
+    private void Gameplay()
     {
-        gameState = GameState.FinishedWin;
+        //Show the Gameplay HUD
+        if (gameplayHUD.activeSelf == false)
+            gameplayHUD.SetActive(true);
 
-        inProgressHUD.SetActive(false);
-        finishedWinHUD.SetActive(true);
+        //If 'Escape' key is pressed, pause the game
+        if (Input.GetKeyDown("escape"))
+        {
+            PauseHUD.SetActive(true);
+
+            gameState = GameState.Paused;
+            return;
+        }
+
+        //Decrease timer
+        UpdateTimer();
+
+        //Update HUD elements
+        UpdateGameplayHUD();
+
+        //Check if time has expired
+        if (timer <= 0)
+        {
+            //Check if player has won the level...
+            if (money >= moneyGoal)
+            {
+                gameplayHUD.SetActive(false);
+
+                //TODO - levelNumber == 5: End Game
+
+                gameState = GameState.LevelWon;
+            }
+            //... or lost the level
+            else
+            {
+                gameplayHUD.SetActive(false);
+
+                gameState = GameState.LevelLost;
+            }
+        }
     }
 
-    //End game with fail
-    private void FinishGameFail()
+    //Game State - Paused
+    private void Paused()
     {
-        gameState = GameState.FinishedFail;
+        //Unlock and show cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
-        inProgressHUD.SetActive(false);
-        finishedFailHUD.SetActive(true);
+        //If 'Escape' key is pressed, un-pause the game
+        if (Input.GetKeyDown("escape"))
+        {
+            PauseHUD.SetActive(false);
+
+            //Lock and hide cursor
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            gameState = GameState.Gameplay;
+            return;
+        }
+    }
+
+    //Game State - Upgrade
+    private void Upgrade()
+    {
+        
+    }
+
+    //Game State - Level Won
+    private void LevelWon()
+    {
+        //Show the Level Won HUD
+        if (levelWonHUD.activeSelf == false)
+            levelWonHUD.SetActive(true);
+
+        //Wait for player to start the next level
+        if (Input.GetKey("space"))
+        {
+            //TODO - Transition to Upgrade Screen
+            levelNumber++;
+            LevelSetup(levelNumber);
+
+            levelWonHUD.SetActive(false);
+
+            gameState = GameState.Gameplay;
+        }
+
+        //If 'Escape' key is pressed, return to the main menu
+        if (Input.GetKeyDown("escape"))
+        {
+            //Functaionality is equivalent to simply restarting the game:
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        
+    }
+
+    //Game State - Level Lost
+    private void LevelLost()
+    {
+        //Show the Level Lost HUD
+        if (levelLostHUD.activeSelf == false)
+            levelLostHUD.SetActive(true);
+
+        //Wait for the player to restart the same level
+        if (Input.GetKey("space"))
+        {
+            LevelSetup(levelNumber);
+
+            levelLostHUD.SetActive(false);
+
+            gameState = GameState.Gameplay;
+        }
+
+        //If 'Escape' key is pressed, return to the main menu
+        if (Input.GetKeyDown("escape"))
+        {
+            //Functaionality is equivalent to simply restarting the game:
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     //Decreases time left
@@ -132,19 +261,14 @@ public class GameManager : MonoBehaviour {
         timer -= Time.deltaTime;
     }
 
-    //Add specified amount to the money counter
+    //Add specified amount to the money counter, negative to subract
     public void AddMoney(int value)
     {
         money += value;
     }
 
-    public void LoseMoney(int value)
-    {
-        money -= value / lossDivisor;
-    }
-
     //Updates HUD values
-    private void UpdateHUD()
+    private void UpdateGameplayHUD()
     {
         if (Input.GetMouseButton(1))
         {
@@ -153,8 +277,75 @@ public class GameManager : MonoBehaviour {
         else 
             PlantBook.SetActive(false);
 
-        inProgressHUD.transform.Find("MoneyCounter").GameObject().GetComponent<TextMeshProUGUI>().text = "$" + money + " / $" + moneyGoal;
+        gameplayHUD.transform.Find("MoneyCounter").GameObject().GetComponent<TextMeshProUGUI>().text = "$" + money + " / $" + moneyGoal;
         timerImage.fillAmount = timer / timeLimit;
-        // inProgressHUD.transform.Find("Timer").GameObject().GetComponent<TextMeshProUGUI>().text = "Time Left:\n\r" + MathF.Ceiling(timer);
+    }
+
+    //Set up the level before level starts
+    private void LevelSetup(int levelNumber)
+    {
+        //Reset player position & rotation
+        player.GetComponent<Player>().Respawn();
+
+        //Reset watering can position & rotation
+        wateringCan.GetComponent<WateringCan>().Respawn();
+
+        //Delete Plants
+        GameObject[] plants = GameObject.FindGameObjectsWithTag("Plant");
+        foreach (GameObject plant in plants)
+            Destroy(plant);
+
+        //Level settings switch block
+        //NOTE: enabling/disabling a feature boolean enables/disables that features for all subsequent levels
+        switch (levelNumber)
+        {
+            case 1:
+                //Plants
+                spawnRose = true;
+                
+                //Timer & Money 
+                timeLimit = 10; //60
+                money = 0;
+                moneyGoal = 50;
+                break;
+
+            case 2:
+                //Plants
+                spawnCactus = true;
+                spawnLily= true;
+
+                //Timer & Money 
+                timeLimit = 20; //120
+                money = 0;
+                moneyGoal = 100;
+                break;
+
+            case 3:
+                //Timer & Money 
+                timeLimit = 10; //120
+                money = 0;
+                moneyGoal = 150;
+                break;
+
+            case 4:
+                //Timer & Money 
+                timeLimit = 10; //60
+                money = 0;
+                moneyGoal = 100;
+                break;
+
+            case 5:
+                //TODO - Implement Weather
+                //weatherEnabled = true;
+
+                //Timer & Money 
+                timeLimit = 10; //240
+                money = 0;
+                moneyGoal = 300;
+                break;
+        }
+
+        //Gameplay Variables
+        timer = timeLimit;
     }
 }

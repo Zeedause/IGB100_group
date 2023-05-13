@@ -1,28 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Threading;
 using UnityEngine;
 
-public class WateringCan : MonoBehaviour
+public class WateringCan : Interactable
 {
+    public GameObject spawner;
     public GameObject placement;
     private WateringCanHUD wateringCanHUD;
 
+    [Header("Water")]
     public float water;
     public float waterCapacity = 500f;
     public float wateringRate = 15f;
-
-    [Header("Materials")]
-    public Material placedMaterial;
-    public Material heldMaterial;
-    private MeshRenderer meshRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         //Get components
         wateringCanHUD = transform.Find("HUD").gameObject.GetComponent<WateringCanHUD>();
-        meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
 
         water = 0;
     }
@@ -31,11 +28,27 @@ public class WateringCan : MonoBehaviour
     void Update()
     {
         //Don't process unless gameState == GameState.InProgress
-        if (GameManager.instance.gameState != GameManager.GameState.InProgress)
+        if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
             return;
 
-        UpdateMaterial();
+        wateringCanHUD.UpdateWater(water, waterCapacity);
+    }
 
+    //Reset the object to it's initial state
+    public void Respawn()
+    {
+        //Reset position & rotation
+        transform.position = spawner.transform.position;
+        transform.rotation = spawner.transform.rotation;
+
+        //Placement
+        placement = null;
+
+        //Enable object collision
+        this.gameObject.GetComponent<BoxCollider>().enabled = true;
+
+        //Values
+        water = 0f;
         wateringCanHUD.UpdateWater(water, waterCapacity);
     }
 
@@ -61,22 +74,12 @@ public class WateringCan : MonoBehaviour
         //Remove water from this object
         AddWater(-waterTransfer);
 
-        //Add water to targer object
+        //Add water to target object
         plant.GetComponent<Plant>().AddWater(waterTransfer);
     }
 
-    //Checks if the the object is held and updates material accordingly
-    private void UpdateMaterial()
-    {
-        if (GameManager.instance.player.GetComponent<Player>().heldObject == this.gameObject)
-            meshRenderer.material = heldMaterial;
-        else
-            meshRenderer.material = placedMaterial;
-
-    }
-
     //If the player successfully interacts with this object
-    public void Interact()
+    public override void Interact()
     {
         if (!GameManager.instance.player.GetComponent<Player>().heldObject)
         {

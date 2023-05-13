@@ -25,14 +25,5 @@ public class WateringCanHUD : MonoBehaviour
         // set values in HUD
         waterCanImage.fillAmount = scaledVal;
         waterSlider.value = amount;
-
-        /* Old method for text display
-         * 
-         * TextMeshProUGUI waterValueLabel = this.gameObject.transform.Find("WaterValueLabel").gameObject.GetComponent<TextMeshProUGUI>();
-         * waterValueLabel.text = "Water:\n\r" + Mathf.Ceil(amount) + "/" + maxCapacity;
-         *
-         * Old method to fill circle
-         * waterCanImage.fillAmount = amount / maxCapacity;
-        */
     }
 }
