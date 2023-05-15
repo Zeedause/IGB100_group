@@ -37,6 +37,9 @@ public class PlantPlacement : Placement
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
         if (heldObject && heldObject.GetComponent<Plant>())
         {
+            //Remove the held object from the player
+            GameManager.instance.player.GetComponent<Player>().heldObject = null;
+
             //Add the object to this placement
             placedObject = heldObject;
 
