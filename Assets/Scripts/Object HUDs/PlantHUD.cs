@@ -10,6 +10,9 @@ public class PlantHUD : MonoBehaviour
     public Slider lightSlider;
     public Slider waterSlider;
 
+    public GameObject waterTest;
+    public GameObject lightTest;
+
     public void InitialiseUI(float fullGrowth, float maxLight, float maxWater)
     {
         growthSlider.maxValue = fullGrowth;
@@ -25,6 +28,12 @@ public class PlantHUD : MonoBehaviour
     public void SetGrowthStateVisibility(bool visible)
     {
         this.gameObject.transform.Find("GrowthStateLabel").gameObject.SetActive(visible);
+    }
+
+    public void SetTesting(bool visible)
+    {
+        waterTest.SetActive(visible);
+        lightTest.SetActive(visible);
     }
 
     public void SetGrowthStatsVisibility(bool visible)

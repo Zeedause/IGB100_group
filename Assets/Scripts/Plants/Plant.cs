@@ -31,6 +31,14 @@ public class Plant : Interactable
     public float maxWater = 100f;
     public float waterRate = -1f;
 
+    [Header("Sweetspot Values")]
+    public float minWaterSweetspot;
+    public float maxWaterSweetspot;
+    public float minLightSweetspot;
+    public float maxLightSweetspot;
+
+    public bool testing = false;
+
     [Header("Animation")]
     public GameObject plantModel;
     public Vector3 growthScaleMin = new Vector3(0.05f, 0.05f, 0.05f);
@@ -38,7 +46,7 @@ public class Plant : Interactable
 
 
 
-    internal void Start()
+    internal virtual void Start()
     {
         //Get references
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -82,8 +90,15 @@ public class Plant : Interactable
         growthState = GrowthState.Seedling;
 
         //Set initial values
-        light = 25f;
-        water = 25f;
+        light = maxLight / 4;
+        water = maxWater / 4;
+
+        // set sweetspot values
+        // messy figures but it aligns with UI constraints niceley, roughly bottom 0.25% and top 0.66%
+        minWaterSweetspot = maxWater * 0.235f;
+        maxWaterSweetspot = maxWater * 0.66f;
+        minLightSweetspot = maxLight * 0.235f;
+        maxLightSweetspot = maxWater * 0.366f;
 
         //Set Plant HUD
         plantHUD.SetGrowthState("Seedling");
