@@ -182,6 +182,9 @@ public class Plant : Interactable
         //If the player isn't holding an object, pick the object up
         if (!GameManager.instance.player.GetComponent<Player>().heldObject)
         {
+            //Trigger player interaction cooldown
+            GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
+
             //If picked up for first time, start growing
             if (growthState == GrowthState.Seedling)
             {
@@ -207,7 +210,7 @@ public class Plant : Interactable
                 placement = null;
             }
         }
-        //Otherwise, if the player is holidng a watering can and thios plant is growing, water this plant
+        //Otherwise, if the player is holidng a watering can and this plant is growing, water this plant
         else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<WateringCan>() && growthState == GrowthState.Growing)
         {
             GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<WateringCan>().WaterPlant(this.gameObject);

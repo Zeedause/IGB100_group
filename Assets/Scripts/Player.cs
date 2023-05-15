@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [Header("Interaction")]
     public Camera cam;
     public float interactionDistance;
+    public bool interactionCooldown = false;
 
     public Transform holdDisplacement;
     public GameObject heldObject;
@@ -41,9 +42,13 @@ public class Player : MonoBehaviour
         //Process player movement
         Movement();
 
-        //Check for player interaction
-        if (Input.GetMouseButtonDown(0))
+        //If the player is not on cooldown and trying to interact
+        if (!interactionCooldown && Input.GetMouseButton(0))
             Interact();
+        //Otherwise if on cooldown and player isn't trying to interact
+        else if (interactionCooldown && !Input.GetMouseButton(0))
+            //Off cooldown
+            interactionCooldown = false;
 
         //Move held object with player
         if (heldObject)

@@ -29,6 +29,9 @@ public class WaterPlacement : Placement
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
         if (heldObject && heldObject.GetComponent<WateringCan>())
         {
+            //Trigger player interaction cooldown
+            GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
+
             //Remove the held object from the player
             GameManager.instance.player.GetComponent<Player>().heldObject = null;
 

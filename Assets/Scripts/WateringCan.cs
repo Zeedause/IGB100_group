@@ -83,6 +83,9 @@ public class WateringCan : Interactable
     {
         if (!GameManager.instance.player.GetComponent<Player>().heldObject)
         {
+            //Trigger player interaction cooldown
+            GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
+
             //Disable object collision
             this.gameObject.GetComponent<BoxCollider>().enabled = false;
 

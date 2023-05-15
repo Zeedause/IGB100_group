@@ -37,6 +37,9 @@ public class PlantPlacement : Placement
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
         if (heldObject && heldObject.GetComponent<Plant>())
         {
+            //Trigger player interaction cooldown
+            GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
+
             //Remove the held object from the player
             GameManager.instance.player.GetComponent<Player>().heldObject = null;
 

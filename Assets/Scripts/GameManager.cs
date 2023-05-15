@@ -304,7 +304,7 @@ public class GameManager : MonoBehaviour {
                 spawnRose = true;
                 
                 //Timer & Money 
-                timeLimit = 10; //60
+                timeLimit = 60;
                 money = 0;
                 moneyGoal = 50;
                 break;
@@ -315,21 +315,21 @@ public class GameManager : MonoBehaviour {
                 spawnLily= true;
 
                 //Timer & Money 
-                timeLimit = 20; //120
+                timeLimit = 120;
                 money = 0;
                 moneyGoal = 100;
                 break;
 
             case 3:
                 //Timer & Money 
-                timeLimit = 10; //120
+                timeLimit = 120;
                 money = 0;
                 moneyGoal = 150;
                 break;
 
             case 4:
                 //Timer & Money 
-                timeLimit = 10; //60
+                timeLimit = 60;
                 money = 0;
                 moneyGoal = 100;
                 break;
@@ -339,7 +339,7 @@ public class GameManager : MonoBehaviour {
                 //weatherEnabled = true;
 
                 //Timer & Money 
-                timeLimit = 10; //240
+                timeLimit = 240;
                 money = 0;
                 moneyGoal = 300;
                 break;
