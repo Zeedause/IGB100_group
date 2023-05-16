@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
         MainMenu,
         Gameplay,
         Paused,
+        LevelMessage,
         UpgradeMenu,
         LevelWon,
         LevelLost
@@ -26,7 +27,8 @@ public class GameManager : MonoBehaviour {
     //Gameplay Variables
     private float timeLimit;
     private float timer;
-    private int money;
+    public int money;
+    public int moneyTotal = 0;
     private int moneyGoal;
 
     //Level Settings
@@ -42,6 +44,8 @@ public class GameManager : MonoBehaviour {
     public GameObject mainMenuHUD;
     public GameObject gameplayHUD;
     public GameObject PauseHUD;
+    public GameObject levelMessageHUD;
+    public GameObject upgradeHUD;
     public GameObject levelWonHUD;
     public GameObject levelLostHUD;
     public GameObject PlantBook;
@@ -84,9 +88,13 @@ public class GameManager : MonoBehaviour {
                 Paused();
                 break;
 
-            //case GameState.UpgradeMenu:
-            //    UpgradeMenu();
-            //    break;
+            case GameState.LevelMessage:
+                LevelMessage();
+                break;
+
+            case GameState.UpgradeMenu:
+                UpgradeMenu();
+                break;
 
             case GameState.LevelWon:
                 LevelWon();
@@ -116,17 +124,17 @@ public class GameManager : MonoBehaviour {
             mainMenuHUD.SetActive(true);
 
         //If 'Escape' key is pressed, exit the application
-        if (Input.GetKey("escape"))
+        if (Input.GetKeyDown("escape"))
             Application.Quit();
 
         //Wait for player to start the game
-        if (Input.GetKey("space"))
+        if (Input.GetKeyDown("space"))
         {
             LevelSetup(levelNumber);
 
             mainMenuHUD.SetActive(false);
 
-            gameState = GameState.Gameplay;
+            gameState = GameState.LevelMessage;
         }
     }
 
@@ -162,6 +170,8 @@ public class GameManager : MonoBehaviour {
 
                 //TODO - levelNumber == 5: End Game
 
+                moneyTotal += money - moneyGoal;
+
                 gameState = GameState.LevelWon;
             }
             //... or lost the level
@@ -195,10 +205,48 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    //Game State - Upgrade
-    private void Upgrade()
+    //Game State - Level Message
+    private void LevelMessage()
     {
-        
+        //Show the Level Message HUD
+        if (levelMessageHUD.activeSelf == false)
+            levelMessageHUD.SetActive(true);
+
+        //Wait for player to transition to the upgrade screen
+        if (Input.GetKeyDown("space"))
+        {
+            LevelSetup(levelNumber);
+
+            levelMessageHUD.SetActive(false);
+
+            gameState = GameState.UpgradeMenu;
+        }
+    }
+
+    //Game State - Upgrade
+    private void UpgradeMenu()
+    {
+        //Unlock and show cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        //Show the Upgrade HUD
+        if (upgradeHUD.activeSelf == false)
+            upgradeHUD.SetActive(true);
+
+        //Wait for player to start the level
+        if (Input.GetKeyDown("space"))
+        {
+            LevelSetup(levelNumber);
+
+            upgradeHUD.SetActive(false);
+
+            //Lock and hide cursor
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            gameState = GameState.Gameplay;
+        }
     }
 
     //Game State - Level Won
@@ -209,15 +257,14 @@ public class GameManager : MonoBehaviour {
             levelWonHUD.SetActive(true);
 
         //Wait for player to start the next level
-        if (Input.GetKey("space"))
+        if (Input.GetKeyDown("space"))
         {
-            //TODO - Transition to Upgrade Screen
             levelNumber++;
             LevelSetup(levelNumber);
 
             levelWonHUD.SetActive(false);
 
-            gameState = GameState.Gameplay;
+            gameState = GameState.LevelMessage;
         }
 
         //If 'Escape' key is pressed, return to the main menu
@@ -226,8 +273,6 @@ public class GameManager : MonoBehaviour {
             //Functaionality is equivalent to simply restarting the game:
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-
-        
     }
 
     //Game State - Level Lost
@@ -238,13 +283,13 @@ public class GameManager : MonoBehaviour {
             levelLostHUD.SetActive(true);
 
         //Wait for the player to restart the same level
-        if (Input.GetKey("space"))
+        if (Input.GetKeyDown("space"))
         {
             LevelSetup(levelNumber);
 
             levelLostHUD.SetActive(false);
 
-            gameState = GameState.Gameplay;
+            gameState = GameState.LevelMessage;
         }
 
         //If 'Escape' key is pressed, return to the main menu
@@ -295,6 +340,11 @@ public class GameManager : MonoBehaviour {
         foreach (GameObject plant in plants)
             Destroy(plant);
 
+        //Remove object references from placements
+        GameObject[] placements = GameObject.FindGameObjectsWithTag("Placement");
+        for (int i = 0; i < placements.Length; i++)
+            placements[i].GetComponent<Placement>().placedObject = null;
+
         //Level settings switch block
         //NOTE: enabling/disabling a feature boolean enables/disables that features for all subsequent levels
         switch (levelNumber)
@@ -302,7 +352,7 @@ public class GameManager : MonoBehaviour {
             case 1:
                 //Plants
                 spawnRose = true;
-                
+
                 //Timer & Money 
                 timeLimit = 60;
                 money = 0;

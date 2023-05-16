@@ -15,6 +15,11 @@ public class WateringCan : Interactable
     public float waterCapacity = 500f;
     public float wateringRate = 15f;
 
+    [Header("Upgrades")]
+    public int upgradeLevel = 0;
+    public float[] waterCapacities = new float[] { 500f, 750f };
+    public float[] wateringRates = new float[] { 15f, 30f };
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +54,8 @@ public class WateringCan : Interactable
 
         //Values
         water = 0f;
+        waterCapacity = waterCapacities[upgradeLevel];
+        wateringRate = wateringRates[upgradeLevel];
         wateringCanHUD.UpdateWater(water, waterCapacity);
     }
 
