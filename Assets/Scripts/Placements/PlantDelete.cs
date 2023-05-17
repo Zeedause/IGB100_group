@@ -10,7 +10,7 @@ public class PlantDelete : Interactable
     {
         //If the object held by the player is a plant
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
-        if (heldObject && heldObject.GetComponent<Plant>())
+        if (heldObject && (heldObject.GetComponent<Plant>() || heldObject.GetComponent<Fertiliser>()))
         {
             //TODO - Deduct money from player here intead of when plant dies?
             //       What about if player trashes an alive plant?

@@ -353,8 +353,8 @@ public class GameManager : MonoBehaviour {
                 //Plants
                 spawnRose = true;
 
-                //Timer & Money 
-                timeLimit = 60;
+                //Timer & Money
+                timeLimit = 90;
                 money = 0;
                 moneyGoal = 50;
                 break;
@@ -379,7 +379,7 @@ public class GameManager : MonoBehaviour {
 
             case 4:
                 //Timer & Money 
-                timeLimit = 60;
+                timeLimit = 90;
                 money = 0;
                 moneyGoal = 100;
                 break;
