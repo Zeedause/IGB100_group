@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour {
     public GameObject mainMenuHUD;
     public GameObject gameplayHUD;
     public GameObject PauseHUD;
-    public GameObject levelMessageHUD;
+    public GameObject[] levelMessageHUD;
     public GameObject upgradeHUD;
     public GameObject levelWonHUD;
     public GameObject levelLostHUD;
@@ -170,7 +170,8 @@ public class GameManager : MonoBehaviour {
 
                 //TODO - levelNumber == 5: End Game
 
-                moneyTotal += money - moneyGoal;
+                // REMOVED FOR PLAYTESTING BALANCE moneyTotal += money - moneyGoal;
+                moneyTotal += money;
 
                 gameState = GameState.LevelWon;
             }
@@ -209,15 +210,15 @@ public class GameManager : MonoBehaviour {
     private void LevelMessage()
     {
         //Show the Level Message HUD
-        if (levelMessageHUD.activeSelf == false)
-            levelMessageHUD.SetActive(true);
+        if (levelMessageHUD[levelNumber - 1].activeSelf == false)
+            levelMessageHUD[levelNumber - 1].SetActive(true);
 
         //Wait for player to transition to the upgrade screen
         if (Input.GetKeyDown("space"))
         {
             LevelSetup(levelNumber);
 
-            levelMessageHUD.SetActive(false);
+            levelMessageHUD[levelNumber - 1].SetActive(false);
 
             gameState = GameState.UpgradeMenu;
         }
@@ -354,13 +355,14 @@ public class GameManager : MonoBehaviour {
                 spawnRose = true;
 
                 //Timer & Money
-                timeLimit = 90;
+                timeLimit = 60;
                 money = 0;
-                moneyGoal = 50;
+                moneyGoal = 40;
                 break;
 
             case 2:
                 //Plants
+                spawnRose = true;
                 spawnCactus = true;
                 spawnLily= true;
 
@@ -372,9 +374,13 @@ public class GameManager : MonoBehaviour {
 
             case 3:
                 //Timer & Money 
-                timeLimit = 120;
+                spawnRose = true;
+                spawnCactus = true;
+                spawnLily = true;
+
+                timeLimit = 90;
                 money = 0;
-                moneyGoal = 150;
+                moneyGoal = 100;
                 break;
 
             case 4:

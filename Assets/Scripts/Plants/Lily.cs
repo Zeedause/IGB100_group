@@ -10,20 +10,28 @@ public class Lily : Plant
     //Growth State - Growing
     internal override void Growing()
     {
-        //Increment growth stats
-        growth += growthRate * Time.deltaTime;
-        AddLight(lightRate * Time.deltaTime);
-        AddWater(waterRate * Time.deltaTime);
-
-        //Check if placed in light
-        if (placement && placement.GetComponent<LightPlacement>())
+        if (testing)
         {
-            AddWater(dryRate * Time.deltaTime);
+            FertilisedGrowing();
         }
+        else
+        {
+            plantHUD.SetTesting(false);
+            //Increment growth stats
+            growth += growthRate * Time.deltaTime;
+            AddLight(lightRate * Time.deltaTime);
+            AddWater(waterRate * Time.deltaTime);
 
-        //Update plant HUD & Model
-        UpdateHUD();
-        UpdateModel();
+            //Check if placed in light
+            if (placement && placement.GetComponent<LightPlacement>())
+            {
+                AddWater(dryRate * Time.deltaTime);
+            }
+
+            //Update plant HUD & Model
+            UpdateHUD();
+            UpdateModel();            
+        }
 
         //Check for 'fully grown' or 'dead' conditions
         if (growth >= fullGrowth)
@@ -48,6 +56,47 @@ public class Lily : Plant
             plantHUD.SetGrowthState("Dead");
             plantHUD.SetGrowthStateVisibility(true);
             plantHUD.SetGrowthStatsVisibility(false);
+        }
+    }
+
+    internal override void FertilisedGrowing()
+    {
+        plantHUD.SetTesting(true);
+        if (water > minWaterSweetspot && water < maxWaterSweetspot &&
+        light > minLightSweetspot && light < maxLightSweetspot)
+        {
+            plantHUD.SetGrowthState("Rapidly Growing");
+
+            //Increment growth stats
+            growth += growthRate * fertiliserStrength * Time.deltaTime;
+            AddLight(lightRate * Time.deltaTime);
+            AddWater(waterRate * Time.deltaTime);
+
+            //Check if placed in light
+            if (placement && placement.GetComponent<LightPlacement>())
+            {
+                AddWater(dryRate * Time.deltaTime);
+            }
+
+            //Update plant HUD & Model
+            UpdateHUD();
+            UpdateModel();
+        }
+        else
+        {
+            AddLight(lightRate * Time.deltaTime);
+            AddWater(waterRate * Time.deltaTime);
+
+            UpdateHUD();
+            plantHUD.SetGrowthState("Fertilised");
+            if (water < minWaterSweetspot || water > maxWaterSweetspot)
+            {
+                plantHUD.UpdateWater(water, Color.red);
+            }
+            if (light < minLightSweetspot || light > maxLightSweetspot)
+            {
+                plantHUD.UpdateLight(light, Color.red);
+            }
         }
     }
 }

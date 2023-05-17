@@ -1041,6 +1041,7 @@ MonoBehaviour:
   minLightSweetspot: 0
   maxLightSweetspot: 0
   testing: 0
+  fertiliserStrength: 1.3
   plantModel: {fileID: 1152975111706427174}
   growthScaleMin: {x: 0.001275395, y: 0.001275395, z: 0.001275395}
   growthScaleMax: {x: 0.005423873, y: 0.005423873, z: 0.005423873}
@@ -1533,10 +1534,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 6526482252784465844}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
-  m_MinValue: -10
+  m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 10
+  m_Value: 84
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1778,7 +1779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4509428078318606279
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1798,7 +1799,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.012935638, y: -0.3}
+  m_AnchoredPosition: {x: 0.313, y: -0.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7952185832973999943
@@ -1898,11 +1899,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_Value
-      value: 13
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
+      propertyPath: m_MaxValue
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
+      propertyPath: m_MinValue
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337700, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_Name
-      value: LightValueLable
+      value: LightValueLabel
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337701, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_Pivot.x

@@ -26,7 +26,7 @@ public class WateringCan : Interactable
         //Get components
         wateringCanHUD = transform.Find("HUD").gameObject.GetComponent<WateringCanHUD>();
 
-        water = 0;
+        water = 20f;
     }
 
     // Update is called once per frame

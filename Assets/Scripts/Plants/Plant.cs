@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
 
@@ -38,6 +39,7 @@ public class Plant : Interactable
     public float maxLightSweetspot;
 
     public bool testing = false;
+    public float fertiliserStrength;
 
     [Header("Animation")]
     public GameObject plantModel;
@@ -94,11 +96,11 @@ public class Plant : Interactable
         water = maxWater / 4;
 
         // set sweetspot values
-        // messy figures but it aligns with UI constraints niceley, roughly bottom 0.25% and top 0.66%
-        minWaterSweetspot = maxWater * 0.235f;
-        maxWaterSweetspot = maxWater * 0.66f;
-        minLightSweetspot = maxLight * 0.235f;
-        maxLightSweetspot = maxWater * 0.366f;
+        // messy figures but it aligns with UI constraints niceley, roughly bottom 0.30% and top 0.66%
+        minWaterSweetspot = maxWater * 0.62f;
+        maxWaterSweetspot = maxWater;
+        minLightSweetspot = maxLight * 0.62f;
+        maxLightSweetspot = maxLight;
 
         //Set Plant HUD
         plantHUD.SetGrowthState("Seedling");
@@ -114,14 +116,22 @@ public class Plant : Interactable
     //Growth State - Growing
     internal virtual void Growing()
     {
-        //Increment growth stats
-        growth += growthRate * Time.deltaTime;
-        AddLight(lightRate * Time.deltaTime);
-        AddWater(waterRate * Time.deltaTime);
+        if (testing)
+        {
+            FertilisedGrowing();
+        }
+        else
+        {
+            plantHUD.SetTesting(false);
+            //Increment growth stats
+            growth += growthRate * Time.deltaTime;
+            AddLight(lightRate * Time.deltaTime);
+            AddWater(waterRate * Time.deltaTime);
 
-        //Update plant HUD & Model
-        UpdateHUD();
-        UpdateModel();
+            //Update plant HUD & Model
+            UpdateHUD();
+            UpdateModel();
+        }
 
         //Check for 'fully grown' or 'dead' conditions
         if (growth >= fullGrowth)
@@ -146,6 +156,42 @@ public class Plant : Interactable
             plantHUD.SetGrowthState("Dead");
             plantHUD.SetGrowthStateVisibility(true);
             plantHUD.SetGrowthStatsVisibility(false);
+
+        }
+    }
+
+    internal virtual void FertilisedGrowing()
+    {
+        plantHUD.SetTesting(true);
+        if (water > minWaterSweetspot && water < maxWaterSweetspot &&
+        light > minLightSweetspot && light < maxLightSweetspot)
+        {
+            plantHUD.SetGrowthState("Rapidly Growing");
+
+            //Increment growth stats
+            growth += growthRate * fertiliserStrength * Time.deltaTime;
+            AddLight(lightRate * Time.deltaTime);
+            AddWater(waterRate * Time.deltaTime);
+
+            //Update plant HUD & Model
+            UpdateHUD();
+            UpdateModel();
+        }
+        else
+        {
+            AddLight(lightRate * Time.deltaTime);
+            AddWater(waterRate * Time.deltaTime);
+
+            UpdateHUD();
+            plantHUD.SetGrowthState("Fertilised");
+            if (water < minWaterSweetspot || water > maxWaterSweetspot)
+            {
+                plantHUD.UpdateWater(water, Color.red);
+            }
+            if (light < minLightSweetspot || light > maxLightSweetspot)
+            {
+                plantHUD.UpdateLight(light, Color.red);
+            }
         }
     }
 
