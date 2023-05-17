@@ -11,9 +11,9 @@ public class Rose : Plant
         {
             plantHUD.SetTesting(true);
             if (water > minWaterSweetspot && water < maxWaterSweetspot &&
-            light > minLightSweetspot && water < maxWaterSweetspot)
+            light > minLightSweetspot && light < maxLightSweetspot)
             {
-                plantHUD.SetGrowthState("Growing");
+                plantHUD.SetGrowthState("Rapidly Growing");
 
                 //Increment growth stats
                 growth += growthRate * Time.deltaTime;
@@ -30,13 +30,13 @@ public class Rose : Plant
                 AddWater(waterRate * Time.deltaTime);
 
                 UpdateHUD();
-                plantHUD.SetGrowthState("Needs not Met");
+                plantHUD.SetGrowthState("Fertilised");
                 if (water < minWaterSweetspot || water > maxWaterSweetspot)
                 {
 
                     plantHUD.UpdateWater(water, Color.red);
                 }
-                else
+                else if (light < minLightSweetspot || light > maxLightSweetspot)
                 {
                     plantHUD.UpdateLight(light, Color.red);
                 }
