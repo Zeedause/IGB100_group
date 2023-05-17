@@ -1651,7 +1651,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1663924976}
         m_TargetAssemblyTypeName: UpgradeUI, Assembly-CSharp
-        m_MethodName: UpgradeWateringCan
+        m_MethodName: WateringCanUpgrade
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3180,7 +3180,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1663924976}
         m_TargetAssemblyTypeName: UpgradeUI, Assembly-CSharp
-        m_MethodName: UpgradeWateringCan
+        m_MethodName: FertiliserUpgrade
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3332,6 +3332,10 @@ PrefabInstance:
     - target: {fileID: 7944091937043904300, guid: 5b145d444aadb8142815f40b625680a1, type: 3}
       propertyPath: m_Name
       value: FertiliserSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7944091937043904300, guid: 5b145d444aadb8142815f40b625680a1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7944091937043904301, guid: 5b145d444aadb8142815f40b625680a1, type: 3}
       propertyPath: m_RootOrder
@@ -4346,6 +4350,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 941870161}
   m_CullTransparentMesh: 1
+--- !u!1 &947006177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7944091937043904300, guid: 5b145d444aadb8142815f40b625680a1, type: 3}
+  m_PrefabInstance: {fileID: 709985765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -7810,7 +7819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cedbc32689e2b34a87feb2a503fcf57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  price: 50
+  price: 70
   purchased: 0
 --- !u!222 &1497584134
 CanvasRenderer:
@@ -8706,7 +8715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1663924975
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8744,6 +8753,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moneyCounter: {fileID: 238622209}
   wateringCanUpgrade: {fileID: 1594524787}
+  fertiliserUpgrade: {fileID: 1497584131}
+  fertiliserSpawner: {fileID: 947006177}
 --- !u!114 &1663924977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9855,7 +9866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1918928763
 RectTransform:
   m_ObjectHideFlags: 0
