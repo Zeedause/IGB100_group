@@ -12,12 +12,12 @@ public class WateringCan : Interactable
 
     [Header("Water")]
     public float water;
-    public float waterCapacity = 500f;
+    public float waterCapacity = 150f;
     public float wateringRate = 15f;
 
     [Header("Upgrades")]
     public int upgradeLevel = 0;
-    public float[] waterCapacities = new float[] { 500f, 750f };
+    public float[] waterCapacities = new float[] { 200f, 750f };
     public float[] wateringRates = new float[] { 15f, 30f };
 
     // Start is called before the first frame update

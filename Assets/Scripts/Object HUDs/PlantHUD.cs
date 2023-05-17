@@ -32,8 +32,7 @@ public class PlantHUD : MonoBehaviour
 
     public void SetTesting(bool visible)
     {
-        waterTest.SetActive(visible);
-        lightTest.SetActive(visible);
+        this.gameObject.transform.Find("Sweetspots").gameObject.SetActive(visible);
     }
 
     public void SetGrowthStatsVisibility(bool visible)

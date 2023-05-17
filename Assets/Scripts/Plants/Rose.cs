@@ -33,10 +33,9 @@ public class Rose : Plant
                 plantHUD.SetGrowthState("Fertilised");
                 if (water < minWaterSweetspot || water > maxWaterSweetspot)
                 {
-
                     plantHUD.UpdateWater(water, Color.red);
                 }
-                else if (light < minLightSweetspot || light > maxLightSweetspot)
+                if (light < minLightSweetspot || light > maxLightSweetspot)
                 {
                     plantHUD.UpdateLight(light, Color.red);
                 }
