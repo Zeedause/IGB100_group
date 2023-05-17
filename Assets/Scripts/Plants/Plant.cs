@@ -230,5 +230,18 @@ public class Plant : Interactable
         {
             GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<WateringCan>().WaterPlant(this.gameObject);
         }
+        //Otherwise, if the player is holidng fertiliser and this plant is growing, enable sweetspots
+        else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<Fertiliser>() && growthState == GrowthState.Growing)
+        {
+            //Trigger player interaction cooldown
+            GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
+
+            //Destroy fertiliser object and remove reference from player
+            Destroy(GameManager.instance.player.GetComponent<Player>().heldObject);
+            GameManager.instance.player.GetComponent<Player>().heldObject = null;
+
+            //Enable sweetspots
+            testing = true;
+        }
     }
 }
