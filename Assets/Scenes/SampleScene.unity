@@ -1428,7 +1428,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &343080307
 GameObject:
@@ -6210,6 +6210,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1068703903}
   m_CullTransparentMesh: 1
+--- !u!1001 &1085064209
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.6638813
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.04298755
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.3835225
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.00000008146034
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064497164010511990, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549391294031299788, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
+      propertyPath: m_Name
+      value: plantLadder
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 30152f5886f8ae049badaf4e25d950ee, type: 3}
 --- !u!1 &1089317941
 GameObject:
   m_ObjectHideFlags: 0
@@ -8960,7 +9017,7 @@ Transform:
   m_Children:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 22.036, y: -31.709, z: 0}
 --- !u!114 &1475213150
 MonoBehaviour:
@@ -10356,7 +10413,7 @@ Transform:
   - {fileID: 1878310779}
   - {fileID: 2059949302}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: -62.303, z: 0}
 --- !u!114 &1742077248
 MonoBehaviour:
@@ -10950,7 +11007,7 @@ Transform:
   m_Children:
   - {fileID: 516168524}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1878310778
 GameObject:
@@ -11877,7 +11934,7 @@ Transform:
   m_Children:
   - {fileID: 1931102033}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: -99.564, z: 0}
 --- !u!1 &2052417844
 GameObject:
@@ -12184,7 +12241,7 @@ Transform:
   - {fileID: 1364784341}
   - {fileID: 1956793022}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &573540520695223687
 MeshFilter:
