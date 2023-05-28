@@ -6,6 +6,10 @@ public class WaterPlacement : Placement
 {
     public float waterRate = 15f;
 
+    [Header("Upgrades")]
+    public int upgradeLevel = 0;
+    public float[] waterRates = new float[] { 15f, 30f };
+
     private void Update()
     {
         //Don't process unless gameState == GameState.InProgress
@@ -58,5 +62,13 @@ public class WaterPlacement : Placement
         this.gameObject.GetComponent<MeshRenderer>().enabled = b;
         this.gameObject.GetComponent<BoxCollider>().enabled = b;
         this.transform.Find("HUD").gameObject.SetActive(b);
+    }
+
+    //Increments the upgrade level and applies new stats
+    public void Upgrade()
+    {
+        upgradeLevel++;
+
+        waterRate = waterRates[upgradeLevel];
     }
 }

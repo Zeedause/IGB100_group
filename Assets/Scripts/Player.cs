@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    /* Camera rotation & Player movement
-     * https://www.youtube.com/watch?v=f473C43s8nE
-     */
-
     public GameObject spawner;
 
     [Header("Movement")]
     public float moveSpeed;
-    private Vector3 moveDirection;
+    public bool dashEnabled;
+    public bool dashing;
+    public float dashSpeed;
+    public float dashDuration;
+    private float dashTimer;
+    public float dashCooldown;
+    private float dashCooldownTimer;
     private Rigidbody rb;
 
     [Header("Interaction")]
@@ -28,6 +30,11 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        dashEnabled = false;
+        dashing = false;
+        dashTimer = 0;
+        dashCooldownTimer = 0;
     }
 
     void Update()
@@ -62,6 +69,12 @@ public class Player : MonoBehaviour
         transform.position = spawner.transform.position;
         transform.rotation = spawner.transform.rotation;
 
+        //Reset Movement/Dashing
+        StopPlayer();
+        dashing = false;
+        dashTimer = 0;
+        dashCooldownTimer = 0;
+
         //Held object & interaction
         heldObject = null;
     }
@@ -75,6 +88,21 @@ public class Player : MonoBehaviour
     //Player input controls
     private void Movement()
     {
+        //If dashing has been unlocked
+        if (dashEnabled)
+        {
+            //If off cooldown and space is pressed
+            if (dashCooldownTimer <= 0 && Input.GetKeyDown("space"))
+            {
+                //Set to dashing
+                dashing = true;
+
+                //Set timers
+                dashTimer = dashDuration;
+                dashCooldownTimer = dashCooldown;
+            }
+        }
+
         float forwardInput = 0f;
         float horizontalInput = 0f;
 
@@ -91,8 +119,50 @@ public class Player : MonoBehaviour
         if (Input.GetKey("s"))
             forwardInput -= 1;
 
-        rb.velocity = transform.forward * forwardInput + transform.right * horizontalInput;
-        rb.velocity = rb.velocity.normalized * moveSpeed;
+        //Calculate Direction
+        Vector3 direction = (transform.forward * forwardInput + transform.right * horizontalInput).normalized;
+
+        //If dashing, apply dash movement
+        if (dashing)
+        {
+            //Dash
+            rb.velocity = direction * Mathf.Lerp(moveSpeed, dashSpeed, dashTimer / dashDuration);
+
+            //Decrement dashTimer
+            dashTimer -= Time.deltaTime;
+            dashTimer = Mathf.Clamp(dashTimer, 0f, 100f);
+
+            //Check dashTimer elapse
+            if (dashTimer <= 0)
+                dashing = false;
+        }
+        //Otehrwise, move normally
+        else
+        {
+            //float forwardInput = 0f;
+            //float horizontalInput = 0f;
+
+            //// Right movement
+            //if (Input.GetKey("d"))
+            //    horizontalInput += 1;
+            //// Left Movement
+            //if (Input.GetKey("a"))
+            //    horizontalInput -= 1;
+            //// Forward Movement
+            //if (Input.GetKey("w"))
+            //    forwardInput += 1;
+            //// Backwards Movement
+            //if (Input.GetKey("s"))
+            //    forwardInput -= 1;
+
+            ////Apply movement
+            //Vector3 direction = (transform.forward * forwardInput + transform.right * horizontalInput).normalized;
+            rb.velocity = direction * moveSpeed;
+
+            //Decrement the dash cooldown timer
+            dashCooldownTimer -= Time.deltaTime;
+            dashCooldownTimer = Mathf.Clamp(dashCooldownTimer, 0f, 100f);
+        }
     }
 
     //Attempt to interact with an object

@@ -35,10 +35,12 @@ public class GameManager : MonoBehaviour {
     public bool spawnRose = false;
     public bool spawnCactus = false;
     public bool spawnLily = false;
+    public bool fertiliser = false;
 
     [Header("References")]
     public GameObject player;
     public GameObject wateringCan;
+    public GameObject fertiliserSpawner;
 
     [Header("HUD")]
     public GameObject mainMenuHUD;
@@ -353,6 +355,11 @@ public class GameManager : MonoBehaviour {
             case 1:
                 //Plants
                 spawnRose = true;
+                spawnCactus = false;
+                spawnLily = false;
+
+                //Fertiliser
+                fertiliserSpawner.SetActive(false);
 
                 //Timer & Money
                 timeLimit = 60;
@@ -364,7 +371,10 @@ public class GameManager : MonoBehaviour {
                 //Plants
                 spawnRose = true;
                 spawnCactus = true;
-                spawnLily= true;
+                spawnLily = true;
+
+                //Fertiliser
+                fertiliserSpawner.SetActive(false);
 
                 //Timer & Money 
                 timeLimit = 120;
@@ -373,11 +383,15 @@ public class GameManager : MonoBehaviour {
                 break;
 
             case 3:
-                //Timer & Money 
+                //Plants
                 spawnRose = true;
                 spawnCactus = true;
                 spawnLily = true;
 
+                //Fertiliser
+                fertiliserSpawner.SetActive(true);
+
+                //Timer & Money 
                 timeLimit = 90;
                 money = 0;
                 moneyGoal = 100;
