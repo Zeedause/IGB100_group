@@ -155,8 +155,8 @@ public class UpgradeUI : MonoBehaviour
         upgradeStates[0] = GameManager.instance.moneyTotal;
 
         //Save the upgrade states
-        for (int i = 1; i < upgrades.Length; i++)
-            upgradeStates[i] = upgrades[i].GetComponent<Upgrade>().purchased;
+        for (int i = 0; i < upgrades.Length; i++)
+            upgradeStates[i + 1] = upgrades[i].GetComponent<Upgrade>().purchased;
     }
 
     //Reverts the upgrade states to the previously saved states

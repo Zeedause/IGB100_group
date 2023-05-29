@@ -17295,7 +17295,7 @@ MonoBehaviour:
   gameState: 0
   levelNumber: 1
   money: 0
-  moneyTotal: 0
+  moneyTotal: 400
   spawnRose: 0
   spawnCactus: 0
   spawnLily: 0
