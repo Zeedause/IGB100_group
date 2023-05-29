@@ -32,7 +32,16 @@ public class PlantHUD : MonoBehaviour
 
     public void SetTesting(bool visible)
     {
-        this.gameObject.transform.Find("Sweetspots").gameObject.SetActive(visible);
+        if (visible)
+        {
+            this.gameObject.transform.Find("Sweetspots").gameObject.SetActive(false);
+            this.gameObject.transform.Find("FertilisedSweetspots").gameObject.SetActive(true);
+        }
+        else
+        {
+            this.gameObject.transform.Find("FertilisedSweetspots").gameObject.SetActive(false);
+            this.gameObject.transform.Find("Sweetspots").gameObject.SetActive(true);
+        }
     }
 
     public void SetGrowthStatsVisibility(bool visible)
@@ -40,11 +49,14 @@ public class PlantHUD : MonoBehaviour
         this.gameObject.transform.Find("GrowthValueLabel").gameObject.SetActive(visible);
         this.gameObject.transform.Find("LightValueLabel").gameObject.SetActive(visible);
         this.gameObject.transform.Find("WaterValueLabel").gameObject.SetActive(visible);
+        this.gameObject.transform.Find("Sweetspots").gameObject.SetActive(visible);
     }
 
-    public void UpdateGrowth(float value)
+    public void UpdateGrowth(float value, Color color)
     {
         growthSlider.value = value;
+        Image growthImage = growthSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>();
+        growthImage.color = color;
     }
 
     public void UpdateLight(float value, Color color)

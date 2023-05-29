@@ -392,9 +392,9 @@ public class GameManager : MonoBehaviour {
                 fertiliserSpawner.SetActive(false);
 
                 //Timer & Money
-                timeLimit = 60;
+                timeLimit = 75;
                 money = 0;
-                moneyGoal = 40;
+                moneyGoal = 30;
                 break;
 
             case 2:
@@ -409,7 +409,7 @@ public class GameManager : MonoBehaviour {
                 //Timer & Money 
                 timeLimit = 120;
                 money = 0;
-                moneyGoal = 100;
+                moneyGoal = 85;
                 break;
 
             case 3:

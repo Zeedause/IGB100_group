@@ -15,22 +15,44 @@ public class Lily : Plant
             FertilisedGrowing();
         }
         else
-        {
+        {        
             plantHUD.SetTesting(false);
-            //Increment growth stats
-            growth += growthRate * Time.deltaTime;
-            AddLight(lightRate * Time.deltaTime);
-            AddWater(waterRate * Time.deltaTime);
-
-            //Check if placed in light
-            if (placement && placement.GetComponent<LightPlacement>())
+            if (water >= minWaterSweetspot && water <= maxWaterSweetspot &&
+                    light >= minLightSweetspot && light <= maxLightSweetspot)
             {
-                AddWater(dryRate * Time.deltaTime);
-            }
+                plantHUD.SetGrowthState("Growing");
 
-            //Update plant HUD & Model
-            UpdateHUD();
-            UpdateModel();            
+                //Increment growth stats
+                growth += growthRate * Time.deltaTime;
+                AddLight(lightRate * Time.deltaTime);
+                AddWater(waterRate * Time.deltaTime);
+
+                //Check if placed in light
+                if (placement && placement.GetComponent<LightPlacement>())
+                {
+                    AddWater(dryRate * Time.deltaTime);
+                }
+
+                //Update plant HUD & Model
+                UpdateHUD();
+                UpdateModel();
+            }
+            else
+            {
+                AddLight(lightRate * Time.deltaTime);
+                AddWater(waterRate * Time.deltaTime);
+
+                UpdateHUD();
+                plantHUD.SetGrowthState("Needs not Met");
+                if (water < minWaterSweetspot || water > maxWaterSweetspot)
+                {
+                    plantHUD.UpdateWater(water, Color.red);
+                }
+                if (light < minLightSweetspot || light > maxLightSweetspot)
+                {
+                    plantHUD.UpdateLight(light, Color.red);
+                }
+            }
         }
 
         //Check for 'fully grown' or 'dead' conditions
@@ -62,8 +84,7 @@ public class Lily : Plant
     internal override void FertilisedGrowing()
     {
         plantHUD.SetTesting(true);
-        if (water >= minWaterSweetspot && water <= maxWaterSweetspot &&
-        light >= minLightSweetspot && light <= maxLightSweetspot)
+        if (water >= minWaterFertilised && light >= minLightFertilised)
         {
             plantHUD.SetGrowthState("Rapidly Growing");
 
@@ -89,11 +110,11 @@ public class Lily : Plant
 
             UpdateHUD();
             plantHUD.SetGrowthState("Fertilised");
-            if (water < minWaterSweetspot || water > maxWaterSweetspot)
+            if (water < minWaterFertilised)
             {
                 plantHUD.UpdateWater(water, Color.red);
             }
-            if (light < minLightSweetspot || light > maxLightSweetspot)
+            if (light < minLightFertilised)
             {
                 plantHUD.UpdateLight(light, Color.red);
             }
