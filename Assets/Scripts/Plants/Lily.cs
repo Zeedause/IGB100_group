@@ -62,8 +62,8 @@ public class Lily : Plant
     internal override void FertilisedGrowing()
     {
         plantHUD.SetTesting(true);
-        if (water > minWaterSweetspot && water < maxWaterSweetspot &&
-        light > minLightSweetspot && light < maxLightSweetspot)
+        if (water >= minWaterSweetspot && water <= maxWaterSweetspot &&
+        light >= minLightSweetspot && light <= maxLightSweetspot)
         {
             plantHUD.SetGrowthState("Rapidly Growing");
 
