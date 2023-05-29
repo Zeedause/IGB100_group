@@ -18,6 +18,14 @@ public class Upgrade : MonoBehaviour
         purchased = false;
     }
 
+    private void Update()
+    {
+        if (purchased)
+            DisableUpgrade();
+        else
+            EnableUpgrade();
+    }
+
     //Disables the upgrade within the HUD
     public void DisableUpgrade()
     {
@@ -41,6 +49,6 @@ public class Upgrade : MonoBehaviour
         //transform.Find("Button").transform.Find("Text").GetComponent<TextMeshProUGUI>().fontStyle &= ~FontStyles.Strikethrough;
 
         //Enable Button
-        transform.Find("Button").GetComponent<Button>().interactable = true;
+        transform.Find("PurchaseButton").GetComponent<Button>().interactable = true;
     }
 }

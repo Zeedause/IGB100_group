@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
 
     //Singleton Setup
     public static GameManager instance = null;
-    
+
     //Game State Variables
     public enum GameState
     {
@@ -22,16 +22,16 @@ public class GameManager : MonoBehaviour {
         LevelLost
     }
     public GameState gameState;
-    public int levelNumber = 0;
 
-    //Gameplay Variables
-    private float timeLimit;
-    private float timer;
+    [Header("Gameplay")]
+    public int levelNumber = 0;
     public int money;
     public int moneyTotal = 0;
     private int moneyGoal;
+    private float timeLimit;
+    private float timer;
 
-    //Level Settings
+    [Header("Level Settings")]
     public bool spawnRose = false;
     public bool spawnCactus = false;
     public bool spawnLily = false;
@@ -114,6 +114,9 @@ public class GameManager : MonoBehaviour {
         //Inialise Varaibles
         levelNumber = 1;
 
+        //Initialise UpgradeHUD
+        upgradeHUD.GetComponent<UpgradeUI>().Initialise();
+
         //Initial Game State
         gameState = GameState.MainMenu;
     }
@@ -132,6 +135,8 @@ public class GameManager : MonoBehaviour {
         //Wait for player to start the game
         if (Input.GetKeyDown("space"))
         {
+            upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
+
             LevelSetup(levelNumber);
 
             mainMenuHUD.SetActive(false);
@@ -218,7 +223,7 @@ public class GameManager : MonoBehaviour {
         //Wait for player to transition to the upgrade screen
         if (Input.GetKeyDown("space"))
         {
-            LevelSetup(levelNumber);
+            //LevelSetup(levelNumber);
 
             levelMessageHUD[levelNumber - 1].SetActive(false);
 
@@ -240,7 +245,7 @@ public class GameManager : MonoBehaviour {
         //Wait for player to start the level
         if (Input.GetKeyDown("space"))
         {
-            LevelSetup(levelNumber);
+            //LevelSetup(levelNumber);
 
             upgradeHUD.SetActive(false);
 
@@ -262,11 +267,17 @@ public class GameManager : MonoBehaviour {
         //Wait for player to start the next level
         if (Input.GetKeyDown("space"))
         {
+            //Save current upgrade state
+            upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
+
+            //Set up next level
             levelNumber++;
             LevelSetup(levelNumber);
 
+            //Hide this HUD
             levelWonHUD.SetActive(false);
 
+            //Change game state
             gameState = GameState.LevelMessage;
         }
 
@@ -288,10 +299,16 @@ public class GameManager : MonoBehaviour {
         //Wait for the player to restart the same level
         if (Input.GetKeyDown("space"))
         {
+            //Revert upgrade state
+            upgradeHUD.GetComponent<UpgradeUI>().RevertUpgradeState();
+
+            //Reset level
             LevelSetup(levelNumber);
 
+            //Hide this HUD
             levelLostHUD.SetActive(false);
 
+            //Change game state
             gameState = GameState.LevelMessage;
         }
 
@@ -301,6 +318,19 @@ public class GameManager : MonoBehaviour {
             //Functaionality is equivalent to simply restarting the game:
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+    }
+
+    //Restarts the current level
+    public void RestartLevel()
+    {
+        //Revert upgrade state
+        upgradeHUD.GetComponent<UpgradeUI>().RevertUpgradeState();
+
+        //Reset level
+        LevelSetup(levelNumber);
+
+        //Change game state
+        gameState = GameState.LevelMessage;
     }
 
     //Decreases time left

@@ -71,4 +71,12 @@ public class WaterPlacement : Placement
 
         waterRate = waterRates[upgradeLevel];
     }
+
+    //Decrements the upgrade level and applies new stats
+    public void Downgrade()
+    {
+        upgradeLevel--;
+
+        waterRate = waterRates[upgradeLevel];
+    }
 }

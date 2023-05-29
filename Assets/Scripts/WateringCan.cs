@@ -39,6 +39,26 @@ public class WateringCan : Interactable
         wateringCanHUD.UpdateWater(water, waterCapacity);
     }
 
+    //Increments the upgrade level and applies new stats
+    public void Upgrade()
+    {
+        upgradeLevel++;
+
+        waterCapacity = waterCapacities[upgradeLevel];
+        wateringRate = wateringRates[upgradeLevel];
+        wateringCanHUD.UpdateWater(water, waterCapacity);
+    }
+
+    //Decrements the upgrade level and applies new stats
+    public void Downgrade()
+    {
+        upgradeLevel--;
+
+        waterCapacity = waterCapacities[upgradeLevel];
+        wateringRate = wateringRates[upgradeLevel];
+        wateringCanHUD.UpdateWater(water, waterCapacity);
+    }
+
     //Reset the object to it's initial state
     public void Respawn()
     {
@@ -54,9 +74,6 @@ public class WateringCan : Interactable
 
         //Values
         water = 0f;
-        waterCapacity = waterCapacities[upgradeLevel];
-        wateringRate = wateringRates[upgradeLevel];
-        wateringCanHUD.UpdateWater(water, waterCapacity);
     }
 
     //Add the specified amount of water to this object, negative to subtract

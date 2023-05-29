@@ -24,10 +24,33 @@ public class UpgradeUI : MonoBehaviour
     [Header("Running Shoes Upgrade")]
     public GameObject runningShoesUpgrade;
 
+    //Upgrade State Variables
+    private GameObject[] upgrades;
+    private object[] upgradeStates = new object[]
+    {
+        0,
+        false,
+        false,
+        false,
+        false
+    };
+
     // DISABLED - Fertiliser enabled as level progression
     //[Header("Fertiliser Upgrade")]
     //public GameObject fertiliserUpgrade;
     //public GameObject fertiliserSpawner;
+
+    //Method call to externally initialise this object
+    public void Initialise()
+    {
+         upgrades = new GameObject[]
+         {
+            wateringCanUpgrade,
+            windowUpgrade,
+            plantLadderUpgrade,
+            runningShoesUpgrade
+         };
+    }
 
     private void Update()
     {
@@ -42,14 +65,14 @@ public class UpgradeUI : MonoBehaviour
         if (GameManager.instance.moneyTotal < wateringCanUpgrade.GetComponent<Upgrade>().price)
             return;
 
-        //Disable the upgrade within the HUD
-        wateringCanUpgrade.GetComponent<Upgrade>().DisableUpgrade();
+        //Set the upgrade purchase state
+        wateringCanUpgrade.GetComponent<Upgrade>().purchased = true;
 
         //Subtract the upgrade price from the money total
         GameManager.instance.moneyTotal -= wateringCanUpgrade.GetComponent<Upgrade>().price;
 
         //Upgrade the watering can
-        GameManager.instance.wateringCan.GetComponent<WateringCan>().upgradeLevel++;
+        GameManager.instance.wateringCan.GetComponent<WateringCan>().Upgrade();
 
         //Upgrade the water placement
         waterPlacement.GetComponent<WaterPlacement>().Upgrade();
@@ -62,8 +85,8 @@ public class UpgradeUI : MonoBehaviour
         if (GameManager.instance.moneyTotal < windowUpgrade.GetComponent<Upgrade>().price)
             return;
 
-        //Disable the upgrade within the HUD
-        windowUpgrade.GetComponent<Upgrade>().DisableUpgrade();
+        //Set the upgrade purchase state
+        windowUpgrade.GetComponent<Upgrade>().purchased = true;
 
         //Subtract the upgrade price from the money total
         GameManager.instance.moneyTotal -= windowUpgrade.GetComponent<Upgrade>().price;
@@ -80,8 +103,8 @@ public class UpgradeUI : MonoBehaviour
         if (GameManager.instance.moneyTotal < plantLadderUpgrade.GetComponent<Upgrade>().price)
             return;
 
-        //Disable the upgrade within the HUD
-        plantLadderUpgrade.GetComponent<Upgrade>().DisableUpgrade();
+        //Set the upgrade purchase state
+        plantLadderUpgrade.GetComponent<Upgrade>().purchased = true;
 
         //Subtract the upgrade price from the money total
         GameManager.instance.moneyTotal -= plantLadderUpgrade.GetComponent<Upgrade>().price;
@@ -97,13 +120,13 @@ public class UpgradeUI : MonoBehaviour
         if (GameManager.instance.moneyTotal < runningShoesUpgrade.GetComponent<Upgrade>().price)
             return;
 
-        //Disable the upgrade within the HUD
-        runningShoesUpgrade.GetComponent<Upgrade>().DisableUpgrade();
+        //Set the upgrade purchase state
+        runningShoesUpgrade.GetComponent<Upgrade>().purchased = true;
 
         //Subtract the upgrade price from the money total
         GameManager.instance.moneyTotal -= runningShoesUpgrade.GetComponent<Upgrade>().price;
 
-        //Upgrade the watering can
+        //Enable dashing on the player
         GameManager.instance.player.GetComponent<Player>().dashEnabled = true;
     }
 
@@ -124,4 +147,76 @@ public class UpgradeUI : MonoBehaviour
     //    //Enable the fertiliser spawner
     //    fertiliserSpawner.SetActive(true);
     //}
+
+    //Saves the current purchase state of all upgrades so that they may be reverted to
+    public void SaveUpgradeState()
+    {
+        //Save the money total
+        upgradeStates[0] = GameManager.instance.moneyTotal;
+
+        //Save the upgrade states
+        for (int i = 1; i < upgrades.Length; i++)
+            upgradeStates[i] = upgrades[i].GetComponent<Upgrade>().purchased;
+    }
+
+    //Reverts the upgrade states to the previously saved states
+    public void RevertUpgradeState()
+    {
+        //Revert the money total
+        GameManager.instance.moneyTotal = (int)upgradeStates[0];
+
+        //Revert upgrades
+        if (upgrades[0].GetComponent<Upgrade>().purchased && !(bool)upgradeStates[1])
+            WateringCanRevert();
+        if (upgrades[1].GetComponent<Upgrade>().purchased && !(bool)upgradeStates[2])
+            WindowRevert();
+        if (upgrades[2].GetComponent<Upgrade>().purchased && !(bool)upgradeStates[3])
+            PlantLadderRevert();
+        if (upgrades[3].GetComponent<Upgrade>().purchased && !(bool)upgradeStates[4])
+            RunningShoesRevert();
+    }
+
+    //Reverts the purchase of the watering can upgrade
+    public void WateringCanRevert()
+    {
+        //Set the upgrade purchase state
+        wateringCanUpgrade.GetComponent<Upgrade>().purchased = false;
+
+        //Revert the watering can
+        GameManager.instance.wateringCan.GetComponent<WateringCan>().Downgrade();
+
+        //Revert the water placement
+        waterPlacement.GetComponent<WaterPlacement>().Downgrade();
+    }
+
+    //Reverts the purchase of the window upgrade
+    public void WindowRevert()
+    {
+        //Set the upgrade purchase state
+        windowUpgrade.GetComponent<Upgrade>().purchased = false;
+
+        //Disable the second window
+        windowHole2.SetActive(true);
+        window2.SetActive(false);
+    }
+
+    //Reverts the purchase of the watering can upgrade
+    public void PlantLadderRevert()
+    {
+        //Set the upgrade purchase state
+        plantLadderUpgrade.GetComponent<Upgrade>().purchased = false;
+
+        //Disable the second plant ladder
+        plantLadder2.SetActive(false);
+    }
+
+    //Reverts the purchase of the watering can upgrade
+    public void RunningShoesRevert()
+    {
+        //Set the upgrade purchase state
+        runningShoesUpgrade.GetComponent<Upgrade>().purchased = false;
+
+        //Disable dashing on the player
+        GameManager.instance.player.GetComponent<Player>().dashEnabled = false;
+    }
 }
