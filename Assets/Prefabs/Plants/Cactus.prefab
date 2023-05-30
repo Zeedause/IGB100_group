@@ -1148,7 +1148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placement: {fileID: 0}
-  sellValue: 30
+  sellValue: 35
   lossDivisor: 2
   growthState: 0
   growthRate: 2.2
@@ -1159,8 +1159,8 @@ MonoBehaviour:
   waterRate: -0.7
   minWaterSweetspot: 36
   maxWaterSweetspot: 96
-  minLightSweetspot: 38
-  maxLightSweetspot: 98
+  minLightSweetspot: 60
+  maxLightSweetspot: 100
   minLightFertilised: 57
   minWaterFertilised: 67
   testing: 0
