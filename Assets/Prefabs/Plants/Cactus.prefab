@@ -170,7 +170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -100, y: 50.000004}
+  m_AnchoredPosition: {x: -62, y: 50.000004}
   m_SizeDelta: {x: 37702, y: 35.87532}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7637089451562440876
@@ -396,7 +396,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 96
+  m_Value: 38
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -570,7 +570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 106, y: 224.9}
+  m_AnchoredPosition: {x: 198, y: 224.9}
   m_SizeDelta: {x: 8507.6, y: 35.87532}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4314967870133057738
@@ -1159,8 +1159,8 @@ MonoBehaviour:
   waterRate: -0.7
   minWaterSweetspot: 36
   maxWaterSweetspot: 96
-  minLightSweetspot: 56
-  maxLightSweetspot: 96
+  minLightSweetspot: 38
+  maxLightSweetspot: 98
   minLightFertilised: 57
   minWaterFertilised: 67
   testing: 0
@@ -2286,7 +2286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_Value
-      value: 67
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_MinValue
