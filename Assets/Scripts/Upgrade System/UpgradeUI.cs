@@ -7,6 +7,7 @@ public class UpgradeUI : MonoBehaviour
 {
     //References
     public GameObject moneyCounter;
+    public GameObject dashMeter;
 
     [Header("Watering Can Upgrade")]
     public GameObject wateringCanUpgrade;
@@ -119,6 +120,9 @@ public class UpgradeUI : MonoBehaviour
         //If not enough money, don't purchase the upgrade
         if (GameManager.instance.moneyTotal < runningShoesUpgrade.GetComponent<Upgrade>().price)
             return;
+
+        // make the dash meter visible in gameplay
+        dashMeter.SetActive(true);
 
         //Set the upgrade purchase state
         runningShoesUpgrade.GetComponent<Upgrade>().purchased = true;

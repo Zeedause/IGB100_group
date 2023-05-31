@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public GameObject spawner;
+    public Slider DashMeter;
+    public float dashOrigin;
+    public float dashFinal;
 
     [Header("Movement")]
     public float moveSpeed;
@@ -16,6 +20,7 @@ public class Player : MonoBehaviour
     private float dashTimer;
     public float dashCooldown;
     private float dashCooldownTimer;
+
     private Rigidbody rb;
 
     [Header("Interaction")]
@@ -100,6 +105,8 @@ public class Player : MonoBehaviour
                 //Set timers
                 dashTimer = dashDuration;
                 dashCooldownTimer = dashCooldown;
+                dashOrigin = Time.time;
+                dashFinal = dashOrigin + dashCooldown;
             }
         }
 
@@ -185,5 +192,10 @@ public class Player : MonoBehaviour
     {
         heldObject.transform.position = holdDisplacement.position;
         heldObject.transform.rotation = transform.rotation;
+    }
+
+    private void FixedUpdate()
+    {
+        DashMeter.value = dashFinal - Time.time;
     }
 }

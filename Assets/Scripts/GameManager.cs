@@ -288,29 +288,17 @@ public class GameManager : MonoBehaviour {
         if (levelWonHUD.activeSelf == false)
             levelWonHUD.SetActive(true);
 
-        //Wait for player to start the next level
-        if (Input.GetKeyDown("space"))
-        {
-            //Save current upgrade state
-            upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
-            //Set up next level
-            levelNumber++;
-            LevelSetup(levelNumber);
-
-            //Hide this HUD
-            levelWonHUD.SetActive(false);
-
-            //Change game state
-            gameState = GameState.LevelMessage;
-        }
-
+        /*
         //If 'Escape' key is pressed, return to the main menu
         if (Input.GetKeyDown("escape"))
         {
             //Functaionality is equivalent to simply restarting the game:
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        */
     }
 
     public void NextLevelButton()
@@ -336,21 +324,8 @@ public class GameManager : MonoBehaviour {
         if (levelLostHUD.activeSelf == false)
             levelLostHUD.SetActive(true);
 
-        //Wait for the player to restart the same level
-        if (Input.GetKeyDown("space"))
-        {
-            //Revert upgrade state
-            upgradeHUD.GetComponent<UpgradeUI>().RevertUpgradeState();
-
-            //Reset level
-            LevelSetup(levelNumber);
-
-            //Hide this HUD
-            levelLostHUD.SetActive(false);
-
-            //Change game state
-            gameState = GameState.LevelMessage;
-        }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void QuitMenuButton()
@@ -434,7 +409,7 @@ public class GameManager : MonoBehaviour {
                 fertiliserSpawner.SetActive(false);
 
                 //Timer & Money
-                timeLimit = 75;
+                timeLimit = 80;
                 money = 0;
                 moneyGoal = 30;
                 break;
