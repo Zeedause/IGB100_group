@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    /* Camera rotation
-     * https://www.youtube.com/watch?v=f473C43s8nE
-     */
-
     public float sensX;
     public float sensY;
-
-    public Transform orientation;
 
     float xRotation;
     float yRotation;

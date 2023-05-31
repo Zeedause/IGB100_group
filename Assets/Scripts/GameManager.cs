@@ -32,13 +32,11 @@ public class GameManager : MonoBehaviour {
     private float timer;
 
     [Header("Level Settings")]
-    public bool spawnRose = false;
-    public bool spawnCactus = false;
-    public bool spawnLily = false;
     public bool fertiliser = false;
 
     [Header("References")]
     public GameObject player;
+    public GameObject orderBoard;
     public GameObject wateringCan;
     public GameObject fertiliserSpawner;
 
@@ -171,7 +169,7 @@ public class GameManager : MonoBehaviour {
 
     public void QuitButton()
     {
-            Application.Quit();
+        Application.Quit();
     }
 
     //Game State - Gameplay
@@ -228,8 +226,8 @@ public class GameManager : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        //If 'Escape' key is pressed, un-pause the game
-        if (Input.GetKeyDown("escape"))
+        //If 'Escape' key is pressed (and not looking at the 'how to play' HUD), un-pause the game
+        if (Input.GetKeyDown("escape") && howtoPlayHUD.activeSelf == false)
         {
             PauseHUD.SetActive(false);
 
@@ -423,14 +421,14 @@ public class GameManager : MonoBehaviour {
             placements[i].GetComponent<Placement>().placedObject = null;
 
         //Level settings switch block
-        //NOTE: enabling/disabling a feature boolean enables/disables that features for all subsequent levels
+        //NOTE: chaning a feature boolean or value changes that features for all subsequent levels
         switch (levelNumber)
         {
             case 1:
                 //Plants
-                spawnRose = true;
-                spawnCactus = false;
-                spawnLily = false;
+                orderBoard.GetComponent<OrderBoard>().roseWeight = 100f;
+                orderBoard.GetComponent<OrderBoard>().cactusWeight = 100f;
+                orderBoard.GetComponent<OrderBoard>().lilyWeight = 100f;
 
                 //Fertiliser
                 fertiliserSpawner.SetActive(false);
@@ -443,9 +441,9 @@ public class GameManager : MonoBehaviour {
 
             case 2:
                 //Plants
-                spawnRose = true;
-                spawnCactus = true;
-                spawnLily = true;
+                orderBoard.GetComponent<OrderBoard>().roseWeight = 33f;
+                orderBoard.GetComponent<OrderBoard>().cactusWeight = 20f;
+                orderBoard.GetComponent<OrderBoard>().lilyWeight = 15f;
 
                 //Fertiliser
                 fertiliserSpawner.SetActive(false);
@@ -457,11 +455,6 @@ public class GameManager : MonoBehaviour {
                 break;
 
             case 3:
-                //Plants
-                spawnRose = true;
-                spawnCactus = true;
-                spawnLily = true;
-
                 //Fertiliser
                 fertiliserSpawner.SetActive(true);
 

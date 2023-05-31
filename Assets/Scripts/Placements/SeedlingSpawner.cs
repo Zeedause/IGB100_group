@@ -14,70 +14,70 @@ public class SeedlingSpawner : Placement
 
     private void Update()
     {
-        //Don't process unless gameState == GameState.Gameplay
-        if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
-            return;
+        ////Don't process unless gameState == GameState.Gameplay
+        //if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
+        //    return;
 
-        if (!placedObject)
-        {
-            SpawnRandomPlant();
-        }
+        //if (!placedObject)
+        //{
+        //    SpawnRandomPlant();
+        //}
     }
 
     //Randomly chooses a plant to spawn based on plant weightings
     private void SpawnRandomPlant()
     {
-        float range = 0f;
-        if (GameManager.instance.spawnRose)
-            range += roseWeight;
-        if (GameManager.instance.spawnCactus)
-            range += cactusWeight;
-        if (GameManager.instance.spawnLily)
-            range += lilyWeight;
+        //float range = 0f;
+        //if (GameManager.instance.spawnRose)
+        //    range += roseWeight;
+        //if (GameManager.instance.spawnCactus)
+        //    range += cactusWeight;
+        //if (GameManager.instance.spawnLily)
+        //    range += lilyWeight;
 
-        float rv = Random.Range(0, range);
+        //float rv = Random.Range(0, range);
 
-        //Rose
-        if (GameManager.instance.spawnRose)
-        {
-            if (rv <= roseWeight)
-            {
-                SpawnPlant(rose);
-                return;
-            }
-            rv -= roseWeight;
-        }
+        ////Rose
+        //if (GameManager.instance.spawnRose)
+        //{
+        //    if (rv <= roseWeight)
+        //    {
+        //        SpawnPlant(rose);
+        //        return;
+        //    }
+        //    rv -= roseWeight;
+        //}
 
 
-        //Cactus
-        if (GameManager.instance.spawnCactus)
-        {
-            if (rv <= cactusWeight)
-            {
-                SpawnPlant(cactus);
-                return;
-            }
-            rv -= cactusWeight;
-        }
+        ////Cactus
+        //if (GameManager.instance.spawnCactus)
+        //{
+        //    if (rv <= cactusWeight)
+        //    {
+        //        SpawnPlant(cactus);
+        //        return;
+        //    }
+        //    rv -= cactusWeight;
+        //}
 
-        //Lily
-        if (GameManager.instance.spawnLily)
-        {
-            if (rv <= lilyWeight)
-            {
-                SpawnPlant(lily);
-                return;
-            }
-        }
+        ////Lily
+        //if (GameManager.instance.spawnLily)
+        //{
+        //    if (rv <= lilyWeight)
+        //    {
+        //        SpawnPlant(lily);
+        //        return;
+        //    }
+        //}
 
-        //This should be un-reachable
-        Debug.Log("Something has gone wrong with plant spawning!");
+        ////This should be un-reachable
+        //Debug.Log("Something has gone wrong with plant spawning!");
     }
 
     //Creates a new plant at the spawner's position & rotation
     private void SpawnPlant(GameObject plant)
     {
-        placedObject = Instantiate(plant, transform.position, transform.rotation);
-        placedObject.GetComponent<Plant>().placement = this.gameObject;
+        //placedObject = Instantiate(plant, transform.position, transform.rotation);
+        //placedObject.GetComponent<Plant>().placement = this.gameObject;
     }
 }

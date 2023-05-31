@@ -51,9 +51,7 @@ public class Plant : Interactable
     public Vector3 growthScaleMin = new Vector3(0.05f, 0.05f, 0.05f);
     public Vector3 growthScaleMax = new Vector3(0.2f, 0.2f, 0.2f);
 
-
-
-    internal virtual void Start()
+    internal virtual void Awake()
     {
         //Get references
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -62,6 +60,11 @@ public class Plant : Interactable
         plantHUD = transform.Find("PlantHUD").gameObject.GetComponent<PlantHUD>();
 
         InitialisePlant();
+    }
+
+    internal virtual void Start()
+    {
+        
     }
 
     internal void Update()
@@ -285,6 +288,19 @@ public class Plant : Interactable
         plantModel.transform.localScale = Vector3.Lerp(growthScaleMin, growthScaleMax, growthPerc);
     }
 
+    //Starts the plant growth state
+    public void StartGrowth()
+    {
+        Interact();
+        ////Set growth state
+        //growthState = GrowthState.Growing;
+
+        ////Set Plant HUD
+        //plantHUD.SetGrowthState("Growing");
+        //plantHUD.SetGrowthStateVisibility(true);
+        //plantHUD.SetGrowthStatsVisibility(true);
+    }
+
     //If the player successfully interacts with this object
     public override void Interact()
     {
@@ -294,6 +310,7 @@ public class Plant : Interactable
             //Trigger player interaction cooldown
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
 
+            //DISABLED - Moved to StartGrowth() called by spawning order
             //If picked up for first time, start growing
             if (growthState == GrowthState.Seedling)
             {
