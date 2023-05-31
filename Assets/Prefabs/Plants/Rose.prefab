@@ -602,7 +602,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Seedling
+  m_text: Growing
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1749,7 +1749,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 50
+  m_Value: 36
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -1959,7 +1959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_Value
-      value: 45
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_MinValue

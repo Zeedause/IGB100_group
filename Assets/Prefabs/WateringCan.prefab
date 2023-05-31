@@ -389,6 +389,13 @@ MonoBehaviour:
   water: 0
   waterCapacity: 200
   wateringRate: 8
+  upgradeLevel: 0
+  waterCapacities:
+  - 200
+  - 750
+  wateringRates:
+  - 15
+  - 30
 --- !u!1 &4679982829445884405
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,6 +501,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4679982829445884404}
     m_Modifications:
+    - target: {fileID: 7574633699172366059, guid: 04a96625b75af6248ad18115ba8ec8ad, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.10546875
+      objectReference: {fileID: 0}
     - target: {fileID: 7574633699286709953, guid: 04a96625b75af6248ad18115ba8ec8ad, type: 3}
       propertyPath: m_Value
       value: 0
@@ -504,7 +515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7574633699286709953, guid: 04a96625b75af6248ad18115ba8ec8ad, type: 3}
       propertyPath: m_MinValue
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7574633699286709958, guid: 04a96625b75af6248ad18115ba8ec8ad, type: 3}
       propertyPath: m_Pivot.x
@@ -536,7 +547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7574633699286709958, guid: 04a96625b75af6248ad18115ba8ec8ad, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 302.3
+      value: 20938
       objectReference: {fileID: 0}
     - target: {fileID: 7574633699286709958, guid: 04a96625b75af6248ad18115ba8ec8ad, type: 3}
       propertyPath: m_SizeDelta.y
@@ -544,7 +555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7574633699286709958, guid: 04a96625b75af6248ad18115ba8ec8ad, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.0021954214
+      value: 0.000031423067
       objectReference: {fileID: 0}
     - target: {fileID: 7574633699286709958, guid: 04a96625b75af6248ad18115ba8ec8ad, type: 3}
       propertyPath: m_LocalScale.y

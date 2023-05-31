@@ -44,6 +44,7 @@ public class Plant : Interactable
 
     public bool testing = false;
     public float fertiliserStrength;
+    public float slowGrowthStrength = 0.7f;
 
     [Header("Animation")]
     public GameObject plantModel;
@@ -147,11 +148,15 @@ public class Plant : Interactable
             }
             else
             {
+
+                // grow slowly while needs not met
+                growth += growthRate * slowGrowthStrength * Time.deltaTime;
+
                 AddLight(lightRate * Time.deltaTime);
                 AddWater(waterRate * Time.deltaTime);
 
                 UpdateHUD();
-                plantHUD.SetGrowthState("Needs not Met");
+                plantHUD.SetGrowthState("Growing Slowly");
                 if (water < minWaterSweetspot || water > maxWaterSweetspot)
                 {
                     plantHUD.UpdateWater(water, Color.red);
@@ -215,11 +220,14 @@ public class Plant : Interactable
         }
         else
         {
+            // grow slowly while needs not met
+            growth += growthRate * slowGrowthStrength * Time.deltaTime;
+
             AddLight(lightRate * Time.deltaTime);
             AddWater(waterRate * Time.deltaTime);
 
             UpdateHUD();
-            plantHUD.SetGrowthState("Fertilised");
+            plantHUD.SetGrowthState("Growing");
             if (water < minWaterFertilised)
             {
                 plantHUD.UpdateWater(water, Color.red);

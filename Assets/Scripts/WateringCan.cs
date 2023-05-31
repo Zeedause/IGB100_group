@@ -73,7 +73,7 @@ public class WateringCan : Interactable
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
 
         //Values
-        water = 0f;
+        water = 20f;
     }
 
     //Add the specified amount of water to this object, negative to subtract

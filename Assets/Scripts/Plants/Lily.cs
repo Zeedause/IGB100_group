@@ -39,11 +39,14 @@ public class Lily : Plant
             }
             else
             {
+                // grow slowly while needs not met
+                growth += growthRate * slowGrowthStrength * Time.deltaTime;
+
                 AddLight(lightRate * Time.deltaTime);
                 AddWater(waterRate * Time.deltaTime);
 
                 UpdateHUD();
-                plantHUD.SetGrowthState("Needs not Met");
+                plantHUD.SetGrowthState("Growing Slowly");
                 if (water < minWaterSweetspot || water > maxWaterSweetspot)
                 {
                     plantHUD.UpdateWater(water, Color.red);
@@ -105,11 +108,14 @@ public class Lily : Plant
         }
         else
         {
+            // grow slowly while needs not met
+            growth += growthRate * slowGrowthStrength * Time.deltaTime;
+
             AddLight(lightRate * Time.deltaTime);
             AddWater(waterRate * Time.deltaTime);
 
             UpdateHUD();
-            plantHUD.SetGrowthState("Fertilised");
+            plantHUD.SetGrowthState("Growing");
             if (water < minWaterFertilised)
             {
                 plantHUD.UpdateWater(water, Color.red);
