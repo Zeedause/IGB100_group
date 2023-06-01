@@ -62,11 +62,6 @@ public class Plant : Interactable
         InitialisePlant();
     }
 
-    internal virtual void Start()
-    {
-        
-    }
-
     internal void Update()
     {
         //Don't process unless gameState == GameState.Gameplay
@@ -291,14 +286,14 @@ public class Plant : Interactable
     //Starts the plant growth state
     public void StartGrowth()
     {
-        Interact();
-        ////Set growth state
-        //growthState = GrowthState.Growing;
+        //Interact();
+        //Set growth state
+        growthState = GrowthState.Growing;
 
-        ////Set Plant HUD
-        //plantHUD.SetGrowthState("Growing");
-        //plantHUD.SetGrowthStateVisibility(true);
-        //plantHUD.SetGrowthStatsVisibility(true);
+        //Set Plant HUD
+        plantHUD.SetGrowthState("Growing");
+        plantHUD.SetGrowthStateVisibility(true);
+        plantHUD.SetGrowthStatsVisibility(true);
     }
 
     //If the player successfully interacts with this object
@@ -311,17 +306,17 @@ public class Plant : Interactable
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
 
             //DISABLED - Moved to StartGrowth() called by spawning order
-            //If picked up for first time, start growing
-            if (growthState == GrowthState.Seedling)
-            {
-                //Set growth state
-                growthState = GrowthState.Growing;
+            ////If picked up for first time, start growing
+            //if (growthState == GrowthState.Seedling)
+            //{
+            //    //Set growth state
+            //    growthState = GrowthState.Growing;
 
-                //Set Plant HUD
-                plantHUD.SetGrowthState("Growing");
-                plantHUD.SetGrowthStateVisibility(true);
-                plantHUD.SetGrowthStatsVisibility(true);
-            }
+            //    //Set Plant HUD
+            //    plantHUD.SetGrowthState("Growing");
+            //    plantHUD.SetGrowthStateVisibility(true);
+            //    plantHUD.SetGrowthStatsVisibility(true);
+            //}
 
             //Disable object collision
             this.gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -354,5 +349,44 @@ public class Plant : Interactable
             //Enable sweetspots
             testing = true;
         }
+        //Otherwise, if the player is holding another plant, swap this plant and the held plant
+        else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<Plant>())
+        {
+            //Trigger player interaction cooldown
+            GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
+
+            //Get the held plant refernce
+            GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
+
+            //Disable collision for this plant, and remove this plant from the placement
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+            placement.GetComponent<Placement>().placedObject = null;
+
+            //Add the held plant to the placement
+            placement.GetComponent<Placement>().Interact();
+
+            //Tell the player to hold this object, and remove the placement reference from this plant
+            GameManager.instance.player.GetComponent<Player>().heldObject = gameObject;
+            placement = null;
+        }
+    }
+
+    //Returns whether or not the object is valid to be interacted with, given what the player is holding
+    public override bool IsValidInteractable()
+    {
+        //If the player isn't holding an object
+        if (!GameManager.instance.player.GetComponent<Player>().heldObject)
+            return true;
+        //Otherwise, if the player is holidng a watering can and this plant is growing
+        else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<WateringCan>() && growthState == GrowthState.Growing)
+            return true;
+        //Otherwise, if the player is holidng fertiliser and this plant is growing
+        else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<Fertiliser>() && growthState == GrowthState.Growing)
+            return true;
+        //Otherwise, if the player is holding another plant
+        else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<Plant>())
+            return true;
+
+        return false;
     }
 }

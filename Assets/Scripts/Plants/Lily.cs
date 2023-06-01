@@ -46,6 +46,7 @@ public class Lily : Plant
                 AddWater(waterRate * Time.deltaTime);
 
                 UpdateHUD();
+                UpdateModel();
                 plantHUD.SetGrowthState("Growing Slowly");
                 if (water < minWaterSweetspot || water > maxWaterSweetspot)
                 {
@@ -115,6 +116,7 @@ public class Lily : Plant
             AddWater(waterRate * Time.deltaTime);
 
             UpdateHUD();
+            UpdateModel();
             plantHUD.SetGrowthState("Growing");
             if (water < minWaterFertilised)
             {

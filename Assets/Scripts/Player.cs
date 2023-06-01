@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     public Transform holdDisplacement;
     public GameObject heldObject;
 
+    private GameObject objectLookedAt;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -53,6 +55,9 @@ public class Player : MonoBehaviour
 
         //Process player movement
         Movement();
+
+        //Process what the player is looking at
+        PlayerLook();
 
         //If the player is not on cooldown and trying to interact
         if (!interactionCooldown && Input.GetMouseButton(0))
@@ -169,6 +174,53 @@ public class Player : MonoBehaviour
             //Decrement the dash cooldown timer
             dashCooldownTimer -= Time.deltaTime;
             dashCooldownTimer = Mathf.Clamp(dashCooldownTimer, 0f, 100f);
+        }
+    }
+
+    //
+    private void PlayerLook()
+    {
+        //Raycast a limited distance to find an object in the direction the player is looking
+        RaycastHit hitInfo;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hitInfo, interactionDistance))
+        {
+            GameObject hitObject = hitInfo.collider.GameObject();
+
+            //If the object is the same as what was already being looked at, do nothing
+            if (hitObject == objectLookedAt)
+                return;
+
+            //If new object is different from what was being looked at...
+            if (hitObject != objectLookedAt && objectLookedAt)
+            {
+                //Change outline colour
+                objectLookedAt.GetComponent<Interactable>().SetOutlineColor(0);
+
+                //Remove reference
+                objectLookedAt = null;
+            }
+
+            //If the object is interactable...
+            if (hitObject.GetComponent<Interactable>())
+            {
+                //Check if the object is a vaild interactable, and change outline colour accordingly
+                if (hitObject.GetComponent<Interactable>().IsValidInteractable())
+                    hitObject.GetComponent<Interactable>().SetOutlineColor(1);
+                else
+                    hitObject.GetComponent<Interactable>().SetOutlineColor(2);
+
+                //Reference object
+                objectLookedAt = hitObject;
+            }
+        }
+        //If raycast missed but an object was being looked at...
+        else if (objectLookedAt)
+        {
+            //Change outline colour
+            objectLookedAt.GetComponent<Interactable>().SetOutlineColor(0);
+
+            //Remove reference
+            objectLookedAt = null;
         }
     }
 

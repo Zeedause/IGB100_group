@@ -423,6 +423,7 @@ GameObject:
   - component: {fileID: 2080031069037784844}
   - component: {fileID: 3130594007781662889}
   - component: {fileID: 907173922160120931}
+  - component: {fileID: 2227172818332987071}
   m_Layer: 0
   m_Name: Rose
   m_TagString: Untagged
@@ -497,6 +498,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2227172818332987071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699565219643504054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &2593544640845101650
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1180,7 @@ MonoBehaviour:
   minWaterFertilised: 67
   testing: 0
   fertiliserStrength: 1.3
+  slowGrowthStrength: 0.7
   plantModel: {fileID: 1152975111706427174}
   growthScaleMin: {x: 0.0018, y: 0.0018, z: 0.0018}
   growthScaleMax: {x: 0.011, y: 0.011, z: 0.011}
@@ -2260,11 +2276,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4979e2569fbf4e34889b3ff7b761d92c, type: 3}
+--- !u!1 &34316139001626137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4979e2569fbf4e34889b3ff7b761d92c, type: 3}
+  m_PrefabInstance: {fileID: 916627150202471240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &935425434539580812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34316139001626137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!4 &806772103468639395 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4979e2569fbf4e34889b3ff7b761d92c, type: 3}
   m_PrefabInstance: {fileID: 916627150202471240}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8708154913770761143 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8386009582420158719, guid: 4979e2569fbf4e34889b3ff7b761d92c, type: 3}
+  m_PrefabInstance: {fileID: 916627150202471240}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3371003187779277161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8708154913770761143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1001 &6882587895413007942
 PrefabInstance:
   m_ObjectHideFlags: 0

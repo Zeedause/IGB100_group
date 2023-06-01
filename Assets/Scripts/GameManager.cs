@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using cakeslice;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour {
     public GameObject orderBoard;
     public GameObject wateringCan;
     public GameObject fertiliserSpawner;
+    public GameObject camera;
 
     [Header("HUD")]
     public GameObject mainMenuHUD;
@@ -74,6 +76,12 @@ public class GameManager : MonoBehaviour {
 
     private void Update()
     {
+        //Tell the camera outline effect script whether or not to process for this frame
+        if (gameState == GameState.Gameplay)
+            camera.GetComponent<OutlineEffect>().updating = true;
+        else
+            camera.GetComponent<OutlineEffect>().updating = false;
+
         //Game State switch block
         switch (gameState)
         {
@@ -384,6 +392,9 @@ public class GameManager : MonoBehaviour {
 
         //Reset watering can position & rotation
         wateringCan.GetComponent<WateringCan>().Respawn();
+
+        //Clear & reset order board
+        orderBoard.GetComponent<OrderBoard>().ResetBoard();
 
         //Delete Plants
         GameObject[] plants = GameObject.FindGameObjectsWithTag("Plant");

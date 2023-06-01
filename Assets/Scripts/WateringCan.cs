@@ -105,7 +105,7 @@ public class WateringCan : Interactable
     //If the player successfully interacts with this object
     public override void Interact()
     {
-        if (!GameManager.instance.player.GetComponent<Player>().heldObject)
+        if (IsValidInteractable())
         {
             //Trigger player interaction cooldown
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
@@ -124,5 +124,15 @@ public class WateringCan : Interactable
                 placement = null;
             }
         }
+    }
+
+    //Returns whether or not the object is valid to be interacted with, given what the player is holding
+    public override bool IsValidInteractable()
+    {
+        //If the player isn't holding an object
+        if (!GameManager.instance.player.GetComponent<Player>().heldObject)
+            return true;
+
+        return false;
     }
 }

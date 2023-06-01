@@ -29,4 +29,17 @@ public class FertiliserSpawner : Interactable
             GameManager.instance.player.GetComponent<Player>().heldObject = null;
         }
     }
+
+    //Returns whether or not the object is valid to be interacted with, given what the player is holding
+    public override bool IsValidInteractable()
+    {
+        //If the player is not holding an object
+        if (!GameManager.instance.player.GetComponent<Player>().heldObject)
+            return true;
+        //Otherwise, if holding a fertiliser object
+        else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<Fertiliser>())
+            return true;
+
+        return false;
+    }
 }

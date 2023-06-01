@@ -73,4 +73,14 @@ public class Order : Interactable
             Destroy(this.gameObject);
         }
     }
+
+    //Returns whether or not the object is valid to be interacted with, given what the player is holding
+    public override bool IsValidInteractable()
+    {
+        //If the player isn't holding an object
+        if (!GameManager.instance.player.GetComponent<Player>().heldObject)
+            return true;
+
+        return false;
+    }
 }

@@ -6299,19 +6299,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557773534}
   m_CullTransparentMesh: 1
---- !u!65 &565181934
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4410802075594912556}
-  m_Material: {fileID: 13400000, guid: 3d4de402bf1b0054d9f5d244ff9db446, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.016707787, y: 0.076126084, z: 0.015701532}
-  m_Center: {x: -0.0042673056, y: -0.029819522, z: -0.014616375}
 --- !u!1001 &570115208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11034,6 +11021,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: PlayerCam
   m_TagString: MainCamera
@@ -11121,6 +11109,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensX: 400
   sensY: 400
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78da3f00f3328541b4526c0b0b5ec5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updating: 0
+  lineThickness: 1.25
+  lineIntensity: 0.5
+  fillAmount: 0.2
+  lineColor0: {r: 1, g: 0, b: 0, a: 1}
+  lineColor1: {r: 0, g: 1, b: 0, a: 1}
+  lineColor2: {r: 0, g: 0, b: 1, a: 1}
+  additiveRendering: 0
+  backfaceCulling: 1
+  fillColor: {r: 0, g: 0, b: 1, a: 1}
+  useFillColor: 0
+  cornerOutlines: 0
+  addLinesBetweenColors: 0
+  scaleWithScreenSize: 1
+  alphaCutoff: 0.5
+  flipY: 0
+  sourceCamera: {fileID: 0}
+  autoEnableOutlines: 0
+  animatedOutlines: 0
+  animationPeriod: 2
+  outlineCamera: {fileID: 0}
+  outlineShaderMaterial: {fileID: 0}
+  renderTexture: {fileID: 0}
+  extraRenderTexture: {fileID: 0}
 --- !u!1 &972507231
 GameObject:
   m_ObjectHideFlags: 0
@@ -15766,6 +15790,7 @@ GameObject:
   - component: {fileID: 1364784341}
   - component: {fileID: 1364784344}
   - component: {fileID: 1364784343}
+  - component: {fileID: 1364784345}
   m_Layer: 0
   m_Name: FrontCounter
   m_TagString: Untagged
@@ -15841,6 +15866,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364784340}
   m_Mesh: {fileID: 8984971684849750624, guid: 2747c5aff67495c48b56220cb8109c62, type: 3}
+--- !u!65 &1364784345
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364784340}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.016707797, y: 0.037553273, z: 0.016894914}
+  m_Center: {x: -0.004267331, y: -0.04910594, z: -0.014019684}
 --- !u!1 &1368480291
 GameObject:
   m_ObjectHideFlags: 0
@@ -22422,6 +22460,7 @@ MonoBehaviour:
   orderBoard: {fileID: 1681812707}
   wateringCan: {fileID: 1598757649}
   fertiliserSpawner: {fileID: 947006177}
+  camera: {fileID: 963194225}
   mainMenuHUD: {fileID: 1918928762}
   howtoPlayHUD: {fileID: 809027899}
   gameplayHUD: {fileID: 1255969237}
@@ -25818,6 +25857,10 @@ PrefabInstance:
       value: SeedlingSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 7944091937043904300, guid: 2eeccec5dd15d2e4a8858541a30f2818, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7944091937043904300, guid: 2eeccec5dd15d2e4a8858541a30f2818, type: 3}
       propertyPath: m_TagString
       value: Placement
       objectReference: {fileID: 0}
@@ -25994,7 +26037,7 @@ GameObject:
   - component: {fileID: 1932508950073528678}
   - component: {fileID: 4396247469676106614}
   - component: {fileID: 9127363502004630813}
-  - component: {fileID: 565181934}
+  - component: {fileID: 9127363502004630814}
   m_Layer: 0
   m_Name: KitchenCounter
   m_TagString: Untagged
@@ -26995,3 +27038,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &9127363502004630814
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4410802075594912556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.016707795, y: 0.03755327, z: 0.014460919}
+  m_Center: {x: -0.0042673093, y: -0.049105927, z: -0.015236687}

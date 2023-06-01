@@ -25,6 +25,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
+using System.Text;
 
 namespace cakeslice
 {
@@ -43,6 +44,8 @@ namespace cakeslice
 		public static OutlineEffect Instance { get; private set; }
 
 		private readonly LinkedSet<Outline> outlines = new LinkedSet<Outline>();
+
+		public bool updating;
 
 		[Range(1.0f, 6.0f)]
 		public float lineThickness = 1.25f;
@@ -73,6 +76,8 @@ namespace cakeslice
 		public bool flipY = false;
 		public Camera sourceCamera;
 		public bool autoEnableOutlines = false;
+		public bool animatedOutlines = false;
+		public float animationPeriod = 2f;
 
 		[HideInInspector]
 		public Camera outlineCamera;
@@ -174,6 +179,28 @@ namespace cakeslice
 			commandBuffer = new CommandBuffer();
 			outlineCamera.AddCommandBuffer(CameraEvent.BeforeImageEffects, commandBuffer);
 		}
+
+		private void Update()
+		{
+			//Don't process unless updating
+            if (!updating)
+				return;
+
+			//Process outline animation
+			if (animatedOutlines)
+			{
+				//Calculate position in oscillation from current time
+				float periodMidPoint = animationPeriod / 2f;
+				float periodPoint = Time.time % animationPeriod;
+				float oscillationPoint = Mathf.Abs(periodPoint - periodMidPoint);
+
+				//Set alpha of all colours based on point in oscillation
+				float alpha = Mathf.Lerp(0.7f, 1f, oscillationPoint / periodMidPoint);
+				lineColor0.a = alpha;
+				lineColor1.a = alpha;
+				lineColor2.a = alpha;
+			}
+        }
 
 		bool RenderTheNextFrame;
 		public void OnPreRender()

@@ -101,4 +101,15 @@ public class OrderBoard : MonoBehaviour
         GameObject spawnedOrder = GameObject.Instantiate(order, spawnLocations[position].transform.position, spawnLocations[position].transform.rotation, this.gameObject.transform);
         pendingOrders[position] = spawnedOrder;
     }
+
+    //Clears & resets the order board
+    public void ResetBoard()
+    {
+        //Destroy any outstanding orders
+        for (int i = 0; i < pendingOrders.Length; i++)
+            Destroy(pendingOrders[i]);
+
+        //Reset timer
+        orderSpawnTimer = 0f;
+    }
 }
