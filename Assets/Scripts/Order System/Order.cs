@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 using static Plant;
 
 public class Order : Interactable
 {
     //Object References
     public GameObject spawnedPlant;
-    public GameObject timerHUD;
+    public Slider timerSlider;
 
     //Timer Variables
     public float despawnTime = 12;
@@ -20,6 +21,8 @@ public class Order : Interactable
     {
         //Start despawn timer
         despawnTimer = despawnTime;
+
+        timerSlider.maxValue = despawnTime;
     }
 
     // Update is called once per frame
@@ -37,13 +40,13 @@ public class Order : Interactable
     private void DespawnTimer()
     {
         //Decrement the timer
-        despawnTime -= Time.deltaTime;
+        despawnTimer -= Time.deltaTime;
 
         //Update timer HUD
-        timerHUD.GetComponent<TextMeshProUGUI>().text = Mathf.Ceil(despawnTime).ToString();
+        timerSlider.value = despawnTimer;
 
         //If timer has elapsed, destory this object
-        if (despawnTime <= 0)
+        if (despawnTimer <= 0)
             Destroy(this.gameObject);
     }
 

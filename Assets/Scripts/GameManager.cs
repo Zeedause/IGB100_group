@@ -402,8 +402,8 @@ public class GameManager : MonoBehaviour {
             case 1:
                 //Plants
                 orderBoard.GetComponent<OrderBoard>().roseWeight = 100f;
-                orderBoard.GetComponent<OrderBoard>().cactusWeight = 100f;
-                orderBoard.GetComponent<OrderBoard>().lilyWeight = 100f;
+                orderBoard.GetComponent<OrderBoard>().cactusWeight = 0f;
+                orderBoard.GetComponent<OrderBoard>().lilyWeight = 0f;
 
                 //Fertiliser
                 fertiliserSpawner.SetActive(false);
@@ -430,6 +430,10 @@ public class GameManager : MonoBehaviour {
                 break;
 
             case 3:
+                orderBoard.GetComponent<OrderBoard>().roseWeight = 33f;
+                orderBoard.GetComponent<OrderBoard>().cactusWeight = 20f;
+                orderBoard.GetComponent<OrderBoard>().lilyWeight = 15f;
+
                 //Fertiliser
                 fertiliserSpawner.SetActive(true);
 
