@@ -8,12 +8,14 @@ public class PauseMenu : MonoBehaviour
     //'Resume' button click
     public void Resume()
     {
+        //Hide pause HUD
         GameManager.instance.PauseHUD.SetActive(false);
 
         //Lock and hide cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        //Change game state
         GameManager.instance.gameState = GameManager.GameState.Gameplay;
     }
 

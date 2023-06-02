@@ -22,13 +22,13 @@ public class Plant : Interactable
     }
     [Header("Growth/Water/Light")]
     public GrowthState growthState;
-    internal float growth = 0f;
+    public float growth = 0f;
     public float growthRate = 1f;
     public float fullGrowth = 100f;
-    internal float light;
+    public float light;
     public float maxLight = 100f;
     public float lightRate = -1f;
-    internal float water;
+    public float water;
     public float maxWater = 100f;
     public float waterRate = -1f;
 
@@ -40,9 +40,11 @@ public class Plant : Interactable
 
     [Header("Fertilised Values")]
     public float minLightFertilised;
+    public float maxLightFertilised;
     public float minWaterFertilised;
+    public float maxWaterFertilised;
 
-    public bool testing = false;
+    public bool fertilised = false;
     public float fertiliserStrength;
     public float slowGrowthStrength = 0.7f;
 
@@ -71,21 +73,9 @@ public class Plant : Interactable
         //Growth State switch block
         switch (growthState)
         {
-            //case GrowthState.Seedling:
-
-            //    break;
-
             case GrowthState.Growing:
                 Growing();
                 break;
-
-            //case GrowthState.Grown:
-
-            //    break;
-
-            //case GrowthState.Dead:
-
-            //    break;
         }
     }
 
@@ -98,23 +88,12 @@ public class Plant : Interactable
         light = maxLight / 3.8f;
         water = maxWater / 3.8f;
 
-        /*
-         * Switched to inspector set values
-         * 
-        // set sweetspot values
-        // messy figures but it aligns with UI constraints niceley, roughly bottom 0.30% and top 0.66%
-        minWaterSweetspot = maxWater * 0.62f;
-        maxWaterSweetspot = maxWater;
-        minLightSweetspot = maxLight * 0.62f;
-        maxLightSweetspot = maxLight;
-        */
-
         //Set Plant HUD
         plantHUD.SetGrowthState("Seedling");
         plantHUD.InitialiseUI(fullGrowth, maxLight, maxWater);
         plantHUD.SetGrowthStateVisibility(false);
         plantHUD.SetGrowthStatsVisibility(false);
-        UpdateHUD();
+        UpdateGrowthStatsHUD();
 
         //Update Model
         UpdateModel();
@@ -123,52 +102,7 @@ public class Plant : Interactable
     //Growth State - Growing
     internal virtual void Growing()
     {
-        if (testing)
-        {
-            FertilisedGrowing();
-        }
-        else
-        {
-            plantHUD.SetTesting(false);
-            if (water >= minWaterSweetspot && water <= maxWaterSweetspot &&
-                    light >= minLightSweetspot && light <= maxLightSweetspot)
-            {
-                plantHUD.SetGrowthState("Growing");
-
-                //Increment growth stats
-                growth += growthRate * Time.deltaTime;
-
-                //Update plant HUD & Model
-                //UpdateHUD();
-                //UpdateModel();
-            }
-            else
-            {
-
-                // grow slowly while needs not met
-                growth += growthRate * slowGrowthStrength * Time.deltaTime;
-
-                //AddLight(lightRate * Time.deltaTime);
-                //AddWater(waterRate * Time.deltaTime);
-
-                plantHUD.SetGrowthState("Growing Slowly");
-                if (water < minWaterSweetspot || water > maxWaterSweetspot)
-                {
-                    plantHUD.UpdateWater(water, Color.red);
-                }
-                if (light < minLightSweetspot || light > maxLightSweetspot)
-                {
-                    plantHUD.UpdateLight(light, Color.red);
-                }
-            }
-
-            AddLight(lightRate * Time.deltaTime);
-            AddWater(waterRate * Time.deltaTime);
-            UpdateHUD();
-            UpdateModel();
-        }
-
-        //Check for 'fully grown' or 'dead' conditions
+        //If plant is fully grown
         if (growth >= fullGrowth)
         {
             //The plant is fully grown
@@ -181,14 +115,23 @@ public class Plant : Interactable
             plantHUD.SetGrowthState("Grown");
             plantHUD.SetGrowthStateVisibility(true);
             plantHUD.SetGrowthStatsVisibility(false);
+
+            //Process no further
+            return;
         }
+        //Otherwise, if plant is dying
         else if (light <= 0f || water <= 0f)
         {
-            if (growth > 0) 
+            //If plant is not yet dead
+            if (growth > 0)
             {
+                //Decay growth
                 growth -= growthRate * Time.deltaTime;
+
+                //Set plant HUD state
                 plantHUD.SetGrowthState("Dying!");
             }
+            //Otherwise if plant is at zero growth
             else
             {
                 //The plant dies
@@ -204,57 +147,125 @@ public class Plant : Interactable
                 plantHUD.SetGrowthState("Dead");
                 plantHUD.SetGrowthStateVisibility(true);
                 plantHUD.SetGrowthStatsVisibility(false);
-            }         
+
+                //Process no further
+                return;
+            }
         }
-    }
-
-    internal virtual void FertilisedGrowing()
-    {
-        plantHUD.SetTesting(true);
-        if (water >= minWaterFertilised && light >= minLightFertilised)
-        {
-            plantHUD.SetGrowthState("Rapidly Growing");
-
-            //Increment growth stats
-            growth += growthRate * fertiliserStrength * Time.deltaTime;
-            AddLight(lightRate * Time.deltaTime);
-            AddWater(waterRate * Time.deltaTime);
-
-            //Update plant HUD & Model
-            UpdateHUD();
-            UpdateModel();
-        }
+        //Otherwise, grow the plant
         else
         {
-            // grow slowly while needs not met
-            growth += growthRate * slowGrowthStrength * Time.deltaTime;
-
-            AddLight(lightRate * Time.deltaTime);
-            AddWater(waterRate * Time.deltaTime);
-
-            UpdateHUD();
-            plantHUD.SetGrowthState("Growing");
-            if (water < minWaterFertilised)
+            if (fertilised)
             {
-                plantHUD.UpdateWater(water, Color.red);
+                //Set plant HUD to fertilised
+                plantHUD.SetFertilised(true);
+
+                //If water & light are both within sweetspots, grow normally
+                if (water >= minWaterFertilised && water <= maxWaterFertilised &&
+                        light >= minLightFertilised && light <= maxLightFertilised)
+                {
+                    //Set plant HUD growth state
+                    plantHUD.SetGrowthState("Rapidly Growing");
+
+                    //Increment growth rapidly
+                    growth += growthRate * fertiliserStrength * Time.deltaTime;
+                }
+                //Otherwise, grow slowly
+                else
+                {
+                    //Set plant HUD growth state
+                    plantHUD.SetGrowthState("Growing Slowly");
+
+                    //Increment growth slowly
+                    growth += growthRate * slowGrowthStrength * Time.deltaTime;
+                }
             }
-            if (light < minLightFertilised)
+            else
             {
-                plantHUD.UpdateLight(light, Color.red);
+                //Set plant HUD to not fertilised
+                plantHUD.SetFertilised(false);
+
+                //If water & light are both within sweetspots, grow normally
+                if (water >= minWaterSweetspot && water <= maxWaterSweetspot &&
+                        light >= minLightSweetspot && light <= maxLightSweetspot)
+                {
+                    //Set plant HUD growth state
+                    plantHUD.SetGrowthState("Growing");
+
+                    //Increment growth normally
+                    growth += growthRate * Time.deltaTime;
+                }
+                //Otherwise, grow slowly
+                else
+                {
+                    //Set plant HUD growth state
+                    plantHUD.SetGrowthState("Growing Slowly");
+
+                    //Increment growth slowly
+                    growth += growthRate * slowGrowthStrength * Time.deltaTime;
+                }
             }
         }
+
+        //Increment water & light
+        AddLight(lightRate * Time.deltaTime);
+        AddWater(waterRate * Time.deltaTime);
+
+        //Update HUD & model
+        UpdateGrowthStatsHUD();
+        UpdateModel();
     }
+
+    //internal virtual void FertilisedGrowing()
+    //{
+    //    //plantHUD.SetFertilised(true);
+    //    //if (water >= minWaterFertilised && light >= minLightFertilised)
+    //    {
+    //        //plantHUD.SetGrowthState("Rapidly Growing");
+
+    //        //Increment growth stats
+    //        //growth += growthRate * fertiliserStrength * Time.deltaTime;
+    //        //AddLight(lightRate * Time.deltaTime);
+    //        //AddWater(waterRate * Time.deltaTime);
+
+    //        //Update plant HUD & Model
+    //        //UpdateGrowthStatsHUD();
+    //        //UpdateModel();
+    //    }
+    //    //else
+    //    //{
+    //    //    // grow slowly while needs not met
+    //    //    growth += growthRate * slowGrowthStrength * Time.deltaTime;
+
+    //    //    AddLight(lightRate * Time.deltaTime);
+    //    //    AddWater(waterRate * Time.deltaTime);
+
+    //    //    UpdateGrowthStatsHUD();
+    //    //    plantHUD.SetGrowthState("Growing");
+    //    //    if (water < minWaterFertilised)
+    //    //    {
+    //    //        plantHUD.UpdateWater(water, Color.red);
+    //    //    }
+    //    //    if (light < minLightFertilised)
+    //    //    {
+    //    //        plantHUD.UpdateLight(light, Color.red);
+    //    //    }
+    //    //}
+    //}
 
     //Add the specified amount of water to this object, negative to subtract
     public void AddWater(float amount)
     {
+        //Save water value, pre-operation
         float initialWater = water;
 
+        //Increment water and clamp it to max capacity
         water += amount;
         if (water > maxWater)
             water = maxWater;
 
-        if (testing)
+        //If new value enters sweetspot, play sound
+        if (fertilised)
         {
             if (minWaterFertilised >= initialWater && minWaterFertilised <= water)
             {
@@ -275,13 +286,16 @@ public class Plant : Interactable
     //Add the specified amount of light to this object, negative to subtract
     public void AddLight(float amount)
     {
+        //Save light value, pre-operation
         float initialLight = light;
 
+        //Increment light and clamp it to max capacity
         light += amount;
         if (light > maxLight)
             light = maxLight;
 
-        if (testing)
+        //If new value enters sweetspot, play sound
+        if (fertilised)
         {
             if (minLightFertilised >= initialLight && minLightFertilised <= light)
             {
@@ -300,7 +314,7 @@ public class Plant : Interactable
     }
 
     //Updates the plant's HUD to show current growth stats
-    internal void UpdateHUD()
+    internal void UpdateGrowthStatsHUD()
     {
         //Growth
         if (light <= 0 || water <= 0)
@@ -308,18 +322,37 @@ public class Plant : Interactable
         else
             plantHUD.UpdateGrowth(growth, Color.white);
 
+        //Water
+        if (fertilised)
+        {
+            if (water < minWaterFertilised || water > maxWaterFertilised)
+                plantHUD.UpdateWater(water, Color.red);
+            else
+                plantHUD.UpdateWater(water, Color.white);
+        }
+        else
+        {
+            if (water < minWaterSweetspot || water > maxWaterSweetspot)
+                plantHUD.UpdateWater(water, Color.red);
+            else
+                plantHUD.UpdateWater(water, Color.white);
+        }
 
         //Light
-        if (light <= 15.0f)
-            plantHUD.UpdateLight(light, Color.red);
+        if (fertilised)
+        {
+            if (light < minLightFertilised || light > maxLightFertilised)
+                plantHUD.UpdateLight(light, Color.red);
+            else
+                plantHUD.UpdateLight(light, Color.white);
+        }
         else
-            plantHUD.UpdateLight(light, Color.white);
-
-        //Water
-        if (water <= 15.0f)
-            plantHUD.UpdateWater(water, Color.red);
-        else
-            plantHUD.UpdateWater(water, Color.white);
+        {
+            if (light < minLightSweetspot || light > maxLightSweetspot)
+                plantHUD.UpdateLight(light, Color.red);
+            else
+                plantHUD.UpdateLight(light, Color.white);
+        }
     }
 
     //Updates the plant's model based on current growth stats
@@ -332,7 +365,6 @@ public class Plant : Interactable
     //Starts the plant growth state
     public void StartGrowth()
     {
-        //Interact();
         //Set growth state
         growthState = GrowthState.Growing;
 
@@ -350,22 +382,6 @@ public class Plant : Interactable
         {
             //Trigger player interaction cooldown
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
-
-            //Play 'Boost' sound
-            //GameManager.instance.audioManager.Play("Placement");
-
-            //DISABLED - Moved to StartGrowth() called by spawning order
-            ////If picked up for first time, start growing
-            //if (growthState == GrowthState.Seedling)
-            //{
-            //    //Set growth state
-            //    growthState = GrowthState.Growing;
-
-            //    //Set Plant HUD
-            //    plantHUD.SetGrowthState("Growing");
-            //    plantHUD.SetGrowthStateVisibility(true);
-            //    plantHUD.SetGrowthStatsVisibility(true);
-            //}
 
             //Disable object collision
             this.gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -399,7 +415,7 @@ public class Plant : Interactable
             GameManager.instance.player.GetComponent<Player>().heldObject = null;
 
             //Enable sweetspots
-            testing = true;
+            fertilised = true;
         }
         //Otherwise, if the player is holding another plant, swap this plant and the held plant
         else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<Plant>())

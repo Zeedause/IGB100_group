@@ -30,7 +30,7 @@ public class PlantHUD : MonoBehaviour
         this.gameObject.transform.Find("GrowthStateLabel").gameObject.SetActive(visible);
     }
 
-    public void SetTesting(bool visible)
+    public void SetFertilised(bool visible)
     {
         if (visible)
         {

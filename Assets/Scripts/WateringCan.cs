@@ -26,6 +26,7 @@ public class WateringCan : Interactable
         //Get components
         wateringCanHUD = transform.Find("HUD").gameObject.GetComponent<WateringCanHUD>();
 
+        //Set inital water
         water = 20f;
     }
 
@@ -36,14 +37,17 @@ public class WateringCan : Interactable
         if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
             return;
 
+        //Update HUD
         wateringCanHUD.UpdateWater(water, waterCapacity);
     }
 
     //Increments the upgrade level and applies new stats
     public void Upgrade()
     {
+        //Increment upgrade level
         upgradeLevel++;
 
+        //Apply upgrade changes
         waterCapacity = waterCapacities[upgradeLevel];
         wateringRate = wateringRates[upgradeLevel];
         wateringCanHUD.UpdateWater(water, waterCapacity);
@@ -52,8 +56,10 @@ public class WateringCan : Interactable
     //Decrements the upgrade level and applies new stats
     public void Downgrade()
     {
+        //Decrement upgrade level
         upgradeLevel--;
 
+        //Apply downgrade changed
         waterCapacity = waterCapacities[upgradeLevel];
         wateringRate = wateringRates[upgradeLevel];
         wateringCanHUD.UpdateWater(water, waterCapacity);
@@ -66,28 +72,33 @@ public class WateringCan : Interactable
         transform.position = spawner.transform.position;
         transform.rotation = spawner.transform.rotation;
 
-        //Placement
+        //De-reference placement
         placement = null;
 
         //Enable object collision
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
 
-        //Values
+        //Initial water value
         water = 20f;
     }
 
     //Add the specified amount of water to this object, negative to subtract
     public void AddWater(float amount)
     {
+        //Add the amount of water
         water += amount;
+
+        //Clamp water to max capacity
         if (water > waterCapacity)
             water = waterCapacity;
 
+        //If filling and not yet at capacity, play filling sound
         if (water < waterCapacity && amount > 0)
         {
             //Play 'Water Fill' sound
             GameManager.instance.audioManager.ExclusivePlay("Water Fill");
         }
+        //Otherwise, stop filling sound
         else
         {
             //Stop 'Water Fill' sound
@@ -98,7 +109,7 @@ public class WateringCan : Interactable
     //Take water from this object and add it to another
     public void WaterPlant(GameObject plant)
     {
-        //If empty, do nothing
+        //If empty, do nothing and stop water pour sound
         if (water == 0)
         {
             //Stop 'Water Pour' sound
@@ -112,7 +123,7 @@ public class WateringCan : Interactable
 
         //Calulate water to be transferred
         float waterTransfer = wateringRate * Time.deltaTime;
-        if (water < waterTransfer)
+        if (water < waterTransfer) //Clamp to remaining water value
             waterTransfer = water;
         
         //Remove water from this object

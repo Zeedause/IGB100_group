@@ -20,6 +20,7 @@ public class Upgrade : MonoBehaviour
 
     private void Update()
     {
+        //Enable/Disable upgrade
         if (purchased)
             DisableUpgrade();
         else
@@ -29,12 +30,6 @@ public class Upgrade : MonoBehaviour
     //Disables the upgrade within the HUD
     public void DisableUpgrade()
     {
-        //Strikethrough text
-        //transform.Find("Title").GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
-        //transform.Find("Descriptor").GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
-        //transform.Find("Price").GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
-        //transform.Find("Button").transform.Find("Text").GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Strikethrough;
-
         //Disable Button
         transform.Find("PurchaseButton").GetComponent<Button>().interactable = false;
     }
@@ -42,12 +37,6 @@ public class Upgrade : MonoBehaviour
     //Disables the upgrade within the HUD
     public void EnableUpgrade()
     {
-        //Remove strikethrough text
-        //transform.Find("Title").GetComponent<TextMeshProUGUI>().fontStyle &= ~FontStyles.Strikethrough;
-        //transform.Find("Descriptor").GetComponent<TextMeshProUGUI>().fontStyle &= ~FontStyles.Strikethrough;
-        //transform.Find("Price").GetComponent<TextMeshProUGUI>().fontStyle &= ~FontStyles.Strikethrough;
-        //transform.Find("Button").transform.Find("Text").GetComponent<TextMeshProUGUI>().fontStyle &= ~FontStyles.Strikethrough;
-
         //Enable Button
         transform.Find("PurchaseButton").GetComponent<Button>().interactable = true;
     }

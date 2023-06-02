@@ -1246,10 +1246,13 @@ MonoBehaviour:
   sellValue: 20
   lossDivisor: 2
   growthState: 0
+  growth: 0
   growthRate: 3
   fullGrowth: 100
+  light: 0
   maxLight: 100
   lightRate: -1
+  water: 0
   maxWater: 100
   waterRate: -1
   minWaterSweetspot: 50
@@ -1257,8 +1260,10 @@ MonoBehaviour:
   minLightSweetspot: 50
   maxLightSweetspot: 100
   minLightFertilised: 60
+  maxLightFertilised: 100
   minWaterFertilised: 60
-  testing: 0
+  maxWaterFertilised: 100
+  fertilised: 0
   fertiliserStrength: 1.3
   slowGrowthStrength: 0.7
   plantModel: {fileID: 5911429887318459093}

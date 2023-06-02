@@ -8,8 +8,6 @@ public class Player : MonoBehaviour
 {
     public GameObject spawner;
     public Slider DashMeter;
-    public float dashOrigin;
-    public float dashFinal;
 
     [Header("Movement")]
     public float moveSpeed;
@@ -35,13 +33,21 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        //Get references
         rb = GetComponent<Rigidbody>();
+
+        //Lock rigidbody rotation
         rb.freezeRotation = true;
 
+        //Set up dash variables
         dashEnabled = false;
         dashing = false;
         dashTimer = 0;
         dashCooldownTimer = 0;
+
+        //Set dash meter HUD
+        DashMeter.maxValue = dashCooldown;
+        DashMeter.value = dashCooldownTimer;
     }
 
     void Update()
@@ -49,6 +55,7 @@ public class Player : MonoBehaviour
         //Don't process unless gameState == GameState.InProgress
         if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
         {
+            //Halt player movement
             StopPlayer();
             return;
         }
@@ -110,17 +117,18 @@ public class Player : MonoBehaviour
                 //Play 'Boost' sound
                 GameManager.instance.audioManager.Play("Dash");
 
-                //Set timers
+                //(Re)Set timers
                 dashTimer = dashDuration;
                 dashCooldownTimer = dashCooldown;
-                dashOrigin = Time.time;
-                dashFinal = dashOrigin + dashCooldown;
             }
+
+            //Update dash HUD
+            DashMeter.value = dashCooldownTimer;
         }
 
+        //Get movement direction from key inputs
         float forwardInput = 0f;
         float horizontalInput = 0f;
-
         // Right movement
         if (Input.GetKey("d"))
             horizontalInput += 1;
@@ -133,7 +141,6 @@ public class Player : MonoBehaviour
         // Backwards Movement
         if (Input.GetKey("s"))
             forwardInput -= 1;
-
         //Calculate Direction
         Vector3 direction = (transform.forward * forwardInput + transform.right * horizontalInput).normalized;
 
@@ -154,24 +161,7 @@ public class Player : MonoBehaviour
         //Otehrwise, move normally
         else
         {
-            //float forwardInput = 0f;
-            //float horizontalInput = 0f;
-
-            //// Right movement
-            //if (Input.GetKey("d"))
-            //    horizontalInput += 1;
-            //// Left Movement
-            //if (Input.GetKey("a"))
-            //    horizontalInput -= 1;
-            //// Forward Movement
-            //if (Input.GetKey("w"))
-            //    forwardInput += 1;
-            //// Backwards Movement
-            //if (Input.GetKey("s"))
-            //    forwardInput -= 1;
-
-            ////Apply movement
-            //Vector3 direction = (transform.forward * forwardInput + transform.right * horizontalInput).normalized;
+            //Apply movement
             rb.velocity = direction * moveSpeed;
 
             //Decrement the dash cooldown timer
@@ -180,7 +170,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Determine if th eplayer is looking at an interactable object and set it's outline colour
+    //Determine if the player is looking at an interactable object and set it's outline colour
     private void PlayerLook()
     {
         //Raycast a limited distance to find an object in the direction the player is looking
@@ -196,7 +186,7 @@ public class Player : MonoBehaviour
             //If new object is different from what was being looked at...
             if (hitObject != objectLookedAt && objectLookedAt)
             {
-                //Change outline colour
+                //Revert outline colour
                 objectLookedAt.GetComponent<Interactable>().SetOutlineColor(0);
 
                 //Remove reference
@@ -247,10 +237,5 @@ public class Player : MonoBehaviour
     {
         heldObject.transform.position = holdDisplacement.position;
         heldObject.transform.rotation = transform.rotation;
-    }
-
-    private void FixedUpdate()
-    {
-        DashMeter.value = dashFinal - Time.time;
     }
 }

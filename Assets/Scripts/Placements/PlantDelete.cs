@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Plant;
 
 public class PlantDelete : Interactable
 {
@@ -12,9 +11,6 @@ public class PlantDelete : Interactable
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
         if (heldObject && (heldObject.GetComponent<Plant>() || heldObject.GetComponent<Fertiliser>()))
         {
-            //TODO - Deduct money from player here intead of when plant dies?
-            //       What about if player trashes an alive plant?
-
             //Play 'Bin' sound
             GameManager.instance.audioManager.Play("Bin");
 

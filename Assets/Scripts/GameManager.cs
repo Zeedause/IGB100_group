@@ -132,6 +132,8 @@ public class GameManager : MonoBehaviour {
         gameState = GameState.MainMenu;
     }
 
+    #region Game State Methods
+
     //Game State - Main Menu
     private void MainMenu()
     {
@@ -139,49 +141,9 @@ public class GameManager : MonoBehaviour {
         if (mainMenuHUD.activeSelf == false)
             mainMenuHUD.SetActive(true);
 
+        //Unlock & show cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-    }
-
-    public void StartButton()
-    {
-        upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
-
-        LevelSetup(levelNumber);
-
-        mainMenuHUD.SetActive(false);
-        howtoPlayHUD.SetActive(false);
-
-        gameState = GameState.LevelMessage;
-    }
-
-    public void HowtoButton()
-    {
-        if (PauseHUD.activeSelf == true)
-            PauseHUD.SetActive(false);
-
-        //Show the Gameplay HUD
-        if (howtoPlayHUD.activeSelf == false)
-            howtoPlayHUD.SetActive(true);
-    }
-    public void BackButton()
-    {
-        if (howtoPlayHUD.activeSelf == true)
-            howtoPlayHUD.SetActive(false);
-
-        if (gameState == GameState.MainMenu)
-        {
-            mainMenuHUD.SetActive(true);
-        }
-        if (gameState == GameState.Paused)
-        {
-            PauseHUD.SetActive(true);
-        }
-    }
-
-    public void QuitButton()
-    {
-        Application.Quit();
     }
 
     //Game State - Gameplay
@@ -194,13 +156,17 @@ public class GameManager : MonoBehaviour {
         //If 'Escape' key is pressed, pause the game
         if (Input.GetKeyDown("escape"))
         {
+            //Show pause HUD
             PauseHUD.SetActive(true);
 
+            //Change game state
             gameState = GameState.Paused;
+
+            //Process no further
             return;
         }
 
-        //Decrease timer
+        //Decrement timer
         UpdateTimer();
 
         //Update HUD elements
@@ -209,23 +175,25 @@ public class GameManager : MonoBehaviour {
         //Check if time has expired
         if (timer <= 0)
         {
+            //Hide gameplay HUD
+            gameplayHUD.SetActive(false);
+
             //Check if player has won the level...
             if (money >= moneyGoal)
             {
-                gameplayHUD.SetActive(false);
-
                 //TODO - levelNumber == 5: End Game
 
+                //Add earned money to money total
                 // REMOVED FOR PLAYTESTING BALANCE moneyTotal += money - moneyGoal;
                 moneyTotal += money;
 
+                //Change game state
                 gameState = GameState.LevelWon;
             }
             //... or lost the level
             else
             {
-                gameplayHUD.SetActive(false);
-
+                //Change game state
                 gameState = GameState.LevelLost;
             }
         }
@@ -241,17 +209,17 @@ public class GameManager : MonoBehaviour {
         //If 'Escape' key is pressed (and not looking at the 'how to play' HUD), un-pause the game
         if (Input.GetKeyDown("escape") && howtoPlayHUD.activeSelf == false)
         {
+            //Hide pause HUD
             PauseHUD.SetActive(false);
 
             //Lock and hide cursor
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
+            //Change game state
             gameState = GameState.Gameplay;
-            return;
         }
     }
-
 
     //Game State - Level Message
     private void LevelMessage()
@@ -259,13 +227,6 @@ public class GameManager : MonoBehaviour {
         //Show the Level Message HUD
         if (levelMessageHUD[levelNumber - 1].activeSelf == false)
             levelMessageHUD[levelNumber - 1].SetActive(true);
-    }
-
-    public void GoToUpgradeMenuButton()
-    {
-        levelMessageHUD[levelNumber - 1].SetActive(false);
-
-        gameState = GameState.UpgradeMenu;
     }
 
     //Game State - Upgrade
@@ -280,19 +241,6 @@ public class GameManager : MonoBehaviour {
             upgradeHUD.SetActive(true);
     }
 
-    public void GoToGameplayButton()
-    {
-        //LevelSetup(levelNumber);
-
-        upgradeHUD.SetActive(false);
-
-        //Lock and hide cursor
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-
-        gameState = GameState.Gameplay;
-    }
-
     //Game State - Level Won
     private void LevelWon()
     {
@@ -300,33 +248,9 @@ public class GameManager : MonoBehaviour {
         if (levelWonHUD.activeSelf == false)
             levelWonHUD.SetActive(true);
 
+        //Unlock & show cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
-        /*
-        //If 'Escape' key is pressed, return to the main menu
-        if (Input.GetKeyDown("escape"))
-        {
-            //Functaionality is equivalent to simply restarting the game:
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        */
-    }
-
-    public void NextLevelButton()
-    {
-        //Save current upgrade state
-        upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
-
-        //Set up next level
-        levelNumber++;
-        LevelSetup(levelNumber);
-
-        //Hide this HUD
-        levelWonHUD.SetActive(false);
-
-        //Change game state
-        gameState = GameState.LevelMessage;
     }
 
     //Game State - Level Lost
@@ -336,15 +260,114 @@ public class GameManager : MonoBehaviour {
         if (levelLostHUD.activeSelf == false)
             levelLostHUD.SetActive(true);
 
+        //Unlock & show cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
+    #endregion
+
+    #region Button Events
+
+    //Button Event - Start
+    public void StartButton()
+    {
+        //Save the current upgrade state (initial state)
+        upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
+
+        //Set up level
+        LevelSetup(levelNumber);
+
+        //Hide menu HUDs
+        mainMenuHUD.SetActive(false);
+        howtoPlayHUD.SetActive(false);
+
+        //Change game state
+        gameState = GameState.LevelMessage;
+    }
+
+    //Button Event - How To Play
+    public void HowtoButton()
+    {
+        //If paused, hide paused HUD
+        if (PauseHUD.activeSelf == true)
+            PauseHUD.SetActive(false);
+
+        //Show the How To Play HUD
+        if (howtoPlayHUD.activeSelf == false)
+            howtoPlayHUD.SetActive(true);
+    }
+
+    //Button Event - Back
+    public void BackButton()
+    {
+        //Hide How To Play HUD
+        if (howtoPlayHUD.activeSelf == true)
+            howtoPlayHUD.SetActive(false);
+
+        //If at the main menu, show the main menu HUD
+        if (gameState == GameState.MainMenu)
+            mainMenuHUD.SetActive(true);
+        //Otherwise, if paused, show the paused HUD
+        else if (gameState == GameState.Paused)
+            PauseHUD.SetActive(true);
+    }
+
+    //Button Event - Quit
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
+
+    //Button Event - Go To Upgrade Menu
+    public void GoToUpgradeMenuButton()
+    {
+        //Hide level message HUD
+        levelMessageHUD[levelNumber - 1].SetActive(false);
+
+        //Change game state
+        gameState = GameState.UpgradeMenu;
+    }
+
+    //Button Event - Go To Gameplay
+    public void GoToGameplayButton()
+    {
+        //Hide upgrade HUD
+        upgradeHUD.SetActive(false);
+
+        //Lock and hide cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        //Change game state
+        gameState = GameState.Gameplay;
+    }
+
+    //Button Event - Next level
+    public void NextLevelButton()
+    {
+        //Save current upgrade state
+        upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
+
+        //Set up next level
+        levelNumber++;
+        LevelSetup(levelNumber);
+
+        //Hide level won HUD
+        levelWonHUD.SetActive(false);
+
+        //Change game state
+        gameState = GameState.LevelMessage;
+    }
+
+    //Button Event - Quit To Menu
     public void QuitMenuButton()
     {
         //Functaionality is equivalent to simply restarting the game:
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    #endregion
 
     //Restarts the current level
     public void RestartLevel()
@@ -355,14 +378,14 @@ public class GameManager : MonoBehaviour {
         //Reset level
         LevelSetup(levelNumber);
 
-        //Hide this HUD
+        //Hide level lost HUD
         levelLostHUD.SetActive(false);
 
         //Change game state
         gameState = GameState.LevelMessage;
     }
 
-    //Decreases time left
+    //Decrement game timer
     private void UpdateTimer()
     {
         timer -= Time.deltaTime;
@@ -377,14 +400,16 @@ public class GameManager : MonoBehaviour {
     //Updates HUD values
     private void UpdateGameplayHUD()
     {
+        //Show/Hide plant book during gameplay
         if (Input.GetMouseButton(1))
-        {
             PlantBook.SetActive(true);
-        }
         else 
             PlantBook.SetActive(false);
 
+        //Update money counter
         gameplayHUD.transform.Find("MoneyCounter").GameObject().GetComponent<TextMeshProUGUI>().text = "$" + money + " / $" + moneyGoal;
+
+        //Update game timer HUD
         timerImage.fillAmount = timer / timeLimit;
     }
 
