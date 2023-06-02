@@ -137,12 +137,10 @@ public class Plant : Interactable
 
                 //Increment growth stats
                 growth += growthRate * Time.deltaTime;
-                AddLight(lightRate * Time.deltaTime);
-                AddWater(waterRate * Time.deltaTime);
 
                 //Update plant HUD & Model
-                UpdateHUD();
-                UpdateModel();
+                //UpdateHUD();
+                //UpdateModel();
             }
             else
             {
@@ -150,10 +148,9 @@ public class Plant : Interactable
                 // grow slowly while needs not met
                 growth += growthRate * slowGrowthStrength * Time.deltaTime;
 
-                AddLight(lightRate * Time.deltaTime);
-                AddWater(waterRate * Time.deltaTime);
+                //AddLight(lightRate * Time.deltaTime);
+                //AddWater(waterRate * Time.deltaTime);
 
-                UpdateHUD();
                 plantHUD.SetGrowthState("Growing Slowly");
                 if (water < minWaterSweetspot || water > maxWaterSweetspot)
                 {
@@ -164,6 +161,11 @@ public class Plant : Interactable
                     plantHUD.UpdateLight(light, Color.red);
                 }
             }
+
+            AddLight(lightRate * Time.deltaTime);
+            AddWater(waterRate * Time.deltaTime);
+            UpdateHUD();
+            UpdateModel();
         }
 
         //Check for 'fully grown' or 'dead' conditions
@@ -171,6 +173,9 @@ public class Plant : Interactable
         {
             //The plant is fully grown
             growthState = GrowthState.Grown;
+
+            //Play 'Spare Ding 1' sound
+            GameManager.instance.audioManager.Play("Spare Ding 1");
 
             //Set Plant HUD
             plantHUD.SetGrowthState("Grown");
@@ -188,6 +193,9 @@ public class Plant : Interactable
             {
                 //The plant dies
                 growthState = GrowthState.Dead;
+
+                //Play 'Failed' sound
+                GameManager.instance.audioManager.Play("Failed");
 
                 //Player loses money
                 gameManager.AddMoney(-sellValue / lossDivisor);
@@ -240,17 +248,55 @@ public class Plant : Interactable
     //Add the specified amount of water to this object, negative to subtract
     public void AddWater(float amount)
     {
+        float initialWater = water;
+
         water += amount;
         if (water > maxWater)
             water = maxWater;
+
+        if (testing)
+        {
+            if (minWaterFertilised >= initialWater && minWaterFertilised <= water)
+            {
+                //Play 'Requirement Met 2' sound
+                GameManager.instance.audioManager.Play("Requirement Met 2");
+            }
+        }
+        else
+        {
+            if (minWaterSweetspot >= initialWater && minWaterSweetspot <= water)
+            {
+                //Play 'Requirement Met 2' sound
+                GameManager.instance.audioManager.Play("Requirement Met 2");
+            }
+        }
     }
 
     //Add the specified amount of light to this object, negative to subtract
     public void AddLight(float amount)
     {
+        float initialLight = light;
+
         light += amount;
         if (light > maxLight)
             light = maxLight;
+
+        if (testing)
+        {
+            if (minLightFertilised >= initialLight && minLightFertilised <= light)
+            {
+                //Play 'Requirement Met 1' sound
+                GameManager.instance.audioManager.Play("Requirement Met 1");
+            }
+        }
+        else
+        {
+            if (minLightSweetspot >= initialLight && minLightSweetspot <= light)
+            {
+                //Play 'Requirement Met 1' sound
+                GameManager.instance.audioManager.Play("Requirement Met 1");
+            }
+        }
     }
 
     //Updates the plant's HUD to show current growth stats
@@ -305,6 +351,9 @@ public class Plant : Interactable
             //Trigger player interaction cooldown
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
 
+            //Play 'Boost' sound
+            //GameManager.instance.audioManager.Play("Placement");
+
             //DISABLED - Moved to StartGrowth() called by spawning order
             ////If picked up for first time, start growing
             //if (growthState == GrowthState.Seedling)
@@ -342,6 +391,9 @@ public class Plant : Interactable
             //Trigger player interaction cooldown
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
 
+            //Play 'Fertiliser' sound
+            GameManager.instance.audioManager.Play("Fertiliser");
+
             //Destroy fertiliser object and remove reference from player
             Destroy(GameManager.instance.player.GetComponent<Player>().heldObject);
             GameManager.instance.player.GetComponent<Player>().heldObject = null;
@@ -354,6 +406,9 @@ public class Plant : Interactable
         {
             //Trigger player interaction cooldown
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
+
+            //Play 'Placement' sound
+            GameManager.instance.audioManager.Play("Placement");
 
             //Get the held plant refernce
             GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;

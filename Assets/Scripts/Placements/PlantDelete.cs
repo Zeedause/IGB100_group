@@ -15,6 +15,9 @@ public class PlantDelete : Interactable
             //TODO - Deduct money from player here intead of when plant dies?
             //       What about if player trashes an alive plant?
 
+            //Play 'Bin' sound
+            GameManager.instance.audioManager.Play("Bin");
+
             //Destroy object and remove reference from player
             Destroy(GameManager.instance.player.GetComponent<Player>().heldObject);
             GameManager.instance.player.GetComponent<Player>().heldObject = null;

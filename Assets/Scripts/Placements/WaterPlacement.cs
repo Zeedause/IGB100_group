@@ -36,6 +36,9 @@ public class WaterPlacement : Placement
             //Trigger player interaction cooldown
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
 
+            //Play 'Placement' sound
+            GameManager.instance.audioManager.Play("Placement");
+
             //Remove the held object from the player
             GameManager.instance.player.GetComponent<Player>().heldObject = null;
 

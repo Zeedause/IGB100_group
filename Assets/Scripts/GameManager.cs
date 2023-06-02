@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
     public GameObject wateringCan;
     public GameObject fertiliserSpawner;
     public GameObject camera;
+    public AudioManager audioManager;
 
     [Header("HUD")]
     public GameObject mainMenuHUD;
@@ -118,6 +119,9 @@ public class GameManager : MonoBehaviour {
     //Initialise the game
     private void InitialiseGame()
     {
+        //Get audo manager reference
+        audioManager = gameObject.GetComponent<AudioManager>();
+
         //Inialise Varaibles
         levelNumber = 1;
 
@@ -413,8 +417,8 @@ public class GameManager : MonoBehaviour {
             case 1:
                 //Plants
                 orderBoard.GetComponent<OrderBoard>().roseWeight = 100f;
-                orderBoard.GetComponent<OrderBoard>().cactusWeight = 0f;
-                orderBoard.GetComponent<OrderBoard>().lilyWeight = 0f;
+                orderBoard.GetComponent<OrderBoard>().cactusWeight = 100f;
+                orderBoard.GetComponent<OrderBoard>().lilyWeight = 100f;
 
                 //Fertiliser
                 fertiliserSpawner.SetActive(false);

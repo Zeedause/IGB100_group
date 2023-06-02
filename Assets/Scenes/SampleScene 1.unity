@@ -11122,19 +11122,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updating: 0
-  lineThickness: 1.25
+  lineThickness: 6
   lineIntensity: 0.5
-  fillAmount: 0.2
-  lineColor0: {r: 1, g: 0, b: 0, a: 1}
-  lineColor1: {r: 0, g: 1, b: 0, a: 1}
-  lineColor2: {r: 0, g: 0, b: 1, a: 1}
+  fillAmount: 0
+  lineColor0: {r: 1, g: 0.8581425, b: 0.3915094, a: 1}
+  lineColor1: {r: 0.11792451, g: 1, b: 0.11792451, a: 1}
+  lineColor2: {r: 1, g: 0, b: 0.014492989, a: 1}
   additiveRendering: 0
   backfaceCulling: 1
   fillColor: {r: 0, g: 0, b: 1, a: 1}
   useFillColor: 0
   cornerOutlines: 0
   addLinesBetweenColors: 0
-  scaleWithScreenSize: 1
+  scaleWithScreenSize: 0
   alphaCutoff: 0.5
   flipY: 0
   sourceCamera: {fileID: 0}
@@ -22432,6 +22432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1867174751}
   - component: {fileID: 1867174750}
+  - component: {fileID: 1867174752}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -22461,6 +22462,7 @@ MonoBehaviour:
   wateringCan: {fileID: 1598757649}
   fertiliserSpawner: {fileID: 947006177}
   camera: {fileID: 963194225}
+  audioManager: {fileID: 0}
   mainMenuHUD: {fileID: 1918928762}
   howtoPlayHUD: {fileID: 809027899}
   gameplayHUD: {fileID: 1255969237}
@@ -22490,6 +22492,128 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1867174752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1867174749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90a217bddb45734cb86383abd5c802a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+  sounds:
+  - name: Bin
+    clip: {fileID: 8300000, guid: 8cab7310ce27bac4fb59d1d1c77eb06d, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: 2c8f194ded38780469408b03d5cead3a, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Ding
+    clip: {fileID: 8300000, guid: d42d94374e3b86d45a3ae9d8ae424430, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Failed
+    clip: {fileID: 8300000, guid: f24bcf5c2b6137b40b0ad837fee227ac, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Fertiliser
+    clip: {fileID: 8300000, guid: b76eaa60889c6bc4eaa00256e1f2c894, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Placement
+    clip: {fileID: 8300000, guid: b8c8dd3340425fe44b1ae0da1e2ab9aa, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Requirement Met 1
+    clip: {fileID: 8300000, guid: 69b1c08f95e89984aa3296d79995473e, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Requirement Met 2
+    clip: {fileID: 8300000, guid: 87c0acc0fab2b0a4baa6aea33049b9a6, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Spare Ding 1
+    clip: {fileID: 8300000, guid: 9e8ef76fe8d247f41a3155d3d16e5bc1, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Spare Ding 2
+    clip: {fileID: 8300000, guid: 2ea4c3900a1ffbb4e84793ff9cd4f7f7, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Water Fill
+    clip: {fileID: 8300000, guid: ca2f98b046e444049ac9af37ff5ccb2c, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
+  - name: Water Pour
+    clip: {fileID: 8300000, guid: 1170d0f10ec8d0f4aad27806faec97f3, type: 3}
+    volume: 0
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
 --- !u!1 &1875198834
 GameObject:
   m_ObjectHideFlags: 0
@@ -24158,6 +24282,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9075200514033158087, guid: e5d8147879dbb654a976c89d46f6e359, type: 3}
+      propertyPath: cactusOrder
+      value: 
+      objectReference: {fileID: 4567683346723876652, guid: 62b270837cf841c48b09ca0dafede4fa, type: 3}
     - target: {fileID: 9075200514033158104, guid: e5d8147879dbb654a976c89d46f6e359, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

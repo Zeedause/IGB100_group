@@ -12,6 +12,9 @@ public class PlantFinish : Interactable
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
         if (heldObject && heldObject.GetComponent<Plant>() && heldObject.GetComponent<Plant>().growthState == GrowthState.Grown)
         {
+            //Play 'Ding' sound
+            GameManager.instance.audioManager.Play("Ding");
+
             //Update the money counter with sell value
             GameManager.instance.AddMoney(GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<Plant>().sellValue);
 

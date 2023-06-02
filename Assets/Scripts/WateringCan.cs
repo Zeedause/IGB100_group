@@ -82,13 +82,33 @@ public class WateringCan : Interactable
         water += amount;
         if (water > waterCapacity)
             water = waterCapacity;
+
+        if (water < waterCapacity && amount > 0)
+        {
+            //Play 'Water Fill' sound
+            GameManager.instance.audioManager.ExclusivePlay("Water Fill");
+        }
+        else
+        {
+            //Stop 'Water Fill' sound
+            GameManager.instance.audioManager.Stop("Water Fill");
+        }
     }
 
     //Take water from this object and add it to another
     public void WaterPlant(GameObject plant)
     {
         //If empty, do nothing
-        if (water == 0) return;
+        if (water == 0)
+        {
+            //Stop 'Water Pour' sound
+            GameManager.instance.audioManager.Stop("Water Pour");
+
+            return;
+        }
+
+        //Play 'Water Pour' sound
+        GameManager.instance.audioManager.ExclusivePlay("Water Pour");
 
         //Calulate water to be transferred
         float waterTransfer = wateringRate * Time.deltaTime;
@@ -109,6 +129,9 @@ public class WateringCan : Interactable
         {
             //Trigger player interaction cooldown
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
+
+            //Stop 'Water Fill' sound
+            GameManager.instance.audioManager.Stop("Water Fill");
 
             //Disable object collision
             this.gameObject.GetComponent<BoxCollider>().enabled = false;

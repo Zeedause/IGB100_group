@@ -107,6 +107,9 @@ public class Player : MonoBehaviour
                 //Set to dashing
                 dashing = true;
 
+                //Play 'Boost' sound
+                GameManager.instance.audioManager.Play("Dash");
+
                 //Set timers
                 dashTimer = dashDuration;
                 dashCooldownTimer = dashCooldown;
@@ -177,7 +180,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //
+    //Determine if th eplayer is looking at an interactable object and set it's outline colour
     private void PlayerLook()
     {
         //Raycast a limited distance to find an object in the direction the player is looking

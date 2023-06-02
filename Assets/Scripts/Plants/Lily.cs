@@ -65,6 +65,9 @@ public class Lily : Plant
             //The plant is fully grown
             growthState = GrowthState.Grown;
 
+            //Play 'Spare Ding 1' sound
+            GameManager.instance.audioManager.Play("Spare Ding 1");
+
             //Set Plant HUD
             plantHUD.SetGrowthState("Grown");
             plantHUD.SetGrowthStateVisibility(true);
