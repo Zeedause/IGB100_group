@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCamera : MonoBehaviour
 {
+    public Slider sensitivitySlider;
     public float sensX;
     public float sensY;
 
@@ -18,13 +20,17 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
+        //Get sensitivity from slider
+        sensX = sensitivitySlider.value;
+        sensY = sensitivitySlider.value;
+
         //Don't process unless gameState == GameState.InProgress
         if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
             return;
 
         //Get mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X");// * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y");// * Time.deltaTime * sensY;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
         yRotation += mouseX;
         xRotation -= mouseY;
