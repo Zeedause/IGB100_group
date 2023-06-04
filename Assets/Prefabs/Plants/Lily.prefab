@@ -1271,7 +1271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placement: {fileID: 0}
-  sellValue: 45
+  sellValue: 40
   lossDivisor: 2
   growthState: 0
   growth: 0

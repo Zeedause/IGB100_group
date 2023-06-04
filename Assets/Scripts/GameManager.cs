@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
     public GameObject PauseHUD;
     public GameObject[] levelMessageHUD;
     public GameObject upgradeHUD;
-    public GameObject levelWonHUD;
+    public GameObject[] levelWonHUD;
     public GameObject levelLostHUD;
     public GameObject PlantBook;
     public Image timerImage;
@@ -245,8 +245,8 @@ public class GameManager : MonoBehaviour {
     private void LevelWon()
     {
         //Show the Level Won HUD
-        if (levelWonHUD.activeSelf == false)
-            levelWonHUD.SetActive(true);
+        if (levelWonHUD[levelNumber - 1].activeSelf == false)
+            levelWonHUD[levelNumber - 1].SetActive(true);
 
         //Unlock & show cursor
         Cursor.lockState = CursorLockMode.None;
@@ -354,7 +354,8 @@ public class GameManager : MonoBehaviour {
         LevelSetup(levelNumber);
 
         //Hide level won HUD
-        levelWonHUD.SetActive(false);
+        levelWonHUD[levelNumber].SetActive(false);
+        levelWonHUD[levelNumber - 1].SetActive(false);
 
         //Change game state
         gameState = GameState.LevelMessage;
@@ -441,9 +442,9 @@ public class GameManager : MonoBehaviour {
         {
             case 1:
                 //Plants
-                orderBoard.GetComponent<OrderBoard>().roseWeight = 33f;
-                orderBoard.GetComponent<OrderBoard>().cactusWeight = 20f;
-                orderBoard.GetComponent<OrderBoard>().lilyWeight = 15f;
+                orderBoard.GetComponent<OrderBoard>().roseWeight = 100f;
+                orderBoard.GetComponent<OrderBoard>().cactusWeight = 0f;
+                orderBoard.GetComponent<OrderBoard>().lilyWeight = 0f;
 
                 //Fertiliser
                 fertiliserSpawner.SetActive(false);
@@ -451,7 +452,7 @@ public class GameManager : MonoBehaviour {
                 //Timer & Money
                 timeLimit = 80;
                 money = 0;
-                moneyGoal = 30;
+                moneyGoal = 20;
                 break;
 
             case 2:
@@ -465,11 +466,22 @@ public class GameManager : MonoBehaviour {
 
                 //Timer & Money 
                 timeLimit = 120;
-                money = 0;
-                moneyGoal = 85;
+                money = 10;
+                moneyGoal = 75;
                 break;
 
             case 3:
+                orderBoard.GetComponent<OrderBoard>().roseWeight = 33f;
+                orderBoard.GetComponent<OrderBoard>().cactusWeight = 20f;
+                orderBoard.GetComponent<OrderBoard>().lilyWeight = 15f;
+
+                //Timer & Money 
+                timeLimit = 120;
+                money = 15;
+                moneyGoal = 95;
+                break;
+
+            case 4:
                 orderBoard.GetComponent<OrderBoard>().roseWeight = 33f;
                 orderBoard.GetComponent<OrderBoard>().cactusWeight = 20f;
                 orderBoard.GetComponent<OrderBoard>().lilyWeight = 15f;
@@ -478,16 +490,9 @@ public class GameManager : MonoBehaviour {
                 fertiliserSpawner.SetActive(true);
 
                 //Timer & Money 
-                timeLimit = 100;
-                money = 0;
-                moneyGoal = 80;
-                break;
-
-            case 4:
-                //Timer & Money 
                 timeLimit = 90;
-                money = 0;
-                moneyGoal = 100;
+                money = 20;
+                moneyGoal = 80;
                 break;
 
             case 5:
