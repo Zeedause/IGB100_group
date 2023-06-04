@@ -8,7 +8,7 @@ public class PlantFinish : Interactable
     //If the player successfully interacts with this object
     public override void Interact()
     {
-        //If the object held by the player is a plant
+        //If the object held by the player is a fully grown plant
         GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
         if (heldObject && heldObject.GetComponent<Plant>() && heldObject.GetComponent<Plant>().growthState == GrowthState.Grown)
         {
@@ -22,5 +22,16 @@ public class PlantFinish : Interactable
             Destroy(GameManager.instance.player.GetComponent<Player>().heldObject);
             GameManager.instance.player.GetComponent<Player>().heldObject = null;
         }
+    }
+
+    //Returns whether or not the object is valid to be interacted with, given what the player is holding
+    public override bool IsValidInteractable()
+    {
+        //If the object held by the player is a fully grown plant
+        GameObject heldObject = GameManager.instance.player.GetComponent<Player>().heldObject;
+        if (heldObject && heldObject.GetComponent<Plant>() && heldObject.GetComponent<Plant>().growthState == GrowthState.Grown)
+            return true;
+
+        return false;
     }
 }

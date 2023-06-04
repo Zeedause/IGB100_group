@@ -76,10 +76,16 @@ namespace cakeslice
 		public bool flipY = false;
 		public Camera sourceCamera;
 		public bool autoEnableOutlines = false;
+
+		[Header("Animation")]
 		public bool animatedOutlines = false;
 		public float animationPeriod = 2f;
+        public float alphaMin = 0.5f;
+        public float alphaMax = 1f;
+        public float lineThicknessMin = 5f;
+        public float lineThicknessMax = 10f;
 
-		[HideInInspector]
+        [HideInInspector]
 		public Camera outlineCamera;
 		Material outline1Material;
 		Material outline2Material;
@@ -195,11 +201,14 @@ namespace cakeslice
 				float oscillationPoint = Mathf.Abs(periodPoint - periodMidPoint);
 
 				//Set alpha of all colours based on point in oscillation
-				float alpha = Mathf.Lerp(0.7f, 1f, oscillationPoint / periodMidPoint);
+				float alpha = Mathf.Lerp(alphaMin, alphaMax, oscillationPoint / periodMidPoint);
 				lineColor0.a = alpha;
 				lineColor1.a = alpha;
 				lineColor2.a = alpha;
-			}
+
+				//Set line thickness based on point in oscillation
+				lineThickness = Mathf.Lerp(lineThicknessMin, lineThicknessMax, oscillationPoint / periodMidPoint);
+            }
         }
 
 		bool RenderTheNextFrame;
