@@ -50,6 +50,7 @@ public class PlantHUD : MonoBehaviour
         this.gameObject.transform.Find("LightValueLabel").gameObject.SetActive(visible);
         this.gameObject.transform.Find("WaterValueLabel").gameObject.SetActive(visible);
         this.gameObject.transform.Find("Sweetspots").gameObject.SetActive(visible);
+        this.gameObject.transform.Find("FertilisedSweetspots").gameObject.SetActive(visible);
     }
 
     public void UpdateGrowth(float value, Color color)

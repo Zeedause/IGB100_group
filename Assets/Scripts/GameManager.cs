@@ -349,13 +349,13 @@ public class GameManager : MonoBehaviour {
         //Save current upgrade state
         upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
 
+        //Hide level won HUD
+        levelWonHUD[levelNumber - 1].SetActive(false);
+        Debug.Log(levelNumber);
+
         //Set up next level
         levelNumber++;
         LevelSetup(levelNumber);
-
-        //Hide level won HUD
-        levelWonHUD[levelNumber].SetActive(false);
-        levelWonHUD[levelNumber - 1].SetActive(false);
 
         //Change game state
         gameState = GameState.LevelMessage;
