@@ -414,7 +414,7 @@ MonoBehaviour:
     Pickup/Use/Place objects - Left Click
 
     Read
-    this Book - Hold Right Click
+    the Plant Book - Hold Right Click
 
     Dash - Space (When unlocked)'
 --- !u!222 &37555549
@@ -27012,6 +27012,15 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
     source: {fileID: 0}
+  - name: Click
+    clip: {fileID: 8300000, guid: 2d4b1571c9460954c9db31c99591cd7f, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 24300002, guid: 99c1a7fa3577bbf4099b65c9c45f2019, type: 2}
+    source: {fileID: 0}
 --- !u!1 &1875198834
 GameObject:
   m_ObjectHideFlags: 0
@@ -31262,7 +31271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4679982828677400157, guid: 8f1b3c1e22e400c419eec31d6707a696, type: 3}
       propertyPath: waterCapacities.Array.data[0]
-      value: 150
+      value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 4679982828677400157, guid: 8f1b3c1e22e400c419eec31d6707a696, type: 3}
       propertyPath: waterCapacities.Array.data[1]

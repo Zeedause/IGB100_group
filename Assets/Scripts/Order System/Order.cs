@@ -56,6 +56,8 @@ public class Order : Interactable
         //If the player isn't holding an object, spawn the new plant in their hand
         if (!GameManager.instance.player.GetComponent<Player>().heldObject)
         {
+            GameManager.instance.audioManager.Play("Ding");
+
             //Trigger player interaction cooldown
             GameManager.instance.player.GetComponent<Player>().interactionCooldown = true;
 

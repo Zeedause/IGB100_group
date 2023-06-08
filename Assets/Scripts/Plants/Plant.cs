@@ -9,6 +9,8 @@ public class Plant : Interactable
     public GameObject placement;
     internal PlantHUD plantHUD;
     internal GameManager gameManager;
+    public ParticleSystem lightBarPart;
+    public ParticleSystem waterBarPart;
 
     public int sellValue = 20;
     public int lossDivisor = 2;
@@ -267,18 +269,28 @@ public class Plant : Interactable
         //If new value enters sweetspot, play sound
         if (fertilised)
         {
-            if (minWaterFertilised >= initialWater && minWaterFertilised <= water)
+            if (minWaterFertilised >= initialWater && minWaterFertilised <= water && minLightFertilised <= light && maxLightFertilised >= light)
             {
                 //Play 'Requirement Met 2' sound
                 GameManager.instance.audioManager.Play("Requirement Met 2");
             }
+
+            if (minWaterFertilised >= initialWater && minWaterFertilised <= water)
+            {
+                waterBarPart.Play();
+            }
         }
         else
         {
-            if (minWaterSweetspot >= initialWater && minWaterSweetspot <= water)
+            if (minWaterSweetspot >= initialWater && minWaterSweetspot <= water && minLightSweetspot <= light && maxLightSweetspot >= light)
             {
                 //Play 'Requirement Met 2' sound
-                GameManager.instance.audioManager.Play("Requirement Met 2");
+                GameManager.instance.audioManager.Play("Requirement Met 1");
+            }
+
+            if (minWaterSweetspot >= initialWater && minWaterSweetspot <= water)
+            {
+                waterBarPart.Play();
             }
         }
     }
@@ -297,18 +309,28 @@ public class Plant : Interactable
         //If new value enters sweetspot, play sound
         if (fertilised)
         {
+            if (minLightFertilised >= initialLight && minLightFertilised <= water && minWaterFertilised <= water && maxLightFertilised >= water)
+            {
+                //Play 'Requirement Met 2' sound
+                GameManager.instance.audioManager.Play("Requirement Met 2");
+            }
+
             if (minLightFertilised >= initialLight && minLightFertilised <= light)
             {
-                //Play 'Requirement Met 1' sound
-                GameManager.instance.audioManager.Play("Requirement Met 1");
+                lightBarPart.Play();
             }
         }
         else
         {
+            if (minLightSweetspot >= initialLight && minLightSweetspot <= light && minWaterSweetspot <= water && maxWaterSweetspot >= water)
+            {
+                //Play 'Requirement Met 2' sound
+                GameManager.instance.audioManager.Play("Requirement Met 1");
+            }
+
             if (minLightSweetspot >= initialLight && minLightSweetspot <= light)
             {
-                //Play 'Requirement Met 1' sound
-                GameManager.instance.audioManager.Play("Requirement Met 1");
+                lightBarPart.Play();
             }
         }
     }

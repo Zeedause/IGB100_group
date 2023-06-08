@@ -272,6 +272,8 @@ public class GameManager : MonoBehaviour {
     //Button Event - Start
     public void StartButton()
     {
+        GameManager.instance.audioManager.Play("Click");
+
         //Save the current upgrade state (initial state)
         upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
 
@@ -289,6 +291,7 @@ public class GameManager : MonoBehaviour {
     //Button Event - How To Play
     public void HowtoButton()
     {
+        GameManager.instance.audioManager.Play("Click");
         //If paused, hide paused HUD
         if (PauseHUD.activeSelf == true)
             PauseHUD.SetActive(false);
@@ -301,6 +304,7 @@ public class GameManager : MonoBehaviour {
     //Button Event - Back
     public void BackButton()
     {
+        GameManager.instance.audioManager.Play("Click");
         //Hide How To Play HUD
         if (howtoPlayHUD.activeSelf == true)
             howtoPlayHUD.SetActive(false);
@@ -316,12 +320,14 @@ public class GameManager : MonoBehaviour {
     //Button Event - Quit
     public void QuitButton()
     {
+        GameManager.instance.audioManager.Play("Click");
         Application.Quit();
     }
 
     //Button Event - Go To Upgrade Menu
     public void GoToUpgradeMenuButton()
     {
+        GameManager.instance.audioManager.Play("Click");
         //Hide level message HUD
         levelMessageHUD[levelNumber - 1].SetActive(false);
 
@@ -332,6 +338,7 @@ public class GameManager : MonoBehaviour {
     //Button Event - Go To Gameplay
     public void GoToGameplayButton()
     {
+        GameManager.instance.audioManager.Play("Click");
         //Hide upgrade HUD
         upgradeHUD.SetActive(false);
 
@@ -346,6 +353,7 @@ public class GameManager : MonoBehaviour {
     //Button Event - Next level
     public void NextLevelButton()
     {
+        GameManager.instance.audioManager.Play("Click");
         //Save current upgrade state
         upgradeHUD.GetComponent<UpgradeUI>().SaveUpgradeState();
 
@@ -364,6 +372,7 @@ public class GameManager : MonoBehaviour {
     //Button Event - Quit To Menu
     public void QuitMenuButton()
     {
+        GameManager.instance.audioManager.Play("Click");
         //Functaionality is equivalent to simply restarting the game:
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -373,6 +382,7 @@ public class GameManager : MonoBehaviour {
     //Restarts the current level
     public void RestartLevel()
     {
+        GameManager.instance.audioManager.Play("Click");
         //Revert upgrade state
         upgradeHUD.GetComponent<UpgradeUI>().RevertUpgradeState();
 

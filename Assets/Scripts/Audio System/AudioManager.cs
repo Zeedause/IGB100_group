@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
 	}
 
 	private void Update()
-	{
+	{ 
 		//Pause sounds if gameplay is paused
 		if (GameManager.instance.gameState == GameManager.GameState.Paused)
 		{

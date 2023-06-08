@@ -8,6 +8,7 @@ public class Upgrade : MonoBehaviour
 {
     public int price;
     public bool purchased = false;
+    private bool soundPlayed = false;
 
     private void Start()
     {
@@ -16,13 +17,22 @@ public class Upgrade : MonoBehaviour
 
         //Set purchase state to false
         purchased = false;
+
+        soundPlayed = false;
     }
 
     private void Update()
     {
         //Enable/Disable upgrade
         if (purchased)
+        {
+            if (!soundPlayed)
+            {
+                GameManager.instance.audioManager.Play("Click");
+                soundPlayed = true;
+            }            
             DisableUpgrade();
+        }
         else
             EnableUpgrade();
     }
