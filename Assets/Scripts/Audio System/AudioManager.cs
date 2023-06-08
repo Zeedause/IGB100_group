@@ -35,15 +35,7 @@ public class AudioManager : MonoBehaviour
 
 	private void Update()
 	{
-		//Stop processing if not in gameplay
-		if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
-			return;
-
-		//If player is not interacting, stop all interacting sounds
-		if (!Input.GetMouseButton(0))
-		{
-			Stop("Water Pour");
-		}
+		
 	}
 
 	public void Play(string sound)

@@ -74,6 +74,20 @@ public class Player : MonoBehaviour
             //Off cooldown
             interactionCooldown = false;
 
+        //If player is not interacting...
+        if (!Input.GetMouseButton(0))
+        {
+            //If holding the watering can...
+            if (heldObject && heldObject.GetComponent<WateringCan>())
+            {
+                //Stop pouring sound
+                GameManager.instance.audioManager.Stop("Water Pour");
+
+                //Stop Watering Can Particles
+                //CODE HERE
+            }
+        }
+
         //Move held object with player
         if (heldObject)
             MoveHeldObject();
