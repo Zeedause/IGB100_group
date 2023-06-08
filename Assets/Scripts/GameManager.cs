@@ -162,6 +162,9 @@ public class GameManager : MonoBehaviour {
             //Change game state
             gameState = GameState.Paused;
 
+            //Pause sound playing
+            audioManager.PauseAllSounds();
+
             //Process no further
             return;
         }
@@ -189,12 +192,18 @@ public class GameManager : MonoBehaviour {
 
                 //Change game state
                 gameState = GameState.LevelWon;
+
+                //Stop sound playing
+                audioManager.StopAllSounds();
             }
             //... or lost the level
             else
             {
                 //Change game state
                 gameState = GameState.LevelLost;
+
+                //Stop sound playing
+                audioManager.StopAllSounds();
             }
         }
     }
@@ -218,6 +227,9 @@ public class GameManager : MonoBehaviour {
 
             //Change game state
             gameState = GameState.Gameplay;
+
+            //Resume sound playing
+            audioManager.ResumeAllSounds();
         }
     }
 
@@ -394,6 +406,9 @@ public class GameManager : MonoBehaviour {
 
         //Change game state
         gameState = GameState.LevelMessage;
+
+        //Stop sound playing
+        audioManager.StopAllSounds();
     }
 
     //Decrement game timer

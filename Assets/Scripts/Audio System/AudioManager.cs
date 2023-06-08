@@ -34,32 +34,7 @@ public class AudioManager : MonoBehaviour
 	}
 
 	private void Update()
-	{ 
-		//Pause sounds if gameplay is paused
-		if (GameManager.instance.gameState == GameManager.GameState.Paused)
-		{
-			for (int i = 0; i < sounds.Length; i++)
-			{
-				sounds[i].source.Pause();
-			}
-		}
-		//Resume sounds if gameplay is unpaused
-		else if (GameManager.instance.gameState == GameManager.GameState.Gameplay)
-		{
-            for (int i = 0; i < sounds.Length; i++)
-            {
-                sounds[i].source.UnPause();
-            }
-        }
-		//If any other gameState, stop all sounds
-		else
-		{
-            for (int i = 0; i < sounds.Length; i++)
-            {
-                sounds[i].source.Stop();
-            }
-        }
-
+	{
 		//Stop processing if not in gameplay
 		if (GameManager.instance.gameState != GameManager.GameState.Gameplay)
 			return;
@@ -105,7 +80,23 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
-    public void Stop(string sound)
+	public void PauseAllSounds()
+	{
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            sounds[i].source.Pause();
+        }
+    }
+
+	public void ResumeAllSounds()
+	{
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            sounds[i].source.UnPause();
+        }
+    }
+
+	public void Stop(string sound)
     {
         Sound s = Array.Find(sounds, item => item.name == sound);
         if (s == null)
@@ -115,5 +106,13 @@ public class AudioManager : MonoBehaviour
         }
 
 		s.source.Stop();
+    }
+
+	public void StopAllSounds()
+	{
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            sounds[i].source.Stop();
+        }
     }
 }

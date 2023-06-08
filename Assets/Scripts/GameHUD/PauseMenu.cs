@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    public AudioManager audioManager;
+
+    private void Start()
+    {
+        //Get audo manager reference
+        audioManager = GameManager.instance.audioManager;
+    }
+
     //'Resume' button click
     public void Resume()
     {
@@ -17,6 +25,9 @@ public class PauseMenu : MonoBehaviour
 
         //Change game state
         GameManager.instance.gameState = GameManager.GameState.Gameplay;
+
+        //Resume sound playing
+        audioManager.ResumeAllSounds();
     }
 
     //'Restart' button click

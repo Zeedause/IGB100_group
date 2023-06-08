@@ -11646,6 +11646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3472397c5b36044bb162ba77dd25a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 0}
 --- !u!1 &882278326
 GameObject:
   m_ObjectHideFlags: 0
@@ -26871,7 +26872,7 @@ MonoBehaviour:
   - {fileID: 493206068}
   - {fileID: 360337796}
   - {fileID: 212844427}
-  levelLostHUD: {fileID: 0}
+  levelLostHUD: {fileID: 1502541263}
   PlantBook: {fileID: 163444136}
   timerImage: {fileID: 3615229372687646922}
 --- !u!4 &1867174751
@@ -29628,7 +29629,7 @@ GameObject:
   - component: {fileID: 2093588589}
   - component: {fileID: 2093588588}
   m_Layer: 0
-  m_Name: StartButton
+  m_Name: ResumeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
