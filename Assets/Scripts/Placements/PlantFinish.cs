@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Plant;
+using static UnityEngine.ParticleSystem;
 
 public class PlantFinish : Interactable
 {
+    public ParticleSystem particles;
+
     //If the player successfully interacts with this object
     public override void Interact()
     {
@@ -14,6 +17,8 @@ public class PlantFinish : Interactable
         {
             //Play 'Ding' sound
             GameManager.instance.audioManager.Play("Ding");
+
+            particles.Play();
 
             //Update the money counter with sell value
             GameManager.instance.AddMoney(GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<Plant>().sellValue);

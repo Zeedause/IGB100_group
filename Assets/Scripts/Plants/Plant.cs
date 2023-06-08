@@ -11,6 +11,7 @@ public class Plant : Interactable
     internal GameManager gameManager;
     public ParticleSystem lightBarPart;
     public ParticleSystem waterBarPart;
+    public ParticleSystem GrowthPart;
 
     public int sellValue = 20;
     public int lossDivisor = 2;
@@ -112,6 +113,7 @@ public class Plant : Interactable
 
             //Play 'Spare Ding 1' sound
             GameManager.instance.audioManager.Play("Spare Ding 1");
+            GrowthPart.Play();
 
             //Set Plant HUD
             plantHUD.SetGrowthState("Grown");
@@ -421,7 +423,7 @@ public class Plant : Interactable
         //Otherwise, if the player is holidng a watering can and this plant is growing, water this plant
         else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<WateringCan>() && growthState == GrowthState.Growing)
         {
-            GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<WateringCan>().WaterPlant(this.gameObject);
+            GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<WateringCan>().WaterPlant(this.gameObject);            
         }
         //Otherwise, if the player is holidng fertiliser and this plant is growing, enable sweetspots
         else if (GameManager.instance.player.GetComponent<Player>().heldObject.GetComponent<Fertiliser>() && growthState == GrowthState.Growing)

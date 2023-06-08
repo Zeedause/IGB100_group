@@ -9,6 +9,7 @@ public class WateringCan : Interactable
     public GameObject spawner;
     public GameObject placement;
     private WateringCanHUD wateringCanHUD;
+    public ParticleSystem waterParticles;
 
     [Header("Water")]
     public float water;
@@ -114,12 +115,16 @@ public class WateringCan : Interactable
         {
             //Stop 'Water Pour' sound
             GameManager.instance.audioManager.Stop("Water Pour");
+            waterParticles.Stop();
 
             return;
         }
 
         //Play 'Water Pour' sound
         GameManager.instance.audioManager.ExclusivePlay("Water Pour");
+
+        if (!waterParticles.isPlaying)
+            waterParticles.Play();
 
         //Calulate water to be transferred
         float waterTransfer = wateringRate * Time.deltaTime;

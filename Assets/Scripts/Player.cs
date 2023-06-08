@@ -84,7 +84,8 @@ public class Player : MonoBehaviour
                 GameManager.instance.audioManager.Stop("Water Pour");
 
                 //Stop Watering Can Particles
-                //CODE HERE
+                heldObject.GetComponent<WateringCan>().waterParticles.Stop();
+                heldObject.GetComponent<WateringCan>().waterParticles.Clear();
             }
         }
 
