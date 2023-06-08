@@ -10909,7 +10909,7 @@ MonoBehaviour:
   placement: {fileID: 0}
   lightBarPart: {fileID: 6157043982699072121}
   waterBarPart: {fileID: 1920278484884324073}
-  GrowthPart: {fileID: 0}
+  GrowthPart: {fileID: 1473967967361803424}
   sellValue: 40
   lossDivisor: 2
   growthState: 0
