@@ -14317,7 +14317,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -28.46}
+  m_AnchoredPosition: {x: 0, y: -31.1}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1010595360
@@ -26979,7 +26979,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Spare Ding 1
     clip: {fileID: 8300000, guid: 9e8ef76fe8d247f41a3155d3d16e5bc1, type: 3}
-    volume: 0.5
+    volume: 0.61
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -26988,7 +26988,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Spare Ding 2
     clip: {fileID: 8300000, guid: 2ea4c3900a1ffbb4e84793ff9cd4f7f7, type: 3}
-    volume: 0.5
+    volume: 0.604
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
@@ -27615,7 +27615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2.84}
+  m_AnchoredPosition: {x: 0, y: -3.7}
   m_SizeDelta: {x: 932.3, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1915675161
@@ -27645,11 +27645,12 @@ MonoBehaviour:
     landlord decided to keep prices high
 
     your character moved in with that trusty
-    friend of theirs
+    friend of theirs with the goal of starting a new plant empire together.
 
 
-    Feel free to play again and try any upgrades you might
-    have missed, or go see which ones you can skip over for an extra challenge.
+    Feel
+    free to play again and try any upgrades you might have missed, or go see which
+    ones you can skip over for an extra challenge.
 
 '
   m_isRightToLeft: 0
@@ -30836,6 +30837,32 @@ PrefabInstance:
     - target: {fileID: 602716993463758319, guid: d6285baeb14f09f41b57b07ef98ba236, type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579879399311242365, guid: d6285baeb14f09f41b57b07ef98ba236, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 0.10471104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579879399311242365, guid: d6285baeb14f09f41b57b07ef98ba236, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: -0.10471104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579879399311242365, guid: d6285baeb14f09f41b57b07ef98ba236, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: -0.10471104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579879399311242365, guid: d6285baeb14f09f41b57b07ef98ba236, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: -0.10471104
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579879399311242365, guid: d6285baeb14f09f41b57b07ef98ba236, type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: -0.10471104
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248914971177648096, guid: d6285baeb14f09f41b57b07ef98ba236, type: 3}
+      propertyPath: m_text
+      value: 'Deposit
+
+        Box'
       objectReference: {fileID: 0}
     - target: {fileID: 7377549777914698488, guid: d6285baeb14f09f41b57b07ef98ba236, type: 3}
       propertyPath: m_Material

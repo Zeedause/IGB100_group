@@ -225,7 +225,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -4656.6133, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 30.4, y: 41.85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!198 &1920278484884324073
@@ -5506,7 +5506,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.91372555, g: 0.9490197, b: 0.87843144, a: 1}
+      maxColor: {r: 1, g: 0.9536098, b: 0.43867922, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -11318,7 +11318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: -90}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -15670.514, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 30.4, y: 41.85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!198 &6157043982699072121
@@ -16321,7 +16321,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 67.9
+  m_Value: 68.6
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -16569,7 +16569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_Value
-      value: 58.8
+      value: 58.3
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_MaxValue

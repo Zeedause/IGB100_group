@@ -11394,7 +11394,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 56.4
+  m_Value: 50.1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -11494,7 +11494,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8633374300441055545}
   serializedVersion: 8
-  lengthInSec: 0.1
+  lengthInSec: 0.2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -16501,7 +16501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_Value
-      value: 59.3
+      value: 49.4
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_MinValue
