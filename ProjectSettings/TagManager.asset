@@ -8,6 +8,7 @@ TagManager:
   - WateringCan
   - Placement
   - Upgrade
+  - Fertiliser
   layers:
   - Default
   - TransparentFX

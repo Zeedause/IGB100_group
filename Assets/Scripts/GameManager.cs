@@ -461,6 +461,11 @@ public class GameManager : MonoBehaviour {
         foreach (GameObject plant in plants)
             Destroy(plant);
 
+        //Delete Fertiliser Objects
+        GameObject[] fertiliser = GameObject.FindGameObjectsWithTag("Fertiliser");
+        foreach (GameObject f in fertiliser)
+            Destroy(f);
+
         //Remove object references from placements
         GameObject[] placements = GameObject.FindGameObjectsWithTag("Placement");
         for (int i = 0; i < placements.Length; i++)

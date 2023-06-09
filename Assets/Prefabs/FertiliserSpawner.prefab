@@ -338,6 +338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fertiliser
       objectReference: {fileID: 0}
+    - target: {fileID: 5877977511027638958, guid: dbea8170e2aa5cf4e806a448a4a2d1ee, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 7770653346674177452, guid: dbea8170e2aa5cf4e806a448a4a2d1ee, type: 3}
       propertyPath: m_RootOrder
       value: 1
