@@ -195,6 +195,9 @@ public class GameManager : MonoBehaviour {
 
                 //Stop sound playing
                 audioManager.StopAllSounds();
+
+                //Play 'Ding' sound
+                audioManager.Play("Ding");
             }
             //... or lost the level
             else
@@ -204,6 +207,9 @@ public class GameManager : MonoBehaviour {
 
                 //Stop sound playing
                 audioManager.StopAllSounds();
+
+                //Play 'Failed' sound
+                audioManager.Play("Failed");
             }
         }
     }
@@ -260,8 +266,6 @@ public class GameManager : MonoBehaviour {
         if (levelWonHUD[levelNumber - 1].activeSelf == false)
             levelWonHUD[levelNumber - 1].SetActive(true);
 
-        audioManager.Play("Ding");
-
         //Unlock & show cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -273,8 +277,6 @@ public class GameManager : MonoBehaviour {
         //Show the Level Lost HUD
         if (levelLostHUD.activeSelf == false)
             levelLostHUD.SetActive(true);
-
-        audioManager.Play("Failed");
 
         //Unlock & show cursor
         Cursor.lockState = CursorLockMode.None;
