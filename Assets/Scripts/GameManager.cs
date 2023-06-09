@@ -375,7 +375,6 @@ public class GameManager : MonoBehaviour {
 
         //Hide level won HUD
         levelWonHUD[levelNumber - 1].SetActive(false);
-        Debug.Log(levelNumber);
 
         //Set up next level
         levelNumber++;

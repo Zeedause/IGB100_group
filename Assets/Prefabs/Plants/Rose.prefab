@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 511.073, y: 50.000004}
-  m_SizeDelta: {x: 37702, y: 35.87532}
+  m_AnchoredPosition: {x: 515.6904, y: 50.000004}
+  m_SizeDelta: {x: 37367, y: 35.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4268078804843258749
 CanvasRenderer:
@@ -102,7 +102,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2685616792773565385}
   m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0, z: -1.6}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0027924, y: 1.0027924, z: 0.84623826}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4966,8 +4966,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 507, y: 224.9}
-  m_SizeDelta: {x: 8507.6, y: 35.87532}
+  m_AnchoredPosition: {x: 513.97, y: 224.9}
+  m_SizeDelta: {x: 8393.8, y: 35.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &513376763122479945
 CanvasRenderer:
@@ -5042,8 +5042,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 590.51, y: 224.9}
-  m_SizeDelta: {x: 8507.6, y: 35.87532}
+  m_AnchoredPosition: {x: 623.1, y: 224.9}
+  m_SizeDelta: {x: 7886.7, y: 35.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &802540962231487476
 CanvasRenderer:
@@ -11077,8 +11077,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 594, y: 50.000004}
-  m_SizeDelta: {x: 37702, y: 35.87532}
+  m_AnchoredPosition: {x: 623.6, y: 50.000004}
+  m_SizeDelta: {x: 35197.7, y: 35.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8160851599856462724
 CanvasRenderer:
@@ -11394,7 +11394,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 50.1
+  m_Value: 60
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -16501,7 +16501,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_Value
-      value: 49.4
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4362360795365337698, guid: 99ca3799d06190e4ab7789d250968566, type: 3}
       propertyPath: m_MinValue
